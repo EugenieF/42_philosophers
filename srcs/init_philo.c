@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <efrancon@student.42.f      +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/08/19 22:23:56 by EugenieFr        ###   ########.fr       */
+/*   Updated: 2021/09/01 12:28:11 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	link_right_fork_mutex(t_data *data)
 	int	last_philo;
 
 	last_philo = data->param[NB_OF_PHILO] - 1;
-	data->philo[0].right_fork = &data->philo[last_philo].left_fork;
+	if (data->param[NB_OF_PHILO] == 1)
+		data->philo[0].right_fork = NULL;
+	else
+		data->philo[0].right_fork = &data->philo[last_philo].left_fork;
 	i = -1;
 	while (++i < last_philo)
 		data->philo[i + 1].right_fork = &data->philo[i].left_fork;
@@ -50,9 +53,12 @@ t_bool	init_philo(t_data *data)
 		return (FAIL);
 	while (i < data->param[NB_OF_PHILO])
 	{
+		data->philo[i].state = THINKING;
+		data->philo[i].last_meal = data->start_time;
 		data->philo[i].num = i + 1;
 		i++;
 	}
+	data->someone_died = FALSE;
 	if (!create_left_fork_mutex(data))
 		return (FAIL);
 	link_right_fork_mutex(data);

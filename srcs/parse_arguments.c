@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_arguments.c                                  :+:      :+:    :+:   */
+/*   parse_arguments.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:29:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/08/18 21:31:15 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/01 14:04:08 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,5 @@ t_bool	fill_and_check_parameters(char **argv, t_data *data)
 			return (0);
 		data->param[i++] = (int)nb;
 	}
-	data->is_even = 0;
-	if (data->param[NB_OF_PHILO] % 2 == 0)
-		data->is_even = 1;
 	return (1);
 }

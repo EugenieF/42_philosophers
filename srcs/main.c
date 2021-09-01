@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:25 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/08/19 22:21:39 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/01 16:04:03 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 	if (!init_philo(data) || !run_philo(data))
 		return (exit_program("Error: philo failed\n", EXIT_FAILURE, data));
 	cleanup(data);
-	printf("\n");
-	atexit(check_leaks);
+	printf("----------------------------------------------\n\n");
+//	atexit(check_leaks);
 	return (0);
 }
