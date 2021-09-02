@@ -6,44 +6,40 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/01 16:24:16 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/02 13:17:02 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_bool	nobody_is_dead(t_philo *philo, t_data *data)
+t_bool	program_is_still_running(t_data *data)
 {
-	int	ret;
-
-	ret = TRUE;
-	pthread_mutex_lock(&data->check_death);
-	if (philo->state == DEAD || data->someone_died == TRUE)
-		ret = FALSE;
-	pthread_mutex_unlock(&data->check_death);
-	return (ret);
+	pthread_mutex_lock(&data->count_meals_lock);
+	if (data->count_meals > data->param[NB_OF_PHILO])
+	{
+		pthread_mutex_unlock(&data->count_meals_lock);
+		return (FALSE);
+	}
+	pthread_mutex_unlock(&data->count_meals_lock);
+	pthread_mutex_lock(&data->check_death_lock);
+	if (data->someone_died == TRUE)
+	{
+		pthread_mutex_unlock(&data->check_death_lock);
+		return (FALSE);
+	}
+	pthread_mutex_unlock(&data->check_death_lock);
+	return (TRUE);
 }
 
-void	*live(void *void_data)
+void	wait_until_the_end(t_data *data)
 {
-	t_data		*data;
-	t_philo		*philo;
-
-	data = (t_data *)void_data;
-	philo = &data->philo[data->i];
-	if (philo->num % 2 == 0)
-		usleep_in_ms(data->param[TIME_TO_EAT], data);
-	if (pthread_create(
-			&philo->check_death_thread, NULL, check_death_philo, (void *)data))
-		return (NULL);
-	pthread_detach(philo->check_death_thread);
-	while (nobody_is_dead(philo, data))
+	while (program_is_still_running(data))
+		usleep_in_ms(10, data);
+	if (data->count_meals == data->param[NB_OF_PHILO] + 1)
 	{
-		philo_takes_forks(philo, data);
-		philo_eats(philo, data);
-		philo_sleeps_then_thinks(philo, data);
+		printf("\n    All %d philosophers ", data->param[NB_OF_PHILO]);
+		printf("ate their %d meals\n", data->param[NB_OF_MEALS]);
 	}
-	return (NULL);
 }
 
 t_bool	run_philo(t_data *data)
@@ -60,11 +56,9 @@ t_bool	run_philo(t_data *data)
 				&data->philo[i].life_thread, NULL, live, (void *)data))
 			return (FAIL);
 		pthread_detach(data->philo[i].life_thread);
-		usleep(100);
+		usleep(1000);
 		i++;
 	}
-	i = 0;
-	while (data->someone_died == FALSE)
-		usleep_in_ms(100, data);
+	wait_until_the_end(data);
 	return (SUCCESS);
 }

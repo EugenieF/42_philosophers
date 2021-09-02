@@ -6,7 +6,7 @@
 #    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/18 22:02:30 by EugenieFr         #+#    #+#              #
-#    Updated: 2021/09/01 16:25:05 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/09/02 13:28:35 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,11 +19,11 @@ SRCS			= main.c \
 				init_philo.c \
 				parse_arguments.c \
 				run_philo.c \
-				living_activity.c \
+				live.c \
+				philo_activity.c \
 				display_status.c \
-				check_death_philo.c \
+				supervise_life_philo.c \
 				handle_time.c \
-				utils.c \
 				cleanup.c
 
 OBJS_DIR		= ./objs

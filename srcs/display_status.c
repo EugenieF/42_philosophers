@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:04 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/01 13:03:36 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/02 14:04:08 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	display_status(int status, t_philo *philo, t_data *data)
 {
 	long int	time_in_ms;
 
-	pthread_mutex_lock(&data->writing_lock);
+	if (data->someone_died == FALSE)
+		pthread_mutex_lock(&data->writing_lock);
 	if (data->someone_died == TRUE)
 		return ;
 	time_in_ms = get_time(data) - data->start_time;

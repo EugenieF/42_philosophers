@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   living_activity.c                                  :+:      :+:    :+:   */
+/*   philo_activity.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/19 22:23:47 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/01 16:17:15 by EugenieFran      ###   ########.fr       */
+/*   Created: 2021/09/02 13:31:31 by EugenieFr         #+#    #+#             */
+/*   Updated: 2021/09/02 13:56:45 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	philo_eats(t_philo *philo, t_data *data)
 	philo->last_meal = get_time(data);
 	display_status(EATING, philo, data);
 	usleep_in_ms(data->param[TIME_TO_EAT], data);
+	philo->nb_of_meals++;
 }
 
 void	philo_sleeps_then_thinks(t_philo *philo, t_data *data)

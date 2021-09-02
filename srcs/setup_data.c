@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:35 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/01 13:05:43 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/02 12:07:06 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,26 @@ char	**create_status(void)
 	return (status);
 }
 
+t_bool	create_locks(t_data *data)
+{
+	if (pthread_mutex_init(&data->writing_lock, NULL))
+		return (FAIL);
+	if (pthread_mutex_init(&data->check_death_lock, NULL))
+		return (FAIL);
+	if (pthread_mutex_init(&data->count_meals_lock, NULL))
+		return (FAIL);
+	if (pthread_mutex_init(&data->end_lock, NULL))
+		return (FAIL);
+	pthread_mutex_lock(&data->end_lock);
+	return (SUCCESS);
+}
+
 void	set_to_null(t_data *data)
 {
 	data->param = NULL;
 	data->status = NULL;
 	data->philo = NULL;
+	data->count_meals = NO_NEED;
 }
 
 t_data	*setup_data(int argc)
@@ -51,12 +66,7 @@ t_data	*setup_data(int argc)
 	data->status = create_status();
 	if (!data->status)
 		return (NULL);
-	if (pthread_mutex_init(&data->writing_lock, NULL))
-		return (NULL);
-	if (pthread_mutex_init(&data->death_lock, NULL))
-		return (NULL);
-	pthread_mutex_lock(&data->death_lock);
-	if (pthread_mutex_init(&data->check_death, NULL))
+	if (!create_locks(data))
 		return (NULL);
 	return (data);
 }

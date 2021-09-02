@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:49 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/01 13:49:40 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/02 11:15:31 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,19 @@ void	free_philo(int nb_of_philo, t_philo *philo)
 	philo = NULL;
 }
 
+void	destroy_mutex(t_data *data)
+{
+	pthread_mutex_destroy(&data->writing_lock);
+	pthread_mutex_destroy(&data->check_death_lock);
+	pthread_mutex_destroy(&data->count_meals_lock);
+	pthread_mutex_destroy(&data->end_lock);
+}
+
 void	cleanup(t_data *data)
 {
 	if (!data)
 		return ;
-	pthread_mutex_destroy(&data->writing_lock);
-	pthread_mutex_destroy(&data->death_lock);
-	pthread_mutex_destroy(&data->check_death);
+	destroy_mutex(data);
 	if (data->philo)
 	{
 		free(data->philo);

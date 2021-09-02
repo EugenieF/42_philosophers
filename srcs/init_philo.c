@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/01 12:28:11 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/02 12:06:59 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_bool	init_philo(t_data *data)
 	{
 		data->philo[i].state = THINKING;
 		data->philo[i].last_meal = data->start_time;
+		data->philo[i].nb_of_meals = 0;
 		data->philo[i].num = i + 1;
 		i++;
 	}
