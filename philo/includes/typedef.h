@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/02 12:36:10 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/02 22:08:25 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_philo
 	long int		last_meal;
 	int				nb_of_meals;
 	int				state;			
+	t_bool			done;
 	pthread_t		life_thread;
 	pthread_t		life_insurance;
 	pthread_mutex_t	left_fork;

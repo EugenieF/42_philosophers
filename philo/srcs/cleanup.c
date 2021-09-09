@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:49 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/02 11:15:31 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/04 16:43:15 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ void	cleanup(t_data *data)
 		return ;
 	destroy_mutex(data);
 	if (data->philo)
-	{
-		free(data->philo);
-		data->philo = NULL;
-	}
+		free_philo(data->param[NB_OF_PHILO], data->philo);
 	if (data->status)
 	{
 		free(data->status);

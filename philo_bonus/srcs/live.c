@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   live.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <efrancon@student.42.f      +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/02 13:31:02 by EugenieFr        ###   ########.fr       */
+/*   Updated: 2021/09/09 11:55:21 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,40 +17,31 @@ t_bool	nobody_is_dead(t_philo *philo, t_data *data)
 	int	ret;
 
 	ret = TRUE;
-	pthread_mutex_lock(&data->check_death_lock);
-	if (philo->state == DEAD || data->someone_died == TRUE)
+	if (philo->state == DEAD || data->philo_died == TRUE)
 		ret = FALSE;
-	pthread_mutex_unlock(&data->check_death_lock);
 	return (ret);
 }
 
 t_bool	not_enough_meals(t_philo *philo, t_data *data)
 {
+	int	ret;
+
+	ret = TRUE;
 	if (data->count_meals == NO_NEED)
-		return (TRUE);
-	pthread_mutex_lock(&data->count_meals_lock);
-	if (philo->nb_of_meals < data->param[NB_OF_MEALS])
-	{
-		pthread_mutex_unlock(&data->count_meals_lock);
-		return (TRUE);
-	}
-	data->count_meals++;
-	pthread_mutex_unlock(&data->count_meals_lock);
-	return (FALSE);
+		return (ret);
+	if (philo->nb_of_meals >= data->param[NB_OF_MEALS])
+		ret = FALSE;
+	return (ret);
 }
 
-void	*live(void *void_data)
+int	live(t_philo *philo, t_data *data)
 {
-	t_data		*data;
-	t_philo		*philo;
+	int	exit_status;
 
-	data = (t_data *)void_data;
-	philo = &data->philo[data->i];
-	if (philo->num % 2 == 0)
-		usleep_in_ms(data->param[TIME_TO_EAT], data);
+	exit_status = FAIL;
 	if (pthread_create(
 			&philo->life_insurance, NULL, supervise_life_philo, (void *)data))
-		return (NULL);
+		return (exit_status);
 	pthread_detach(philo->life_insurance);
 	while (not_enough_meals(philo, data) && nobody_is_dead(philo, data))
 	{
@@ -58,5 +49,9 @@ void	*live(void *void_data)
 		philo_eats(philo, data);
 		philo_sleeps_then_thinks(philo, data);
 	}
-	return (NULL);
+	if (data->count_meals && philo->nb_of_meals == data->param[NB_OF_MEALS])
+		exit_status = MEALS_REACHED;
+	else if (data->philo_died == TRUE)
+		exit_status = DEATH;
+	return (exit_status);
 }

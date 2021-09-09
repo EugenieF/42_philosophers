@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:25 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/02 13:36:48 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/09 12:17:41 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	check_leaks(void)
 {
-	system("leaks philo");
+	system("leaks philo_bonus");
 }
 
 int	exit_program(char *message, int exit_code, t_data *data)
@@ -33,11 +33,12 @@ int	main(int argc, char **argv)
 	if (!data)
 		return (1);
 	if (!(argc == 5 || argc == 6) || !fill_and_check_parameters(argv, data))
-		return (exit_program("Error: invalid arguments\n", 0, data));
+		return (exit_program("Error: invalid arguments", 0, data));
 	printf("\n");
 	if (!init_philo(data) || !run_philo(data))
-		return (exit_program("Error: philo failed\n", EXIT_FAILURE, data));
-	cleanup(data);
+		return (exit_program("Error: philo failed", EXIT_FAILURE, data));
+	if (!cleanup(data))
+		return (1);
 	printf("----------------------------------------------\n\n");
 //	atexit(check_leaks);
 	return (0);

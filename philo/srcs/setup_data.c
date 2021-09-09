@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:35 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/02 12:07:06 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/09 12:26:03 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ t_data	*setup_data(int argc)
 	if (!data)
 		return (NULL);
 	set_to_null(data);
-	data->start_time = get_time(data);
 	argc--;
 	data->param = (int *)malloc(sizeof(int) * argc);
 	if (!data->param)
