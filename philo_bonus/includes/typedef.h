@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/08 20:59:52 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/09 20:32:55 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 # define TYPEDEF_H
 
 # define CHILD	0
+
+# ifdef __linux__
+#  define IS_LINUX 1
+# else
+#  define IS_LINUX 0
+# endif
 
 typedef int	t_bool;
 

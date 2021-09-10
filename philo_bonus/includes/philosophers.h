@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/06 20:03:28 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/09 20:19:28 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/stat.h>
 # include <semaphore.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include <signal.h>
 # include "typedef.h"
 
