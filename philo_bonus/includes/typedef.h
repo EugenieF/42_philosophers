@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/09 20:32:55 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/11 12:23:40 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ typedef struct s_data
 	int			*param;
 	t_philo		*philo;
 	char		**status;
+	sem_t		*forks_lock;
+	sem_t		*writing_lock;
 	sem_t		*end_lock;
 }				t_data;
 

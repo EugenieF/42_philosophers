@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/02 20:15:27 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/11 13:28:57 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void		philo_eats(t_philo *philo, t_data *data);
 void		philo_sleeps_then_thinks(t_philo *philo, t_data *data);
 void		display_status(int status, t_philo *philo, t_data *data);
 void		*supervise_life_philo(void *void_data);
-void		cleanup(t_data *data);
+t_bool		cleanup(t_data *data);
 int			exit_program(char *message, int exit_code, t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/10 12:11:02 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/11 13:06:29 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_bool	meals_count_reached(t_philo *philo, t_data *data)
 		pthread_mutex_lock(&data->writing_lock);
 		pthread_mutex_unlock(&data->count_meals_lock);
 		pthread_mutex_unlock(&data->end_lock);
+		pthread_mutex_unlock(&data->writing_lock);
 		return (TRUE);
 	}
 	pthread_mutex_unlock(&data->count_meals_lock);
@@ -46,6 +47,7 @@ t_bool	philo_died(t_philo *philo, t_data *data)
 		philo->state = DEAD;
 		pthread_mutex_unlock(&data->check_death_lock);
 		pthread_mutex_unlock(&data->end_lock);
+		pthread_mutex_unlock(&data->writing_lock);
 		return (TRUE);
 	}
 	pthread_mutex_unlock(&data->check_death_lock);

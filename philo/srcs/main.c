@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:25 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/09 12:16:39 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/11 13:30:16 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,12 @@ int	main(int argc, char **argv)
 		return (exit_program("Error: invalid arguments", 0, data));
 	printf("\n");
 	if (!init_philo(data) || !run_philo(data))
-		return (exit_program("Error: philo failed", EXIT_FAILURE, data));
-	cleanup(data);
+		return (exit_program("Error: philo failed", 1, data));
 	printf("----------------------------------------------\n\n");
-//	atexit(check_leaks);
+	if (!cleanup(data))
+		return (exit_program("Error: pthread_mutex_destroy() failed", 1, data));
+	while (1)
+		;
+	atexit(check_leaks);
 	return (0);
 }

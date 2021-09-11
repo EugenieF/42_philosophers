@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/09 12:29:22 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/11 13:55:02 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,18 @@
 t_bool	open_semaphores(t_data *data, int total_philo)
 {
 	int		i;
-	sem_t	*forks_lock;
-	sem_t	*writing_lock;
 
 	unlink_semaphores();
-	forks_lock = sem_open("/sem_forks", O_CREAT | O_EXCL, 0777, total_philo);
-	writing_lock = sem_open("/sem_writing", O_CREAT | O_EXCL, 0777, 1);
+	data->forks_lock = sem_open("/sem_forks", O_CREAT | O_EXCL, 0777, total_philo);
+	data->writing_lock = sem_open("/sem_writing", O_CREAT | O_EXCL, 0777, 1);
 	data->end_lock = sem_open("/sem_end", O_CREAT | O_EXCL, 0777, 0);
-	if (forks_lock == SEM_FAILED || writing_lock == SEM_FAILED)
+	if (data->forks_lock == SEM_FAILED || data->writing_lock == SEM_FAILED)
 		return (FAIL);
 	i = -1;
 	while (++i < total_philo)
 	{
-		data->philo[i].forks_lock = forks_lock;
-		data->philo[i].writing_lock = writing_lock;
+		data->philo[i].forks_lock = data->forks_lock;
+		data->philo[i].writing_lock = data->writing_lock;
 		data->philo[i].end_lock = data->end_lock;
 	}
 	return (SUCCESS);
