@@ -37,11 +37,9 @@ int	main(int argc, char **argv)
 	printf("\n");
 	if (!init_philo(data) || !run_philo(data))
 		return (exit_program("Error: philo failed", EXIT_FAILURE, data));
+	printf("----------------------------------------------\n\n");
 	if (!cleanup(data))
 		return (1);
-	printf("----------------------------------------------\n\n");
-//	while (1)
-//		;
 	atexit(check_leaks);
 	return (0);
 }

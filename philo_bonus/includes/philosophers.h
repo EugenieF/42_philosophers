@@ -27,6 +27,8 @@
 # include <signal.h>
 # include "typedef.h"
 
+int			ft_atoi(const char *str);
+char		*ft_strdup(const char *s1);
 long int	get_time(void);
 void		usleep_in_ms(long int time_in_ms);
 t_bool		time_is_valid(long int time);

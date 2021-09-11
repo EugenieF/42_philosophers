@@ -39,6 +39,20 @@ t_bool	destroy_mutex(t_data *data)
 	return (SUCCESS);
 }
 
+void	free_status(char **status)
+{
+	int	i;
+
+	i = 0;
+	while (i < 6)
+	{
+		free(status[i]);
+		status[i++] = NULL;
+	}
+	free(status);
+	status = NULL;
+}
+
 t_bool	cleanup(t_data *data)
 {
 	if (!data)
@@ -50,7 +64,7 @@ t_bool	cleanup(t_data *data)
 	if (data->param)
 		free(data->param);
 	if (data->status)
-		free(data->status);
+		free_status(data->status);
 	free(data);
 	return (SUCCESS);
 }

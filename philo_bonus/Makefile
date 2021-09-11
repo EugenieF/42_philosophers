@@ -24,13 +24,14 @@ SRCS			= main.c \
 				display_status.c \
 				supervise_life_philo.c \
 				handle_time.c \
-				cleanup.c
+				cleanup.c \
+				utils.c
 
 OBJS_DIR		= ./objs
 
 OBJS			= ${addprefix ${OBJS_DIR}/, ${SRCS:.c=.o}}
 
-CC				= gcc
+CC				= clang
 
 CFLAGS			= -Wall -Wextra -Werror -pthread -I${INCLUDE} -g3
 

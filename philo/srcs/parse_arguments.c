@@ -23,31 +23,6 @@ t_bool	char_is_valid(char c)
 		|| (c >= 9 && c <= 13));
 }
 
-int	ft_atoi(const char *str)
-{
-	unsigned long	i;
-	unsigned long	res;
-	int				sign;
-
-	i = 0;
-	sign = 1;
-	res = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		res = res * 10 + str[i] - '0';
-		i++;
-	}
-	return (sign * res);
-}
-
 t_bool	argv_is_valid(char *argv)
 {
 	int	i;

@@ -19,11 +19,11 @@ char	**create_status(void)
 	status = (char **)malloc(sizeof(char *) * 6);
 	if (!status)
 		return (NULL);
-	status[THINKING] = "\033[38;5;123mis thinking\033[0m";
-	status[HAS_A_FORK] = "\033[38;5;229mhas taken a fork\033[0m";
-	status[EATING] = "\033[38;5;215mis eating\033[0m";
-	status[SLEEPING] = "\033[38;5;32mis sleeping\033[0m";
-	status[DEAD] = "\033[38;5;196mdied\033[0m";
+	status[THINKING] = ft_strdup("\033[38;5;123mis thinking\033[0m");
+	status[HAS_A_FORK] = ft_strdup("\033[38;5;229mhas taken a fork\033[0m");
+	status[EATING] = ft_strdup("\033[38;5;215mis eating\033[0m");
+	status[SLEEPING] = ft_strdup("\033[38;5;32mis sleeping\033[0m");
+	status[DEAD] = ft_strdup("\033[38;5;196mdied\033[0m");
 	status[HAS_TWO_FORKS] = NULL;
 	return (status);
 }

@@ -21,11 +21,26 @@ void	unlink_semaphores(void)
 
 t_bool	close_semaphores(t_data *data)
 {
-	sem_close(data->forks_lock);
-	sem_close(data->writing_lock);
-	sem_close(data->end_lock);
+	if (sem_close(data->forks_lock) != 0
+		|| sem_close(data->writing_lock) != 0
+		|| sem_close(data->end_lock) != 0)
+		return (FAIL);
 	unlink_semaphores();
 	return (SUCCESS);
+}
+
+void	free_status(char **status)
+{
+	int	i;
+
+	i = 0;
+	while (i < 6)
+	{
+		free(status[i]);
+		status[i++] = NULL;
+	}
+	free(status);
+	status = NULL;
 }
 
 t_bool	cleanup(t_data *data)
@@ -38,10 +53,10 @@ t_bool	cleanup(t_data *data)
 			return (FAIL);
 		free(data->philo);
 	}
-	if (data->status)
-		free(data->status);
 	if (data->param)
 		free(data->param);
+	if (data->status)
+		free_status(data->status);
 	free(data);
 	return (SUCCESS);
 }
