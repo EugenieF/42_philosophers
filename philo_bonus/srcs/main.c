@@ -40,6 +40,8 @@ int	main(int argc, char **argv)
 	printf("----------------------------------------------\n\n");
 	if (!cleanup(data))
 		return (1);
+//	while (1)
+//		;
 	atexit(check_leaks);
 	return (0);
 }

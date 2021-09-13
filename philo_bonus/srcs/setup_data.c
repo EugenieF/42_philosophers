@@ -24,7 +24,6 @@ char	**create_status(void)
 	status[EATING] = ft_strdup("\033[38;5;215mis eating\033[0m");
 	status[SLEEPING] = ft_strdup("\033[38;5;32mis sleeping\033[0m");
 	status[DEAD] = ft_strdup("\033[38;5;196mdied\033[0m");
-	status[HAS_TWO_FORKS] = NULL;
 	return (status);
 }
 

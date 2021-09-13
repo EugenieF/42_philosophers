@@ -40,6 +40,8 @@ int	main(int argc, char **argv)
 	printf("----------------------------------------------\n\n");
 	if (!cleanup(data))
 		return (exit_program("Error: pthread_mutex_destroy() failed", 1, data));
-	atexit(check_leaks);
+//	while (1)
+//		;
+//	atexit(check_leaks);
 	return (0);
 }

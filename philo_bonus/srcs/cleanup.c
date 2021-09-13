@@ -34,10 +34,10 @@ void	free_status(char **status)
 	int	i;
 
 	i = 0;
-	while (i < 6)
+	while (++i < 6)
 	{
 		free(status[i]);
-		status[i++] = NULL;
+		status[i] = NULL;
 	}
 	free(status);
 	status = NULL;
@@ -47,6 +47,8 @@ t_bool	cleanup(t_data *data)
 {
 	if (!data)
 		return (SUCCESS);
+	if (data->status)
+		free_status(data->status);
 	if (data->philo)
 	{
 		if (!close_semaphores(data))
@@ -55,8 +57,6 @@ t_bool	cleanup(t_data *data)
 	}
 	if (data->param)
 		free(data->param);
-	if (data->status)
-		free_status(data->status);
 	free(data);
 	return (SUCCESS);
 }

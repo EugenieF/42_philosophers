@@ -46,12 +46,12 @@ typedef enum s_param
 
 typedef enum s_status
 {
-	THINKING		= 0,
-	HAS_A_FORK		= 1,
-	SLEEPING		= 2,
-	EATING			= 3,
-	DEAD			= 4,
-	HAS_TWO_FORKS	= 5,
+	THINKING		= 1,
+	HAS_A_FORK		= 2,
+	SLEEPING		= 3,
+	EATING			= 4,
+	DEAD			= 5,
+	HAS_TWO_FORKS	= 6,
 }	t_status;
 
 typedef struct s_philo
