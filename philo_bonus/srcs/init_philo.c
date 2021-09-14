@@ -19,9 +19,13 @@ t_bool	open_semaphores(t_data *data, int total_philo)
 	unlink_semaphores();
 	data->forks_lock = sem_open(
 			"/sem_forks", O_CREAT | O_EXCL, 0777, total_philo);
+	if (data->forks_lock == SEM_FAILED)
+		return (FAIL);
 	data->writing_lock = sem_open("/sem_writing", O_CREAT | O_EXCL, 0777, 1);
+	if (data->writing_lock == SEM_FAILED)
+		return (FAIL);
 	data->end_lock = sem_open("/sem_end", O_CREAT | O_EXCL, 0777, 0);
-	if (data->forks_lock == SEM_FAILED || data->writing_lock == SEM_FAILED)
+	if (data->end_lock == SEM_FAILED)
 		return (FAIL);
 	i = -1;
 	while (++i < total_philo)

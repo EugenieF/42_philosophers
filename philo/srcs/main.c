@@ -19,9 +19,10 @@ void	check_leaks(void)
 
 int	exit_program(char *message, int exit_code, t_data *data)
 {
-	cleanup(data);
 	printf("%s\n", message);
-	atexit(check_leaks);
+	if (!cleanup(data))
+		printf("Error: pthread_mutex_destroy() failed\n");
+//	atexit(check_leaks);
 	return (exit_code);
 }
 
@@ -31,17 +32,21 @@ int	main(int argc, char **argv)
 
 	data = setup_data(argc);
 	if (!data)
+	{
+		printf("Error: setup_data() failed\n");
 		return (1);
+	}
 	if (!(argc == 5 || argc == 6) || !fill_and_check_parameters(argv, data))
-		return (exit_program("Error: invalid arguments", 0, data));
+		return (exit_program("Error: invalid arguments", 1, data));
 	printf("\n");
 	if (!init_philo(data) || !run_philo(data))
 		return (exit_program("Error: philo failed", 1, data));
 	printf("----------------------------------------------\n\n");
 	if (!cleanup(data))
-		return (exit_program("Error: pthread_mutex_destroy() failed", 1, data));
-/*	while (1)
-		;
-	atexit(check_leaks);
-*/	return (0);
+	{
+		printf("Error: pthread_mutex_destroy() failed\n");
+		return (1);
+	}
+//	atexit(check_leaks);
+	return (0);
 }

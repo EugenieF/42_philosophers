@@ -17,6 +17,7 @@
 
 # ifdef __linux__
 #  define IS_LINUX 1
+
 typedef enum s_status
 {
 	THINKING		= 0,
@@ -28,6 +29,7 @@ typedef enum s_status
 }	t_status;
 # else
 #  define IS_LINUX 0
+
 typedef enum s_status
 {
 	THINKING		= 1,

@@ -35,7 +35,8 @@ t_bool	run_philo(t_data *data)
 		if (pthread_create(
 				&data->philo[i].life_thread, NULL, live, (void *)data))
 			return (FAIL);
-		pthread_detach(data->philo[i].life_thread);
+		if (pthread_detach(data->philo[i].life_thread))
+			return (FAIL);
 		usleep(100);
 		i++;
 	}

@@ -51,7 +51,8 @@ t_bool	waiting_for_the_end(t_data *data)
 		if (pthread_create(
 				&meals_thread, NULL, check_exit_status, (void *)data))
 			return (FAIL);
-		pthread_detach(meals_thread);
+		if (pthread_detach(meals_thread))
+			return (FAIL);
 	}
 	sem_wait(data->end_lock);
 	i = 0;

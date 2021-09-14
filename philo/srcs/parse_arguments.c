@@ -31,10 +31,10 @@ t_bool	argv_is_valid(char *argv)
 	while (argv[i])
 	{
 		if (!char_is_valid(argv[i]))
-			return (0);
+			return (FALSE);
 		i++;
 	}
-	return (1);
+	return (TRUE);
 }
 
 t_bool	fill_and_check_parameters(char **argv, t_data *data)

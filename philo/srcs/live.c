@@ -45,7 +45,8 @@ void	*live(void *void_data)
 		return (NULL);
 	if (philo->num % 2 == 0)
 		usleep_in_ms(data->param[TIME_TO_EAT]);
-	pthread_detach(philo->life_insurance);
+	if (pthread_detach(philo->life_insurance))
+		return (NULL);
 	while (not_enough_meals(philo, data) && nobody_is_dead(philo, data))
 	{
 		philo_takes_forks(philo, data);
