@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:49 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/11 13:32:54 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/14 14:20:39 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,17 @@ void	free_status(char **status)
 {
 	int	i;
 
-	i = 0;
-	while (++i < 6)
+	if (IS_LINUX)
+		i = 5;
+	else
+		i = 6;
+	while (--i >= THINKING)
 	{
-		free(status[i]);
-		status[i] = NULL;
+		if (status[i])
+		{
+			free(status[i]);
+			status[i] = NULL;
+		}
 	}
 	free(status);
 	status = NULL;

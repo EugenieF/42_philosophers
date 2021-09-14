@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:25 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/11 13:30:16 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/14 14:06:39 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	main(int argc, char **argv)
 	printf("----------------------------------------------\n\n");
 	if (!cleanup(data))
 		return (exit_program("Error: pthread_mutex_destroy() failed", 1, data));
-//	while (1)
-//		;
-//	atexit(check_leaks);
-	return (0);
+/*	while (1)
+		;
+	atexit(check_leaks);
+*/	return (0);
 }
