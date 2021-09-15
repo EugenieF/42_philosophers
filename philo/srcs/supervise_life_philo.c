@@ -37,8 +37,11 @@ t_bool	meals_count_reached(t_philo *philo, t_data *data)
 
 t_bool	philo_died(t_philo *philo, t_data *data)
 {
+	unsigned long	time_to_die;
+
+	time_to_die = (unsigned long)data->param[TIME_TO_DIE];
 	pthread_mutex_lock(&data->check_death_lock);
-	if ((long)data->param[TIME_TO_DIE] < get_time() - philo->last_meal
+	if (time_to_die < get_time() - philo->last_meal
 		&& philo->state != EATING)
 	{
 		display_status(DEAD, philo, data);

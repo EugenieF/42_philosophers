@@ -63,7 +63,7 @@ typedef enum s_param
 typedef struct s_philo
 {
 	int				num;
-	long int		last_meal;
+	unsigned long	last_meal;
 	int				nb_of_meals;
 	int				state;			
 	t_bool			done;
@@ -76,7 +76,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int				i;
-	long int		start_time;
+	unsigned long	start_time;
 	t_bool			someone_died;
 	int				count_meals;
 	int				*param;

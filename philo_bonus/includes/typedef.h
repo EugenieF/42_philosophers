@@ -67,7 +67,7 @@ typedef enum s_param
 typedef struct s_philo
 {
 	int				num;
-	long int		last_meal;
+	unsigned long	last_meal;
 	int				nb_of_meals;
 	int				state;			
 	pid_t			pid;
@@ -79,17 +79,17 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	int			i;
-	long int	start_time;
-	t_bool		philo_died;
-	t_bool		meals_reached;
-	int			count_meals;
-	int			*param;
-	t_philo		*philo;
-	char		**status;
-	sem_t		*forks_lock;
-	sem_t		*writing_lock;
-	sem_t		*end_lock;
-}				t_data;
+	int				i;
+	unsigned long	start_time;
+	t_bool			philo_died;
+	t_bool			meals_reached;
+	int				count_meals;
+	int				*param;
+	t_philo			*philo;
+	char			**status;
+	sem_t			*forks_lock;
+	sem_t			*writing_lock;
+	sem_t			*end_lock;
+}					t_data;
 
 #endif
