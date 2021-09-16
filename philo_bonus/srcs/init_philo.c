@@ -6,34 +6,32 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/11 13:55:02 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/16 12:09:57 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_bool	open_semaphores(t_data *data, int total_philo)
+t_bool	open_semaphore(sem_t **semaphore, char *name, int nb_of_resources)
+{
+	*semaphore = sem_open(name, O_CREAT | O_EXCL, 0777, nb_of_resources);
+	if (*semaphore == SEM_FAILED)
+		return (FAIL);
+	return (SUCCESS);
+}
+
+t_bool	create_semaphores(t_data *data, int total_philo)
 {
 	int		i;
 
 	unlink_semaphores();
-	data->forks_lock = sem_open(
-			"/sem_forks", O_CREAT | O_EXCL, 0777, total_philo);
-	if (data->forks_lock == SEM_FAILED)
-		return (FAIL);
-	data->writing_lock = sem_open("/sem_writing", O_CREAT | O_EXCL, 0777, 1);
-	if (data->writing_lock == SEM_FAILED)
-		return (FAIL);
-	data->end_lock = sem_open("/sem_end", O_CREAT | O_EXCL, 0777, 0);
-	if (data->end_lock == SEM_FAILED)
+	if (!open_semaphore(&data->sem->forks_lock, "/sem_forks", total_philo)
+		|| !open_semaphore(&data->sem->writing_lock, "/sem_writing", 1)
+		|| !open_semaphore(&data->sem->end_lock, "/sem_end", 0))
 		return (FAIL);
 	i = -1;
 	while (++i < total_philo)
-	{
-		data->philo[i].forks_lock = data->forks_lock;
-		data->philo[i].writing_lock = data->writing_lock;
-		data->philo[i].end_lock = data->end_lock;
-	}
+		data->philo[i].sem = data->sem;
 	return (SUCCESS);
 }
 
@@ -56,7 +54,7 @@ t_bool	init_philo(t_data *data)
 		data->philo[i].num = i + 1;
 		i++;
 	}
-	if (!open_semaphores(data, total_philo))
+	if (!create_semaphores(data, total_philo))
 		return (FAIL);
 	return (SUCCESS);
 }

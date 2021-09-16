@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/10 11:05:43 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/16 11:52:57 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	*check_exit_status(void *void_data)
 		if (data->count_meals > data->param[NB_OF_PHILO]
 			|| exit_status == DEATH)
 		{
-			sem_post(data->end_lock);
+			sem_post(data->sem->end_lock);
 			return (NULL);
 		}
 		i = i % data->param[NB_OF_PHILO];
@@ -54,7 +54,7 @@ t_bool	waiting_for_the_end(t_data *data)
 		if (pthread_detach(meals_thread))
 			return (FAIL);
 	}
-	sem_wait(data->end_lock);
+	sem_wait(data->sem->end_lock);
 	i = 0;
 	while (i < data->param[NB_OF_PHILO])
 		kill(data->philo[i++].pid, SIGKILL);

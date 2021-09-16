@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/14 14:21:39 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/16 11:47:18 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,13 @@ typedef enum s_param
 	NB_OF_MEALS		= 5,
 }	t_param;
 
+typedef struct s_semaphores
+{
+	sem_t	*forks_lock;
+	sem_t	*writing_lock;
+	sem_t	*end_lock;
+}		t_semaphores;
+
 typedef struct s_philo
 {
 	int				num;
@@ -72,9 +79,7 @@ typedef struct s_philo
 	int				state;			
 	pid_t			pid;
 	pthread_t		life_insurance;
-	sem_t			*forks_lock;
-	sem_t			*writing_lock;
-	sem_t			*end_lock;
+	t_semaphores	*sem;
 }					t_philo;
 
 typedef struct s_data
@@ -85,11 +90,9 @@ typedef struct s_data
 	t_bool			meals_reached;
 	int				count_meals;
 	int				*param;
-	t_philo			*philo;
 	char			**status;
-	sem_t			*forks_lock;
-	sem_t			*writing_lock;
-	sem_t			*end_lock;
+	t_philo			*philo;
+	t_semaphores	*sem;
 }					t_data;
 
 #endif

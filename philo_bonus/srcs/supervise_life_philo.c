@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/09 12:54:35 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/16 11:53:46 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_bool	philo_died(t_philo *philo, t_data *data)
 		display_status(DEAD, philo, data);
 		data->philo_died = TRUE;
 		philo->state = DEAD;
-		sem_post(philo->end_lock);
+		sem_post(philo->sem->end_lock);
 		return (TRUE);
 	}
 	return (FALSE);
