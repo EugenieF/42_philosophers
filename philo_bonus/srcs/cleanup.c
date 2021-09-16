@@ -17,12 +17,14 @@ void	unlink_semaphores(void)
 	sem_unlink("/sem_forks");
 	sem_unlink("/sem_writing");
 	sem_unlink("/sem_end");
+	sem_unlink("/sem_death");
 }
 
 t_bool	close_semaphores(t_data *data)
 {
 	if (sem_close(data->forks_lock) != 0
 		|| sem_close(data->writing_lock) != 0
+		|| sem_close(data->check_death_lock) != 0
 		|| sem_close(data->end_lock) != 0)
 		return (FAIL);
 	unlink_semaphores();

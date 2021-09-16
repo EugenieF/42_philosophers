@@ -74,6 +74,7 @@ typedef struct s_philo
 	pthread_t		life_insurance;
 	sem_t			*forks_lock;
 	sem_t			*writing_lock;
+	sem_t			*check_death_lock;
 	sem_t			*end_lock;
 }					t_philo;
 
@@ -89,6 +90,7 @@ typedef struct s_data
 	char			**status;
 	sem_t			*forks_lock;
 	sem_t			*writing_lock;
+	sem_t			*check_death_lock;
 	sem_t			*end_lock;
 }					t_data;
 
