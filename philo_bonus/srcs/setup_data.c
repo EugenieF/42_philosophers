@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:35 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/16 11:48:20 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/17 13:30:20 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,6 @@ t_data	*setup_data(int argc)
 		return (NULL);
 	data->status = create_status();
 	if (!data->status)
-		return (NULL);
-	data->sem = (t_semaphores *)malloc(sizeof(t_semaphores));
-	if (!data->sem)
 		return (NULL);
 	data->philo_died = FALSE;
 	data->meals_reached = FALSE;

@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:31 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/16 11:54:09 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/17 11:55:12 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ void	philo_takes_forks(t_philo *philo, t_data *data)
 
 void	philo_eats(t_philo *philo, t_data *data)
 {
-	sem_wait(philo->check_death_lock);
+	sem_wait(philo->sem->check_death_lock);
 	if (philo->state != HAS_TWO_FORKS || data->philo_died == TRUE)
 	{
-		sem_post(philo->check_death_lock);
+		sem_post(philo->sem->check_death_lock);
 		return ;
 	}
 	philo->last_meal = get_time();
-	sem_post(philo->check_death_lock);
+	sem_post(philo->sem->check_death_lock);
 	display_status(EATING, philo, data);
 	usleep_in_ms(data->param[TIME_TO_EAT]);
 	philo->nb_of_meals++;

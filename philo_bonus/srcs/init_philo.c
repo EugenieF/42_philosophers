@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/17 11:41:28 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/17 13:30:55 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ t_bool	create_semaphores(t_data *data, int total_philo)
 {
 	int		i;
 
+	data->sem = (t_semaphores *)malloc(sizeof(t_semaphores));
+	if (!data->sem)
+		return (FAIL);
 	unlink_semaphores();
 	if (!open_semaphore(&data->sem->forks_lock, "/sem_forks", total_philo)
 		|| !open_semaphore(&data->sem->writing_lock, "/sem_writing", 1)
