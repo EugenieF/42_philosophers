@@ -28,9 +28,14 @@ void	philo_takes_forks(t_philo *philo, t_data *data)
 
 void	philo_eats(t_philo *philo, t_data *data)
 {
-	if (philo->state != HAS_TWO_FORKS)
+	pthread_mutex_lock(&data->check_death_lock);
+	if (philo->state != HAS_TWO_FORKS || data->someone_died == TRUE)
+	{
+		pthread_mutex_unlock(&data->check_death_lock);
 		return ;
+	}
 	philo->last_meal = get_time();
+	pthread_mutex_unlock(&data->check_death_lock);
 	display_status(EATING, philo, data);
 	usleep_in_ms(data->param[TIME_TO_EAT]);
 	philo->nb_of_meals++;

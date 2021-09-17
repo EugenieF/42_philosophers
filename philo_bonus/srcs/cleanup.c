@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:49 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/16 12:13:00 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/17 11:38:56 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ void	unlink_semaphores(void)
 	sem_unlink("/sem_forks");
 	sem_unlink("/sem_writing");
 	sem_unlink("/sem_end");
+	sem_unlink("/sem_death");
 }
 
 t_bool	close_semaphores(t_data *data)
 {
 	if (sem_close(data->sem->forks_lock) != 0
 		|| sem_close(data->sem->writing_lock) != 0
-		|| sem_close(data->sem->end_lock) != 0)
+		|| sem_close(data->sem->end_lock) != 0
+		|| sem_close(data->sem->check_death_lock) != 0)
 		return (FAIL);
 	unlink_semaphores();
 	if (data->sem)

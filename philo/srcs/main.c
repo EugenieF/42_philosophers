@@ -47,6 +47,6 @@ int	main(int argc, char **argv)
 		printf("Error: pthread_mutex_destroy() failed\n");
 		return (1);
 	}
-//	atexit(check_leaks);
+	atexit(check_leaks);
 	return (0);
 }

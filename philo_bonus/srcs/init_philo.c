@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/16 12:09:57 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/17 11:41:28 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ t_bool	create_semaphores(t_data *data, int total_philo)
 	unlink_semaphores();
 	if (!open_semaphore(&data->sem->forks_lock, "/sem_forks", total_philo)
 		|| !open_semaphore(&data->sem->writing_lock, "/sem_writing", 1)
-		|| !open_semaphore(&data->sem->end_lock, "/sem_end", 0))
+		|| !open_semaphore(&data->sem->end_lock, "/sem_end", 0)
+		|| !open_semaphore(&data->sem->check_death_lock, "/sem_death", 1))
 		return (FAIL);
 	i = -1;
 	while (++i < total_philo)
