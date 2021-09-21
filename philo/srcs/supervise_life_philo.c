@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/21 13:34:38 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/21 22:11:18 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	*supervise_life_philo(void *void_data)
 			lock_mutex(&data->data_lock);
 			data->finish++;
 			unlock_mutex(&data->data_lock);
-			usleep(100);
 			return (NULL);
 		}
 		usleep(10);

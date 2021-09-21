@@ -6,23 +6,11 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:04 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/21 13:41:15 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/21 22:27:24 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-t_bool	other_philo_died(t_data *data)
-{
-	int	ret;
-
-	ret = FALSE;
-	lock_mutex(&data->data_lock);
-	if (data->someone_died == TRUE)
-		ret = TRUE;
-	unlock_mutex(&data->data_lock);
-	return (ret);
-}
 
 void	display_status(int status, t_philo *philo, t_data *data)
 {
@@ -42,7 +30,7 @@ void	display_status(int status, t_philo *philo, t_data *data)
 	unlock_mutex(&philo->state_lock);
 }
 
-t_bool	end(t_data *data)
+t_bool	death_already_displayed(t_data *data)
 {
 	int	ret;
 
@@ -62,7 +50,7 @@ void	display_death(t_philo *philo, t_data *data)
 {
 	unsigned long	time_in_ms;
 
-	if (end(data))
+	if (death_already_displayed(data))
 		return ;
 	lock_mutex(&data->writing_lock);
 	time_in_ms = get_time() - data->start_time;

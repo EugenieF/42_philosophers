@@ -6,7 +6,7 @@
 #    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/18 22:02:30 by EugenieFr         #+#    #+#              #
-#    Updated: 2021/09/21 13:23:46 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/09/21 22:36:34 by EugenieFran      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRCS			= main.c \
 				supervise_life_philo.c \
 				handle_time.c \
 				cleanup.c \
-				utils.c
+				utils_philo.c \
+				libft.c
 
 OBJS_DIR		= ./objs
 
@@ -33,7 +34,7 @@ OBJS			= ${addprefix ${OBJS_DIR}/, ${SRCS:.c=.o}}
 
 CC				= gcc
 
-CFLAGS			= -Wall -Wextra -Werror -pthread -I${INCLUDE} -g #-fsanitize=thread
+CFLAGS			= -Wall -Wextra -Werror -pthread -I${INCLUDE} -g -fsanitize=thread
 
 RM				= rm -rf
 

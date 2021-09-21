@@ -6,21 +6,18 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/21 12:55:05 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/21 22:17:48 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_bool	check_end(t_data *data)
+t_bool	program_completed(t_data *data)
 {
 	int	ret;
 
 	ret = FALSE;
 	lock_mutex(&data->data_lock);
-//	if (data->count_meals > data->param[NB_OF_PHILO]
-//		|| data->someone_died == TRUE)
-//			ret = TRUE;
 	if (data->finish == data->param[NB_OF_PHILO])
 		ret = TRUE;
 	unlock_mutex(&data->data_lock);
@@ -31,7 +28,7 @@ t_bool	waiting_for_the_end(t_data *data)
 {
 	int	i;
 
-	while (!check_end(data))
+	while (!program_completed(data))
 		usleep(10);
 	i = -1;
 	while (++i < data->param[NB_OF_PHILO])

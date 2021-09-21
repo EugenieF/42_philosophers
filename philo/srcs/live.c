@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/21 13:23:30 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/21 22:40:10 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,11 @@
 
 t_bool	someone_died(t_philo *philo, t_data *data)
 {
-	int	ret;
-
-	ret = FALSE;
 	if (check_state_philo(DEAD, philo))
 		return (TRUE);
-	lock_mutex(&data->data_lock);
-	if (data->someone_died == TRUE)
-		ret = TRUE;
-	unlock_mutex(&data->data_lock);
-	return (ret);
+	if (other_philo_died(data))
+		return (TRUE);
+	return (FALSE);
 }
 
 t_bool	not_enough_meals(t_philo *philo, t_data *data)

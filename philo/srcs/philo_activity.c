@@ -6,23 +6,11 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:31 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/21 13:25:26 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/21 22:21:11 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-t_bool	check_state_philo(int status, t_philo *philo)
-{
-	int	ret;
-
-	ret = FALSE;
-	lock_mutex(&philo->state_lock);
-	if (philo->state == status)
-		ret = TRUE;
-	unlock_mutex(&philo->state_lock);
-	return (ret);
-}
 
 t_bool	philo_takes_forks(t_philo *philo, t_data *data)
 {

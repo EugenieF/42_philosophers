@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 18:41:11 by efrancon          #+#    #+#             */
-/*   Updated: 2021/09/20 15:05:10 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/21 22:35:30 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,51 +22,26 @@ int	unlock_mutex(pthread_mutex_t *mutex)
 	return (pthread_mutex_unlock(mutex));
 }
 
-int	ft_atoi(const char *str)
+t_bool	check_state_philo(int status, t_philo *philo)
 {
-	unsigned long	i;
-	unsigned long	res;
-	int				sign;
+	int	ret;
 
-	i = 0;
-	sign = 1;
-	res = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		res = res * 10 + str[i] - '0';
-		i++;
-	}
-	return (sign * res);
+	ret = FALSE;
+	lock_mutex(&philo->state_lock);
+	if (philo->state == status)
+		ret = TRUE;
+	unlock_mutex(&philo->state_lock);
+	return (ret);
 }
 
-char	*ft_strdup(const char *s1)
+t_bool	other_philo_died(t_data *data)
 {
-	int		i;
-	int		s1_len;
-	char	*copy;
+	int	ret;
 
-	if (!s1)
-		return (NULL);
-	i = 0;
-	s1_len = 0;
-	while (s1[s1_len])
-		s1_len++;
-	copy = (char *)malloc(sizeof(char) * (s1_len + 1));
-	if (!copy)
-		return (NULL);
-	while (s1[i])
-	{
-		copy[i] = s1[i];
-		i++;
-	}
-	copy[i] = '\0';
-	return (copy);
+	ret = FALSE;
+	lock_mutex(&data->data_lock);
+	if (data->someone_died == TRUE)
+		ret = TRUE;
+	unlock_mutex(&data->data_lock);
+	return (ret);
 }
