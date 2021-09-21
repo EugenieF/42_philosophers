@@ -38,7 +38,7 @@ t_bool			someone_died(t_philo *philo, t_data *data);
 t_bool			other_philo_died(t_data *data);
 t_bool			not_enough_meals(t_philo *philo, t_data *data);
 t_bool			check_state_philo(int status, t_philo *philo);
-void			philo_takes_forks(t_philo *philo, t_data *data);
+t_bool			philo_takes_forks(t_philo *philo, t_data *data);
 void			philo_eats(t_philo *philo, t_data *data);
 void			philo_sleeps_then_thinks(t_philo *philo, t_data *data);
 void			display_status(int status, t_philo *philo, t_data *data);

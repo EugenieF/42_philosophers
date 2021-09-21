@@ -24,23 +24,33 @@ t_bool	check_state_philo(int status, t_philo *philo)
 	return (ret);
 }
 
-void	philo_takes_forks(t_philo *philo, t_data *data)
+t_bool	philo_takes_forks(t_philo *philo, t_data *data)
 {
-	if (check_state_philo(THINKING, philo))
-	{
-		lock_mutex(&philo->left_fork);
-		display_status(HAS_A_FORK, philo, data);
-	}
+	lock_mutex(&philo->left_fork);
+	display_status(HAS_A_FORK, philo, data);
 	if (!philo->right_fork)
 	{
-	//	unlock_mutex(&philo->left_fork);
-		return ;
+		smart_usleep_in_ms(data->param[TIME_TO_DIE], philo, data);
+		unlock_mutex(&philo->left_fork);
+		return (FAIL);
+	}
+	if (someone_died(philo, data))
+	{
+		unlock_mutex(&philo->left_fork);
+		return (FAIL);
 	}
 	lock_mutex(philo->right_fork);
 	display_status(HAS_A_FORK, philo, data);
 	lock_mutex(&philo->state_lock);
 	philo->state = HAS_TWO_FORKS;
 	unlock_mutex(&philo->state_lock);
+	if (someone_died(philo, data))
+	{
+		unlock_mutex(&philo->left_fork);
+		unlock_mutex(philo->right_fork);
+		return (FAIL);
+	}
+	return (SUCCESS);
 }
 
 void	philo_eats(t_philo *philo, t_data *data)

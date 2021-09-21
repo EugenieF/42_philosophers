@@ -33,7 +33,7 @@ OBJS			= ${addprefix ${OBJS_DIR}/, ${SRCS:.c=.o}}
 
 CC				= gcc
 
-CFLAGS			= -Wall -Wextra -Werror -pthread -I${INCLUDE} -g -fsanitize=thread
+CFLAGS			= -Wall -Wextra -Werror -pthread -I${INCLUDE} -g #-fsanitize=thread
 
 RM				= rm -rf
 

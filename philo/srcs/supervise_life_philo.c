@@ -72,6 +72,10 @@ void	*supervise_life_philo(void *void_data)
 		if (meals_count_reached(philo, data)
 			|| philo_died(philo, data))
 		{
+			lock_mutex(&data->data_lock);
+			data->finish++;
+			unlock_mutex(&data->data_lock);
+			usleep(100);
 			return (NULL);
 		}
 		usleep(10);

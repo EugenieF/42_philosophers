@@ -69,10 +69,15 @@ void	*live(void *void_data)
 		smart_usleep_in_ms(data->param[TIME_TO_EAT], philo, data);
 	while (not_enough_meals(philo, data) && !someone_died(philo, data))
 	{
-		philo_takes_forks(philo, data);
-		if (someone_died(philo, data))
+		if (!philo_takes_forks(philo, data))
 			break ;
 		philo_eats(philo, data);
+		if (someone_died(philo, data))
+		{
+			unlock_mutex(&philo->left_fork);
+			unlock_mutex(philo->right_fork);
+			break ;
+		}
 		philo_sleeps_then_thinks(philo, data);
 	}
 	return (NULL);

@@ -18,9 +18,11 @@ t_bool	check_end(t_data *data)
 
 	ret = FALSE;
 	lock_mutex(&data->data_lock);
-	if (data->count_meals > data->param[NB_OF_PHILO]
-		|| data->someone_died == TRUE)
-			ret = TRUE;
+//	if (data->count_meals > data->param[NB_OF_PHILO]
+//		|| data->someone_died == TRUE)
+//			ret = TRUE;
+	if (data->finish == data->param[NB_OF_PHILO])
+		ret = TRUE;
 	unlock_mutex(&data->data_lock);
 	return (ret);
 }

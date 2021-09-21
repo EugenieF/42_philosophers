@@ -55,6 +55,7 @@ void	set_to_null(t_data *data)
 	data->status = NULL;
 	data->philo = NULL;
 	data->count_meals = NO_NEED;
+	data->finish = 0;
 }
 
 t_data	*setup_data(int argc)
