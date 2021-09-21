@@ -23,7 +23,7 @@ void	usleep_in_ms(unsigned long time_in_ms)
 
 t_bool	time_is_valid(unsigned long time)
 {
-	return (time >= 0 && time < 2147483648);
+	return (time < 2147483648);
 }
 
 unsigned long	get_time(void)

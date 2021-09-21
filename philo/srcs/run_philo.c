@@ -12,12 +12,26 @@
 
 #include "philosophers.h"
 
+t_bool	check_end(t_data *data)
+{
+	int	ret;
+
+	ret = FALSE;
+	lock_mutex(&data->data_lock);
+	if (data->count_meals > data->param[NB_OF_PHILO]
+		|| data->someone_died == TRUE)
+			ret = TRUE;
+	unlock_mutex(&data->data_lock);
+	return (ret);
+}
+
 t_bool	waiting_for_the_end(t_data *data)
 {
 	int	i;
 
+	while (!check_end(data))
+		usleep(10);
 	i = -1;
-	pthread_mutex_lock(&data->end_lock);
 	while (++i < data->param[NB_OF_PHILO])
 	{
 		if (pthread_join(data->philo[i].life_thread, NULL))

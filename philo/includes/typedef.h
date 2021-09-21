@@ -87,7 +87,6 @@ typedef struct s_data
 	pthread_mutex_t	writing_lock;
 	pthread_mutex_t	count_meals_lock;
 	pthread_mutex_t	data_lock;
-	pthread_mutex_t	end_lock;
 }					t_data;
 
 #endif

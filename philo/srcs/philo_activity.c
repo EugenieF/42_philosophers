@@ -31,9 +31,9 @@ void	philo_takes_forks(t_philo *philo, t_data *data)
 		lock_mutex(&philo->left_fork);
 		display_status(HAS_A_FORK, philo, data);
 	}
-	if (!philo->right_fork || someone_died(philo, data))
+	if (!philo->right_fork)
 	{
-		unlock_mutex(&philo->left_fork);
+	//	unlock_mutex(&philo->left_fork);
 		return ;
 	}
 	lock_mutex(philo->right_fork);

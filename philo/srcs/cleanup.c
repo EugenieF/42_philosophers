@@ -15,17 +15,10 @@
 t_bool	destroy_mutex(pthread_mutex_t *mutex)
 {
 	int	ret;
-	int	i;
 
-	i = 0;
 	ret = pthread_mutex_destroy(mutex);
-	while (ret != 0)
-	{
-		pthread_mutex_unlock(mutex);
-		ret = pthread_mutex_destroy(mutex);
-		if (i++ > 10)
+	if (ret != 0)
 			return (FAIL);
-	}
 	return (SUCCESS);
 }
 
@@ -35,8 +28,7 @@ t_bool	clean_mutex(t_data *data)
 
 	if (!destroy_mutex(&data->writing_lock)
 		|| !destroy_mutex(&data->count_meals_lock)
-		|| !destroy_mutex(&data->data_lock)
-		|| !destroy_mutex(&data->end_lock))
+		|| !destroy_mutex(&data->data_lock))
 		return (FAIL);
 	i = 0;
 	while (data->philo && i < data->param[NB_OF_PHILO])
@@ -50,7 +42,7 @@ t_bool	clean_mutex(t_data *data)
 	return (SUCCESS);
 }
 
-void	free_status(char **status)
+void	free_status(t_data *data)
 {
 	int	i;
 
@@ -60,26 +52,23 @@ void	free_status(char **status)
 		i = 6;
 	while (--i >= THINKING)
 	{
-		if (status[i])
-		{
-			free(status[i]);
-	//		status[i] = NULL;
-		}
+		if (data->status[i])
+			free(data->status[i]);
 	}
-	free(status);
-	status = NULL;
+	free(data->status);
+	data->status = NULL;
 }
 
 t_bool	cleanup(t_data *data)
 {
 	if (!data)
 		return (SUCCESS);
-	if (data->status)
-		free_status(data->status);
 	if (!clean_mutex(data))
 		return (FAIL);
 	if (data->philo)
 		free(data->philo);
+	if (data->status)
+		free_status(data);
 	if (data->param)
 		free(data->param);
 	free(data);

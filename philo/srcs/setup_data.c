@@ -45,9 +45,6 @@ t_bool	create_locks(t_data *data)
 		return (FAIL);
 	if (pthread_mutex_init(&data->data_lock, NULL))
 		return (FAIL);
-	if (pthread_mutex_init(&data->end_lock, NULL))
-		return (FAIL);
-	pthread_mutex_lock(&data->end_lock);
 	return (SUCCESS);
 }
 
