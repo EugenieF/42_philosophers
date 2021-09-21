@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:49 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/16 11:33:22 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/21 13:04:01 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,16 @@ t_bool	clean_mutex(t_data *data)
 	int	i;
 
 	if (!destroy_mutex(&data->writing_lock)
-		|| !destroy_mutex(&data->check_death_lock)
 		|| !destroy_mutex(&data->count_meals_lock)
+		|| !destroy_mutex(&data->data_lock)
 		|| !destroy_mutex(&data->end_lock))
 		return (FAIL);
 	i = 0;
 	while (data->philo && i < data->param[NB_OF_PHILO])
 	{
-		if (!destroy_mutex(&data->philo[i].left_fork))
+		if (!destroy_mutex(&data->philo[i].left_fork)
+			|| !destroy_mutex(&data->philo[i].state_lock)
+			|| !destroy_mutex(&data->philo[i].meal_lock))
 			return (FAIL);
 		i++;
 	}
@@ -61,7 +63,7 @@ void	free_status(char **status)
 		if (status[i])
 		{
 			free(status[i]);
-			status[i] = NULL;
+	//		status[i] = NULL;
 		}
 	}
 	free(status);
@@ -72,10 +74,10 @@ t_bool	cleanup(t_data *data)
 {
 	if (!data)
 		return (SUCCESS);
-	if (!clean_mutex(data))
-		return (FAIL);
 	if (data->status)
 		free_status(data->status);
+	if (!clean_mutex(data))
+		return (FAIL);
 	if (data->philo)
 		free(data->philo);
 	if (data->param)

@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efrancon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 18:41:11 by efrancon          #+#    #+#             */
-/*   Updated: 2021/09/11 18:41:12 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/09/20 15:05:10 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+int	lock_mutex(pthread_mutex_t *mutex)
+{
+	return (pthread_mutex_lock(mutex));
+}
+
+int	unlock_mutex(pthread_mutex_t *mutex)
+{
+	return (pthread_mutex_unlock(mutex));
+}
 
 int	ft_atoi(const char *str)
 {

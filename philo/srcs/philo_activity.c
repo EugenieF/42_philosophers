@@ -6,48 +6,67 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:31 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/02 20:17:03 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/21 13:25:26 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+t_bool	check_state_philo(int status, t_philo *philo)
+{
+	int	ret;
+
+	ret = FALSE;
+	lock_mutex(&philo->state_lock);
+	if (philo->state == status)
+		ret = TRUE;
+	unlock_mutex(&philo->state_lock);
+	return (ret);
+}
+
 void	philo_takes_forks(t_philo *philo, t_data *data)
 {
-	if (philo->state == THINKING && pthread_mutex_lock(&philo->left_fork) == 0)
-		display_status(HAS_A_FORK, philo, data);
-	if (!philo->right_fork)
-		return (usleep_in_ms(data->param[TIME_TO_DIE]));
-	if (philo->state == HAS_A_FORK
-		&& pthread_mutex_lock(philo->right_fork) == 0)
+	if (check_state_philo(THINKING, philo))
 	{
+		lock_mutex(&philo->left_fork);
 		display_status(HAS_A_FORK, philo, data);
-		philo->state = HAS_TWO_FORKS;
 	}
+	if (!philo->right_fork || someone_died(philo, data))
+	{
+		unlock_mutex(&philo->left_fork);
+		return ;
+	}
+	lock_mutex(philo->right_fork);
+	display_status(HAS_A_FORK, philo, data);
+	lock_mutex(&philo->state_lock);
+	philo->state = HAS_TWO_FORKS;
+	unlock_mutex(&philo->state_lock);
 }
 
 void	philo_eats(t_philo *philo, t_data *data)
 {
-	pthread_mutex_lock(&data->check_death_lock);
-	if (philo->state != HAS_TWO_FORKS || data->someone_died == TRUE)
+	lock_mutex(&philo->meal_lock);
+	if (!check_state_philo(HAS_TWO_FORKS, philo))
 	{
-		pthread_mutex_unlock(&data->check_death_lock);
+		unlock_mutex(&philo->meal_lock);
 		return ;
 	}
 	philo->last_meal = get_time();
-	pthread_mutex_unlock(&data->check_death_lock);
-	display_status(EATING, philo, data);
-	usleep_in_ms(data->param[TIME_TO_EAT]);
 	philo->nb_of_meals++;
+	unlock_mutex(&philo->meal_lock);
+	display_status(EATING, philo, data);
+	smart_usleep_in_ms(data->param[TIME_TO_EAT], philo, data);
 }
 
 void	philo_sleeps_then_thinks(t_philo *philo, t_data *data)
 {
-	if (philo->state != EATING)
+	if (!check_state_philo(EATING, philo))
 		return ;
-	pthread_mutex_unlock(&philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
+	unlock_mutex(&philo->left_fork);
+	unlock_mutex(philo->right_fork);
 	display_status(SLEEPING, philo, data);
-	usleep_in_ms(data->param[TIME_TO_SLEEP]);
+	smart_usleep_in_ms(data->param[TIME_TO_SLEEP], philo, data);
+	if (!not_enough_meals(philo, data))
+		return ;
 	display_status(THINKING, philo, data);
 }

@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/11 13:06:29 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/21 13:34:38 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,48 @@
 
 t_bool	meals_count_reached(t_philo *philo, t_data *data)
 {
+	int	ret;
+
+	ret = FALSE;
+	lock_mutex(&data->count_meals_lock);
 	if (data->count_meals == NO_NEED)
+	{
+		unlock_mutex(&data->count_meals_lock);
 		return (FALSE);
-	pthread_mutex_lock(&data->count_meals_lock);
+	}
+	lock_mutex(&philo->meal_lock);
 	if (!philo->done && data->count_meals <= data->param[NB_OF_PHILO]
 		&& philo->nb_of_meals == data->param[NB_OF_MEALS])
 	{
+		lock_mutex(&data->data_lock);
 		data->count_meals++;
+		unlock_mutex(&data->data_lock);
 		philo->done = 1;
 	}
+	unlock_mutex(&philo->meal_lock);
 	if (philo->done && data->count_meals > data->param[NB_OF_PHILO])
-	{
-		pthread_mutex_lock(&data->writing_lock);
-		pthread_mutex_unlock(&data->count_meals_lock);
-		pthread_mutex_unlock(&data->end_lock);
-		pthread_mutex_unlock(&data->writing_lock);
-		return (TRUE);
-	}
-	pthread_mutex_unlock(&data->count_meals_lock);
-	return (FALSE);
+		ret = TRUE;
+	unlock_mutex(&data->count_meals_lock);
+	return (ret);
 }
 
 t_bool	philo_died(t_philo *philo, t_data *data)
 {
+	int				ret;
 	unsigned long	time_to_die;
 
+	ret = FALSE;
 	time_to_die = (unsigned long)data->param[TIME_TO_DIE];
-	pthread_mutex_lock(&data->check_death_lock);
-	if (time_to_die < get_time() - philo->last_meal
-		&& philo->state != EATING)
-	{
-		display_status(DEAD, philo, data);
-		pthread_mutex_lock(&data->writing_lock);
-		data->someone_died = TRUE;
-		philo->state = DEAD;
-		pthread_mutex_unlock(&data->check_death_lock);
-		pthread_mutex_unlock(&data->end_lock);
-		pthread_mutex_unlock(&data->writing_lock);
+	if (someone_died(philo, data))
 		return (TRUE);
+	lock_mutex(&philo->meal_lock);
+	if (time_to_die < get_time() - philo->last_meal)
+	{
+		display_death(philo, data);
+		ret = TRUE;
 	}
-	pthread_mutex_unlock(&data->check_death_lock);
-	return (FALSE);
+	unlock_mutex(&philo->meal_lock);
+	return (ret);
 }
 
 void	*supervise_life_philo(void *void_data)
@@ -63,13 +64,17 @@ void	*supervise_life_philo(void *void_data)
 	t_philo		*philo;
 
 	data = (t_data *)void_data;
+	lock_mutex(&data->data_lock);
 	philo = &data->philo[data->i];
+	unlock_mutex(&data->data_lock);
 	while (1)
 	{
-		if (data->count_meals && meals_count_reached(philo, data))
+		if (meals_count_reached(philo, data)
+			|| philo_died(philo, data))
+		{
+			unlock_mutex(&data->end_lock);
 			return (NULL);
-		if (philo->state != DEAD && philo_died(philo, data))
-			return (NULL);
-		usleep(1000);
+		}
+		usleep(10);
 	}
 }

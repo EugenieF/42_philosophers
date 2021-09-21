@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:25 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/17 13:23:12 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/21 13:22:24 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ int	main(int argc, char **argv)
 		printf("Error: pthread_mutex_destroy() failed\n");
 		return (1);
 	}
-	atexit(check_leaks);
+//	atexit(check_leaks);
 	return (0);
 }

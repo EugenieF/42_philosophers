@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:35 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/09 12:26:03 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/21 13:26:30 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ t_bool	create_locks(t_data *data)
 {
 	if (pthread_mutex_init(&data->writing_lock, NULL))
 		return (FAIL);
-	if (pthread_mutex_init(&data->check_death_lock, NULL))
-		return (FAIL);
 	if (pthread_mutex_init(&data->count_meals_lock, NULL))
+		return (FAIL);
+	if (pthread_mutex_init(&data->data_lock, NULL))
 		return (FAIL);
 	if (pthread_mutex_init(&data->end_lock, NULL))
 		return (FAIL);
@@ -53,6 +53,7 @@ t_bool	create_locks(t_data *data)
 
 void	set_to_null(t_data *data)
 {
+	memset(data, 0, sizeof(t_data));
 	data->param = NULL;
 	data->status = NULL;
 	data->philo = NULL;

@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/14 14:17:04 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/21 13:26:18 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ typedef struct s_philo
 	pthread_t		life_insurance;
 	pthread_mutex_t	left_fork;
 	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	state_lock;
+	pthread_mutex_t	meal_lock;
 }					t_philo;
 
 typedef struct s_data
@@ -84,7 +86,7 @@ typedef struct s_data
 	char			**status;
 	pthread_mutex_t	writing_lock;
 	pthread_mutex_t	count_meals_lock;
-	pthread_mutex_t	check_death_lock;
+	pthread_mutex_t	data_lock;
 	pthread_mutex_t	end_lock;
 }					t_data;
 

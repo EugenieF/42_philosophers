@@ -6,31 +6,53 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/02 21:40:52 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/21 13:23:30 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_bool	nobody_is_dead(t_philo *philo, t_data *data)
+t_bool	someone_died(t_philo *philo, t_data *data)
 {
 	int	ret;
 
-	ret = TRUE;
-	pthread_mutex_lock(&data->check_death_lock);
-	if (philo->state == DEAD || data->someone_died == TRUE)
-		ret = FALSE;
-	pthread_mutex_unlock(&data->check_death_lock);
+	ret = FALSE;
+	if (check_state_philo(DEAD, philo))
+		return (TRUE);
+	lock_mutex(&data->data_lock);
+	if (data->someone_died == TRUE)
+		ret = TRUE;
+	unlock_mutex(&data->data_lock);
 	return (ret);
 }
 
 t_bool	not_enough_meals(t_philo *philo, t_data *data)
 {
+	int	ret;
+
+	ret = FALSE;
+	lock_mutex(&data->count_meals_lock);
 	if (data->count_meals == NO_NEED)
+	{
+		unlock_mutex(&data->count_meals_lock);
 		return (TRUE);
+	}
+	unlock_mutex(&data->count_meals_lock);
+	lock_mutex(&philo->meal_lock);
 	if (philo->nb_of_meals < data->param[NB_OF_MEALS])
-		return (TRUE);
-	return (FALSE);
+		ret = TRUE;
+	unlock_mutex(&philo->meal_lock);
+	return (ret);
+}
+
+t_bool	life_insurance(t_philo *philo, t_data *data)
+{
+	if (pthread_create(
+			&philo->life_insurance, NULL, supervise_life_philo, (void *)data))
+		return (FAIL);
+	if (pthread_detach(philo->life_insurance))
+		return (FAIL);
+	return (SUCCESS);
 }
 
 void	*live(void *void_data)
@@ -39,17 +61,17 @@ void	*live(void *void_data)
 	t_philo		*philo;
 
 	data = (t_data *)void_data;
+	lock_mutex(&data->data_lock);
 	philo = &data->philo[data->i];
-	if (pthread_create(
-			&philo->life_insurance, NULL, supervise_life_philo, (void *)data))
-		return (NULL);
+	unlock_mutex(&data->data_lock);
+	life_insurance(philo, data);
 	if (philo->num % 2 == 0)
-		usleep_in_ms(data->param[TIME_TO_EAT]);
-	if (pthread_detach(philo->life_insurance))
-		return (NULL);
-	while (not_enough_meals(philo, data) && nobody_is_dead(philo, data))
+		smart_usleep_in_ms(data->param[TIME_TO_EAT], philo, data);
+	while (not_enough_meals(philo, data) && !someone_died(philo, data))
 	{
 		philo_takes_forks(philo, data);
+		if (someone_died(philo, data))
+			break ;
 		philo_eats(philo, data);
 		philo_sleeps_then_thinks(philo, data);
 	}
