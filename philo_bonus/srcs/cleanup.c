@@ -18,6 +18,7 @@ void	unlink_semaphores(void)
 	sem_unlink("/sem_writing");
 	sem_unlink("/sem_end");
 	sem_unlink("/sem_death");
+	sem_unlink("/sem_state");
 }
 
 t_bool	close_semaphores(t_data *data)
@@ -25,6 +26,7 @@ t_bool	close_semaphores(t_data *data)
 	if (sem_close(data->sem->forks_lock) != 0
 		|| sem_close(data->sem->writing_lock) != 0
 		|| sem_close(data->sem->end_lock) != 0
+		|| sem_close(data->sem->state_lock) != 0
 		|| sem_close(data->sem->check_death_lock) != 0)
 		return (FAIL);
 	unlink_semaphores();

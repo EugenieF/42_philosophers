@@ -6,7 +6,7 @@
 #    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/18 22:02:30 by EugenieFr         #+#    #+#              #
-#    Updated: 2021/09/21 22:36:34 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/09/22 18:11:04 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,9 +32,9 @@ OBJS_DIR		= ./objs
 
 OBJS			= ${addprefix ${OBJS_DIR}/, ${SRCS:.c=.o}}
 
-CC				= gcc
+CC				= clang
 
-CFLAGS			= -Wall -Wextra -Werror -pthread -I${INCLUDE} -g #-fsanitize=thread
+CFLAGS			= -Wall -Wextra -Werror -pthread -I${INCLUDE} -g -fsanitize=thread
 
 RM				= rm -rf
 

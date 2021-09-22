@@ -79,6 +79,7 @@ typedef struct s_semaphores
 	sem_t	*writing_lock;
 	sem_t	*end_lock;
 	sem_t	*check_death_lock;
+	sem_t	*state_lock;
 }		t_semaphores;
 
 typedef struct s_philo

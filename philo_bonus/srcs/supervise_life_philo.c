@@ -24,14 +24,27 @@ t_bool	meals_count_reached(t_philo *philo, t_data *data)
 	return (FALSE);
 }
 
+t_bool	other_philo_died(t_philo *philo, t_data *data)
+{
+	int	ret;
+
+	ret = FALSE;
+	sem_wait(philo->sem->state_lock);
+	if (data->philo_died == TRUE)
+		ret = TRUE;
+	sem_post(philo->sem->state_lock);
+	return (ret);
+}
+
 t_bool	philo_died(t_philo *philo, t_data *data)
 {
 	unsigned long	time_to_die;
 
 	time_to_die = (unsigned long)data->param[TIME_TO_DIE];
+	if (other_philo_died(philo, data))
+		return (FALSE);
 	sem_wait(philo->sem->check_death_lock);
-	if (time_to_die < get_time() - philo->last_meal
-		&& philo->state != EATING)
+	if (time_to_die < get_time() - philo->last_meal)
 	{
 		display_status(DEAD, philo, data);
 		data->philo_died = TRUE;
@@ -55,7 +68,7 @@ void	*supervise_life_philo(void *void_data)
 	{
 		if (data->count_meals && meals_count_reached(philo, data))
 			return (NULL);
-		if (philo->state != DEAD && philo_died(philo, data))
+		if (philo_died(philo, data))
 			return (NULL);
 		usleep(10);
 	}

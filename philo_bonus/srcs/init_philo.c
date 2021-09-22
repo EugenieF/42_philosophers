@@ -31,6 +31,7 @@ t_bool	create_semaphores(t_data *data, int total_philo)
 	if (!open_semaphore(&data->sem->forks_lock, "/sem_forks", total_philo)
 		|| !open_semaphore(&data->sem->writing_lock, "/sem_writing", 1)
 		|| !open_semaphore(&data->sem->end_lock, "/sem_end", 0)
+		|| !open_semaphore(&data->sem->state_lock, "/sem_state", 1)
 		|| !open_semaphore(&data->sem->check_death_lock, "/sem_death", 1))
 		return (FAIL);
 	i = -1;
