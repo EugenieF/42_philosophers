@@ -40,18 +40,23 @@ t_bool	argv_is_valid(char *argv)
 t_bool	fill_and_check_parameters(char **argv, t_data *data)
 {
 	int		i;
+	int		j;
 	long	nb;
 
-	i = 1;
+	i = 0;
+	if (IS_LINUX)
+		j = 0;
+	else
+		j = 1;
 	nb = 0;
-	while (argv[i])
+	while (argv[++i])
 	{
 		if (!argv_is_valid(argv[i]))
 			return (FAIL);
 		nb = ft_atoi(argv[i]);
 		if (!number_is_valid(nb))
 			return (FAIL);
-		data->param[i++] = (int)nb;
+		data->param[j++] = (int)nb;
 	}
 	if (i == 6)
 		data->count_meals = NEEDED;

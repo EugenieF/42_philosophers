@@ -38,7 +38,7 @@ t_bool	argv_is_valid(char *argv)
 }
 
 t_bool	fill_and_check_parameters(char **argv, t_data *data)
-{	
+{
 	int		i;
 	int		j;
 	long	nb;

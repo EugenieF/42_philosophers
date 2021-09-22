@@ -27,6 +27,15 @@ typedef enum s_status
 	DEAD			= 4,
 	HAS_TWO_FORKS	= 5,
 }	t_status;
+
+typedef enum s_param
+{
+	NB_OF_PHILO		= 0,
+	TIME_TO_DIE		= 1,
+	TIME_TO_EAT		= 2,
+	TIME_TO_SLEEP	= 3,
+	NB_OF_MEALS		= 4,
+}	t_param;
 # else
 #  define IS_LINUX 0
 
@@ -39,6 +48,15 @@ typedef enum s_status
 	DEAD			= 5,
 	HAS_TWO_FORKS	= 6,
 }	t_status;
+
+typedef enum s_param
+{
+	NB_OF_PHILO		= 1,
+	TIME_TO_DIE		= 2,
+	TIME_TO_EAT		= 3,
+	TIME_TO_SLEEP	= 4,
+	NB_OF_MEALS		= 5,
+}	t_param;
 # endif
 
 typedef int	t_bool;
@@ -54,15 +72,6 @@ typedef enum e_boolean
 	DEATH			= 2,
 	MEALS_REACHED	= 3,
 }		t_boolean;
-
-typedef enum s_param
-{
-	NB_OF_PHILO		= 1,
-	TIME_TO_DIE		= 2,
-	TIME_TO_EAT		= 3,
-	TIME_TO_SLEEP	= 4,
-	NB_OF_MEALS		= 5,
-}	t_param;
 
 typedef struct s_semaphores
 {

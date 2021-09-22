@@ -6,14 +6,14 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/21 13:26:18 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/17 11:39:22 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPEDEF_H
 # define TYPEDEF_H
 
-typedef int	t_bool;
+# define CHILD	0
 
 # ifdef __linux__
 #  define IS_LINUX 1
@@ -59,15 +59,27 @@ typedef enum s_param
 }	t_param;
 # endif
 
+typedef int	t_bool;
+
 typedef enum e_boolean
 {
-	FAIL		= 0,
-	SUCCESS		= 1,
-	FALSE		= 0,
-	TRUE		= 1,
-	NO_NEED		= 0,
-	NEEDED		= 1,
+	FAIL			= 0,
+	SUCCESS			= 1,
+	FALSE			= 0,
+	TRUE			= 1,
+	NO_NEED			= 0,
+	NEEDED			= 1,
+	DEATH			= 2,
+	MEALS_REACHED	= 3,
 }		t_boolean;
+
+typedef struct s_semaphores
+{
+	sem_t	*forks_lock;
+	sem_t	*writing_lock;
+	sem_t	*end_lock;
+	sem_t	*data_lock;
+}		t_semaphores;
 
 typedef struct s_philo
 {
@@ -75,13 +87,11 @@ typedef struct s_philo
 	unsigned long	last_meal;
 	int				nb_of_meals;
 	int				state;			
-	t_bool			done;
-	pthread_t		life_thread;
+	pid_t			pid;
 	pthread_t		life_insurance;
-	pthread_mutex_t	left_fork;
-	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	state_lock;
-	pthread_mutex_t	meal_lock;
+	t_semaphores	*sem;
+	sem_t			*state_lock;
+	sem_t			*meal_lock;
 }					t_philo;
 
 typedef struct s_data
@@ -89,14 +99,12 @@ typedef struct s_data
 	int				i;
 	unsigned long	start_time;
 	t_bool			someone_died;
+	t_bool			meals_reached;
 	int				count_meals;
 	int				*param;
-	t_philo			*philo;
 	char			**status;
-	pthread_mutex_t	writing_lock;
-	pthread_mutex_t	count_meals_lock;
-	pthread_mutex_t	data_lock;
-	int				finish;
+	t_philo			*philo;
+	t_semaphores	*sem;
 }					t_data;
 
 #endif
