@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/16 11:52:57 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/27 11:05:13 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ t_bool	run_philo(t_data *data)
 		else if (data->philo[i].pid == CHILD)
 		{
 			exit_status = live(&data->philo[i], data);
+			if (exit_status == FAIL)
+				return (FAIL);
 			exit(exit_status);
 		}
 		usleep(100);

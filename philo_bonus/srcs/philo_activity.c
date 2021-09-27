@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:31 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/17 11:55:12 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/27 10:38:13 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	philo_takes_forks(t_philo *philo, t_data *data)
 		display_status(HAS_A_FORK, philo, data);
 	}
 	if (data->param[NB_OF_PHILO] == 1)
-		return (usleep_in_ms(data->param[TIME_TO_DIE]));
+		return (smart_usleep_in_ms(data->param[TIME_TO_DIE], philo, data));
 	if (philo->state == HAS_A_FORK)
 	{
 		sem_wait(philo->sem->forks_lock);
@@ -31,16 +31,11 @@ void	philo_takes_forks(t_philo *philo, t_data *data)
 
 void	philo_eats(t_philo *philo, t_data *data)
 {
-	sem_wait(philo->sem->check_death_lock);
 	if (philo->state != HAS_TWO_FORKS || data->philo_died == TRUE)
-	{
-		sem_post(philo->sem->check_death_lock);
 		return ;
-	}
 	philo->last_meal = get_time();
-	sem_post(philo->sem->check_death_lock);
 	display_status(EATING, philo, data);
-	usleep_in_ms(data->param[TIME_TO_EAT]);
+	smart_usleep_in_ms(data->param[TIME_TO_EAT], philo, data);
 	philo->nb_of_meals++;
 }
 
@@ -51,6 +46,6 @@ void	philo_sleeps_then_thinks(t_philo *philo, t_data *data)
 	sem_post(philo->sem->forks_lock);
 	sem_post(philo->sem->forks_lock);
 	display_status(SLEEPING, philo, data);
-	usleep_in_ms(data->param[TIME_TO_SLEEP]);
+	smart_usleep_in_ms(data->param[TIME_TO_SLEEP], philo, data);
 	display_status(THINKING, philo, data);
 }

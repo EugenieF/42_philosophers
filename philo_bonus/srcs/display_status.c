@@ -25,8 +25,7 @@ void	display_status(int status, t_philo *philo, t_data *data)
 		return ;
 	printf("  %lu\t\t", time_in_ms);
 	printf("Philo nᵒ %d %s\n", philo->num, data->status[status]);
-	sem_post(philo->sem->writing_lock);
-	sem_wait(philo->sem->state_lock);
 	philo->state = status;
-	sem_post(philo->sem->state_lock);
+	if (status != DEAD)
+		sem_post(philo->sem->writing_lock);
 }

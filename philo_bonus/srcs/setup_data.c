@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:35 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/17 13:30:20 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/27 11:18:01 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,13 @@ char	**create_status(void)
 
 void	set_to_null(t_data *data)
 {
+	memset(data, 0, sizeof(t_data));
 	data->param = NULL;
 	data->status = NULL;
 	data->philo = NULL;
 	data->count_meals = NO_NEED;
+	data->philo_died = FALSE;
+	data->meals_reached = FALSE;
 }
 
 t_data	*setup_data(int argc)
@@ -60,7 +63,5 @@ t_data	*setup_data(int argc)
 	data->status = create_status();
 	if (!data->status)
 		return (NULL);
-	data->philo_died = FALSE;
-	data->meals_reached = FALSE;
 	return (data);
 }

@@ -6,19 +6,19 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/09 11:55:21 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/27 11:06:05 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_bool	nobody_is_dead(t_philo *philo, t_data *data)
+t_bool	someone_died(t_philo *philo, t_data *data)
 {
 	int	ret;
 
-	ret = TRUE;
+	ret = FALSE;
 	if (philo->state == DEAD || data->philo_died == TRUE)
-		ret = FALSE;
+		ret = TRUE;
 	return (ret);
 }
 
@@ -42,8 +42,9 @@ int	live(t_philo *philo, t_data *data)
 	if (pthread_create(
 			&philo->life_insurance, NULL, supervise_life_philo, (void *)data))
 		return (exit_status);
-	pthread_detach(philo->life_insurance);
-	while (not_enough_meals(philo, data) && nobody_is_dead(philo, data))
+	if (pthread_detach(philo->life_insurance))
+		return (exit_status);
+	while (not_enough_meals(philo, data) && !someone_died(philo, data))
 	{
 		philo_takes_forks(philo, data);
 		philo_eats(philo, data);

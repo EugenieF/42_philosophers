@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:29:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/08 19:11:34 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/27 10:32:44 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_bool	argv_is_valid(char *argv)
 }
 
 t_bool	fill_and_check_parameters(char **argv, t_data *data)
-{	
+{
 	int		i;
 	int		j;
 	long	nb;

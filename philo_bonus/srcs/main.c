@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:25 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/17 13:24:49 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/27 11:11:20 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	exit_program(char *message, int exit_code, t_data *data)
 {
 	printf("%s\n", message);
 	if (!cleanup(data))
-		printf("Error: pthread_mutex_destroy() failed\n");
-//	atexit(check_leaks);
+		printf("Error: close_semaphores() failed\n");
+	atexit(check_leaks);
 	return (exit_code);
 }
 
@@ -47,6 +47,6 @@ int	main(int argc, char **argv)
 		printf("Error: close_semaphores() failed\n");
 		return (1);
 	}
-//	atexit(check_leaks);
+	atexit(check_leaks);
 	return (0);
 }

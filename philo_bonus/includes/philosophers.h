@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/09 20:19:28 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/27 10:40:51 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int				ft_atoi(const char *str);
 char			*ft_strdup(const char *s1);
 unsigned long	get_time(void);
 void			usleep_in_ms(unsigned long time_in_ms);
+void			smart_usleep_in_ms(int time, t_philo *philo, t_data *data);
 t_bool			time_is_valid(unsigned long time);
 t_data			*setup_data(int argc);
 void			unlink_semaphores(void);
@@ -43,6 +44,7 @@ void			philo_eats(t_philo *philo, t_data *data);
 void			philo_sleeps_then_thinks(t_philo *philo, t_data *data);
 void			display_status(int status, t_philo *philo, t_data *data);
 void			*supervise_life_philo(void *void_data);
+t_bool			someone_died(t_philo *philo, t_data *data);
 t_bool			cleanup(t_data *data);
 int				exit_program(char *message, int exit_code, t_data *data);
 
