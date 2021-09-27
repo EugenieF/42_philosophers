@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/27 10:40:51 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/27 19:11:20 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ t_bool			fill_and_check_parameters(char **argv, t_data *data);
 t_bool			init_philo(t_data *data);
 t_bool			run_philo(t_data *data);
 int				live(t_philo *philo, t_data *data);
-void			philo_takes_forks(t_philo *philo, t_data *data);
+t_bool			philo_takes_forks(t_philo *philo, t_data *data);
 void			philo_eats(t_philo *philo, t_data *data);
 void			philo_sleeps_then_thinks(t_philo *philo, t_data *data);
 void			display_status(int status, t_philo *philo, t_data *data);
 void			*supervise_life_philo(void *void_data);
 t_bool			someone_died(t_philo *philo, t_data *data);
+t_bool			not_enough_meals(t_philo *philo, t_data *data);
 t_bool			cleanup(t_data *data);
 int				exit_program(char *message, int exit_code, t_data *data);
 

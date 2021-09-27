@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/27 10:31:55 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/27 17:14:29 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_semaphores
 	sem_t	*forks_lock;
 	sem_t	*writing_lock;
 	sem_t	*end_lock;
+	sem_t	*meal_lock;
 }		t_semaphores;
 
 typedef struct s_philo

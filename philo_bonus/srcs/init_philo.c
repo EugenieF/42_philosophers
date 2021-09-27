@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/27 11:18:31 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/27 18:32:43 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 t_bool	open_semaphore(sem_t **semaphore, char *name, int nb_of_resources)
 {
+	memset(semaphore, 0, sizeof(sem_t *));
 	*semaphore = sem_open(name, O_CREAT | O_EXCL, 0777, nb_of_resources);
 	if (*semaphore == SEM_FAILED)
 		return (FAIL);
@@ -27,10 +28,12 @@ t_bool	create_semaphores(t_data *data, int total_philo)
 	data->sem = (t_semaphores *)malloc(sizeof(t_semaphores));
 	if (!data->sem)
 		return (FAIL);
+	memset(data->sem, 0, sizeof(t_semaphores));
 	unlink_semaphores();
 	if (!open_semaphore(&data->sem->forks_lock, "/sem_forks", total_philo)
 		|| !open_semaphore(&data->sem->writing_lock, "/sem_writing", 1)
-		|| !open_semaphore(&data->sem->end_lock, "/sem_end", 0))
+		|| !open_semaphore(&data->sem->end_lock, "/sem_end", 0)
+		|| !open_semaphore(&data->sem->meal_lock, "/sem_meal", 1))
 		return (FAIL);
 	i = -1;
 	while (++i < total_philo)

@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/27 11:05:13 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/27 19:16:33 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ void	*check_exit_status(void *void_data)
 	while (1)
 	{
 		exit_status = 0;
-		if (IS_LINUX)
-			waitpid(data->philo[++i].pid, &exit_status, 0);
-		else
-			waitpid(data->philo[++i].pid, &exit_status, WNOHANG);
+		waitpid(data->philo[++i].pid, &exit_status, 0);
 		if (WIFEXITED(exit_status))
 			exit_status = WEXITSTATUS(exit_status);
 		if (exit_status == MEALS_REACHED)
@@ -87,7 +84,7 @@ t_bool	run_philo(t_data *data)
 				return (FAIL);
 			exit(exit_status);
 		}
-		usleep(100);
+		usleep(50);
 		i++;
 	}
 	if (!waiting_for_the_end(data))
