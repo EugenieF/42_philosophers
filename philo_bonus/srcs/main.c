@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:25 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/27 18:51:47 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/28 23:01:00 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ int	main(int argc, char **argv)
 		printf("Error: close_semaphores() failed\n");
 		return (1);
 	}
-	atexit(check_leaks);
+//	atexit(check_leaks);
 	return (0);
 }

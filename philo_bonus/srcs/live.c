@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/27 19:32:01 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/28 22:37:49 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,25 @@
 
 t_bool	someone_died(t_philo *philo, t_data *data)
 {
-	int	ret;
+	int				ret;
+	unsigned long	time_to_die;
 
 	ret = FALSE;
+	time_to_die = (unsigned long)data->param[TIME_TO_DIE];
 	if (philo->state == DEAD || data->philo_died == TRUE)
 		ret = TRUE;
+	sem_wait(philo->sem->meal_lock);
+	if (time_to_die < get_time() - philo->last_meal)
+	{
+		sem_post(philo->sem->meal_lock);
+		display_status(DEAD, philo, data);
+		data->philo_died = TRUE;
+		philo->state = DEAD;
+		sem_post(philo->sem->end_lock);
+		ret = TRUE;
+		return (ret);
+	}
+	sem_post(philo->sem->meal_lock);
 	return (ret);
 }
 

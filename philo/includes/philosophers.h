@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/21 13:35:05 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/28 22:56:19 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <sys/time.h>
 # include "typedef.h"
 
+int				ft_isdigit(char c);
+int				ft_isspace(char c);
 int				ft_atoi(const char *str);
 char			*ft_strdup(const char *s1);
 int				lock_mutex(pthread_mutex_t *mutex);

@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:29:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/14 14:05:26 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/28 22:56:40 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,18 @@ t_bool	number_is_valid(long nb)
 	return (nb > 0 && nb < 2147483648);
 }
 
-t_bool	char_is_valid(char c)
-{
-	return ((c >= '0' && c <= '9') || (c == '-' || c == '+')
-		|| (c >= 9 && c <= 13));
-}
-
 t_bool	argv_is_valid(char *argv)
 {
 	int	i;
 
 	i = 0;
+	while (ft_isspace(argv[i]))
+		i++;
+	if (argv[i] == '+')
+		i++;
 	while (argv[i])
 	{
-		if (!char_is_valid(argv[i]))
+		if (!ft_isdigit(argv[i]))
 			return (FALSE);
 		i++;
 	}

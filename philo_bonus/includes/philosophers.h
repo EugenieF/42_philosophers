@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/27 19:11:20 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/28 22:58:48 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <signal.h>
 # include "typedef.h"
 
+int				ft_isdigit(char c);
+int				ft_isspace(char c);
 int				ft_atoi(const char *str);
 char			*ft_strdup(const char *s1);
 unsigned long	get_time(void);

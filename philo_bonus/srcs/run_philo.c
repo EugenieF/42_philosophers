@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/27 19:16:33 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/28 22:32:35 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	*check_exit_status(void *void_data)
 			return (NULL);
 		}
 		i = i % data->param[NB_OF_PHILO];
+		usleep(50);
 	}
 }
 
@@ -84,7 +85,7 @@ t_bool	run_philo(t_data *data)
 				return (FAIL);
 			exit(exit_status);
 		}
-		usleep(50);
+		usleep(100);
 		i++;
 	}
 	if (!waiting_for_the_end(data))
