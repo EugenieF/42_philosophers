@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/28 22:56:19 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/09 13:50:21 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int				ft_isdigit(char c);
 int				ft_isspace(char c);
 int				ft_atoi(const char *str);
 char			*ft_strdup(const char *s1);
+void			ft_putstr_fd(char *s, int fd);
 int				lock_mutex(pthread_mutex_t *mutex);
 int				unlock_mutex(pthread_mutex_t *mutex);
 unsigned long	get_time(void);

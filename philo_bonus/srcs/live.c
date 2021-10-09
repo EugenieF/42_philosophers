@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/28 22:37:49 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/09 13:15:36 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ int	live(t_philo *philo, t_data *data)
 {
 	int	exit_status;
 
-	exit_status = FAIL;
+	exit_status = DEATH;
 	if (!life_insurance(philo, data))
-		return (exit_status);
+		return (FAIL);
 	while (not_enough_meals(philo, data) && !someone_died(philo, data))
 	{
 		if (!philo_takes_forks(philo, data))
@@ -80,7 +80,8 @@ int	live(t_philo *philo, t_data *data)
 	}
 	if (data->count_meals && philo->nb_of_meals == data->param[NB_OF_MEALS])
 		exit_status = MEALS_REACHED;
-	else if (data->philo_died == TRUE)
-		exit_status = DEATH;
+//	else if (data->philo_died == TRUE)
+//		exit_status = DEATH;
+//	printf("exit_status = %d\n", exit_status);
 	return (exit_status);
 }

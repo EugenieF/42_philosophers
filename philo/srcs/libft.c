@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 22:35:41 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/28 22:55:50 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/09 13:50:26 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,18 @@ char	*ft_strdup(const char *s1)
 	}
 	copy[i] = '\0';
 	return (copy);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	if (!s)
+		return ;
+	i = 0;
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
 }

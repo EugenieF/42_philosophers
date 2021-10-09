@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 18:28:10 by efrancon          #+#    #+#             */
-/*   Updated: 2021/09/28 22:58:31 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/09 13:47:51 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ int	ft_isdigit(char c)
 int	ft_isspace(char c)
 {
 	return ((c >= 9 && c <= 13) || c == 32);
+}
+
+int	ft_strlen(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
 int	ft_atoi(const char *str)
@@ -69,4 +79,18 @@ char	*ft_strdup(const char *s1)
 	}
 	copy[i] = '\0';
 	return (copy);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	if (!s)
+		return ;
+	i = 0;
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
 }

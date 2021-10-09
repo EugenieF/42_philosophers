@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/28 22:58:48 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/09 14:08:29 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
-# include <pthread.h>
 # include <sys/time.h>
 # include <fcntl.h>
 # include <sys/stat.h>
-# include <semaphore.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
@@ -29,7 +27,9 @@
 
 int				ft_isdigit(char c);
 int				ft_isspace(char c);
+int				ft_strlen(const char *str);
 int				ft_atoi(const char *str);
+void			ft_putstr_fd(char *s, int fd);
 char			*ft_strdup(const char *s1);
 unsigned long	get_time(void);
 void			usleep_in_ms(unsigned long time_in_ms);

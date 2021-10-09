@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:04 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/21 22:27:24 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/09 16:54:09 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	display_status(int status, t_philo *philo, t_data *data)
 	time_in_ms = get_time() - data->start_time;
 	if (!time_is_valid(time_in_ms))
 		return ;
-	printf("  %lu\t\t", time_in_ms);
-	printf("Philo nᵒ %d %s\n", philo->num, data->status[status]);
+	printf("  %lu\t\tPhilo nᵒ %d %s\n",
+		time_in_ms, philo->num, data->status[status]);
 	unlock_mutex(&data->writing_lock);
 	lock_mutex(&philo->state_lock);
 	philo->state = status;
@@ -56,8 +56,8 @@ void	display_death(t_philo *philo, t_data *data)
 	time_in_ms = get_time() - data->start_time;
 	if (!time_is_valid(time_in_ms))
 		return ;
-	printf("  %lu\t\t", time_in_ms);
-	printf("Philo nᵒ %d %s\n", philo->num, data->status[DEAD]);
+	printf("  %lu\t\tPhilo nᵒ %d %s\n",
+		time_in_ms, philo->num, data->status[DEAD]);
 	unlock_mutex(&data->writing_lock);
 	lock_mutex(&philo->state_lock);
 	philo->state = DEAD;

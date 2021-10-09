@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:25 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/28 23:01:00 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/10/09 13:49:21 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	check_leaks(void)
 
 int	exit_program(char *message, int exit_code, t_data *data)
 {
-	printf("%s\n", message);
+	ft_putstr_fd(message, 2);
 	if (!cleanup(data))
-		printf("Error: close_semaphores() failed\n");
-	atexit(check_leaks);
+		ft_putstr_fd("Error: close_semaphores() failed\n", 2);
+//	atexit(check_leaks);
 	return (exit_code);
 }
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 	data = setup_data(argc);
 	if (!data)
 	{
-		printf("Error: setup_data() failed\n");
+		ft_putstr_fd("Error: setup_data() failed\n", 2);
 		return (1);
 	}
 	if (!(argc == 5 || argc == 6) || !fill_and_check_parameters(argv, data))
@@ -44,7 +44,7 @@ int	main(int argc, char **argv)
 	printf("----------------------------------------------\n\n");
 	if (!cleanup(data))
 	{
-		printf("Error: close_semaphores() failed\n");
+		ft_putstr_fd("Error: close_semaphores() failed\n", 2);
 		return (1);
 	}
 //	atexit(check_leaks);
