@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+         #
+#    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/18 22:02:30 by EugenieFr         #+#    #+#              #
-#    Updated: 2021/09/28 22:56:55 by EugenieFran      ###   ########.fr        #
+#    Updated: 2021/12/15 17:48:05 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,15 +26,18 @@ SRCS			= main.c \
 				handle_time.c \
 				cleanup.c \
 				utils_philo.c \
-				libft.c
+				libft.c \
+				libft_2.c
 
 OBJS_DIR		= ./objs
 
 OBJS			= ${addprefix ${OBJS_DIR}/, ${SRCS:.c=.o}}
 
+DEP				= $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.d))
+
 CC				= clang
 
-CFLAGS			= -Wall -Wextra -Werror -pthread -I${INCLUDE} -g #-fsanitize=thread
+CFLAGS			= -Wall -Wextra -Werror -pthread -MMD -MP -I${INCLUDE} -g3 -fsanitize=thread
 
 RM				= rm -rf
 
@@ -45,24 +48,26 @@ GREEN			= \033[32m
 BLUE			= \033[34m
 YELLOW			= \033[33m
 
+
+${NAME}:	${OBJS}
+		@${CC} ${OBJS} ${CFLAGS} -o ${NAME}
+		@echo "${GREEN}PHILOSOPHERS : compiled !${RESET}"
+
+-include $(DEP)
 ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c
 		@mkdir -p ${OBJS_DIR}
 		@${CC} ${CFLAGS} -c $< -o $@
-
-${NAME}:	${OBJS}
-		@echo "${YELLOW}Starting compilation philosophers...${RESET}"
-		@${CC} ${OBJS} ${CFLAGS} -o ${NAME}
-		@echo "${GREEN}PHILOSOPHERS : compiled !${RESET}"
+		@echo "$(BLUE)clang $(RESET)$(notdir $@)"
 
 all:		${NAME}
 
 clean:
 		@${RM} ${OBJS_DIR}
-		@echo "${BLUE}PHILOSOPHERS : objects removed${RESET}"
+		@echo "${YELLOW}objects removed${RESET}"
 
 fclean:		clean
 		@${RM} ${NAME}
-		@echo "${BLUE}PHILOSOPHERS : philo removed${RESET}"
+		@echo "${YELLOW}philo removed${RESET}"
 
 re:			fclean all
 

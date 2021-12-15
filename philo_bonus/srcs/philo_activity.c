@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:31 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/10/09 13:18:56 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/28 22:19:45 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_bool	philo_takes_forks(t_philo *philo, t_data *data)
 	if (data->param[NB_OF_PHILO] == 1)
 	{
 		smart_usleep_in_ms(data->param[TIME_TO_DIE], philo, data);
-	//	usleep_in_ms(data->param[TIME_TO_DIE]);
 		return (FAIL);
 	}
 	if (someone_died(philo, data))

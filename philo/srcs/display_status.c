@@ -3,28 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   display_status.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:04 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/10/09 16:54:09 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/12/15 15:59:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+// void	display_status(int status, t_philo *philo, t_data *data)
+// {
+// 	unsigned long	time_in_ms;
+
+// 	if (other_philo_died(data))
+// 		return ;
+// 	lock_mutex(&data->writing_lock);
+// 	time_in_ms = get_time() - data->start_time;
+// 	if (!time_is_valid(time_in_ms))
+// 		return ;
+// 	printf("  %lu\t\t", time_in_ms);
+// 	printf("Philo nᵒ %d %s\n", philo->num, data->status[status]);
+// 	unlock_mutex(&data->writing_lock);
+// 	lock_mutex(&philo->state_lock);
+// 	philo->state = status;
+// 	unlock_mutex(&philo->state_lock);
+// }
+
+char	*get_message(
+	unsigned long time_in_ms, int status, t_philo *philo, t_data *data)
+{
+	char			*time_str;
+	char			*philo_num;
+	char			*message;
+
+	time_str = ft_itoa(time_in_ms);
+	philo_num = ft_itoa(philo->num);
+	message = ft_strjoin("  ", time_str);
+	clean_free(&time_str);
+	message = ft_strjoin_and_free(message, "\t\t");
+	message = ft_strjoin_and_free(message, "Philo nᵒ ");
+	message = ft_strjoin_and_free(message, philo_num);
+	clean_free(&philo_num);
+	message = ft_strjoin_and_free(message, " ");
+	message = ft_strjoin_and_free(message, data->status[status]);
+	message = ft_strjoin_and_free(message, "\n");
+	return (message);
+}
+
 void	display_status(int status, t_philo *philo, t_data *data)
 {
 	unsigned long	time_in_ms;
+	char			*message;
 
 	if (other_philo_died(data))
 		return ;
-	lock_mutex(&data->writing_lock);
 	time_in_ms = get_time() - data->start_time;
 	if (!time_is_valid(time_in_ms))
 		return ;
-	printf("  %lu\t\tPhilo nᵒ %d %s\n",
-		time_in_ms, philo->num, data->status[status]);
+	message = get_message(time_in_ms, status, philo, data);
+	lock_mutex(&data->writing_lock);
+	ft_putstr_fd(message, 1);
 	unlock_mutex(&data->writing_lock);
+	clean_free(&message);
 	lock_mutex(&philo->state_lock);
 	philo->state = status;
 	unlock_mutex(&philo->state_lock);
@@ -49,16 +90,18 @@ t_bool	death_already_displayed(t_data *data)
 void	display_death(t_philo *philo, t_data *data)
 {
 	unsigned long	time_in_ms;
+	char			*message;
 
 	if (death_already_displayed(data))
 		return ;
-	lock_mutex(&data->writing_lock);
 	time_in_ms = get_time() - data->start_time;
 	if (!time_is_valid(time_in_ms))
 		return ;
-	printf("  %lu\t\tPhilo nᵒ %d %s\n",
-		time_in_ms, philo->num, data->status[DEAD]);
+	message = get_message(time_in_ms, DEAD, philo, data);
+	lock_mutex(&data->writing_lock);
+	ft_putstr_fd(message, 1);
 	unlock_mutex(&data->writing_lock);
+	clean_free(&message);
 	lock_mutex(&philo->state_lock);
 	philo->state = DEAD;
 	unlock_mutex(&philo->state_lock);

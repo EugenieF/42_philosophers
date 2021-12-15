@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/21 13:37:00 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/12/15 16:03:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,15 @@ t_bool	create_left_fork_mutex(t_data *data)
 	return (SUCCESS);
 }
 
-t_bool	init_philo(t_data *data)
+void	init_philo(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	data->philo = (t_philo *)malloc(sizeof(t_philo) * data->param[NB_OF_PHILO]);
+	data->philo = (t_philo *)ft_calloc(
+			1, sizeof(t_philo) * data->param[NB_OF_PHILO]);
 	if (!data->philo)
-		return (FAIL);
+		exit_error("malloc()", data);
 	memset(data->philo, 0, sizeof(t_philo));
 	data->start_time = get_time();
 	while (i < data->param[NB_OF_PHILO])
@@ -69,7 +70,6 @@ t_bool	init_philo(t_data *data)
 	}
 	data->someone_died = FALSE;
 	if (!create_left_fork_mutex(data))
-		return (FAIL);
+		exit_error("pthread_mutex_init()", data);
 	link_right_fork_mutex(data);
-	return (SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   live.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/10/09 13:15:36 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/12/15 14:34:12 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,21 @@ t_bool	not_enough_meals(t_philo *philo, t_data *data)
 	return (ret);
 }
 
-t_bool	life_insurance(t_philo *philo, t_data *data)
+static void	life_insurance(t_philo *philo, t_data *data)
 {
 	if (pthread_create(
 			&philo->life_insurance, NULL, supervise_life_philo, (void *)data))
-		return (FAIL);
+		exit_error("pthread_create()", data);
 	if (pthread_detach(philo->life_insurance))
-		return (FAIL);
-	return (SUCCESS);
+		exit_error("pthread_detach()", data);
 }
 
 int	live(t_philo *philo, t_data *data)
 {
 	int	exit_status;
 
-	exit_status = DEATH;
-	if (!life_insurance(philo, data))
-		return (FAIL);
+	exit_status = FAIL;
+	life_insurance(philo, data);
 	while (not_enough_meals(philo, data) && !someone_died(philo, data))
 	{
 		if (!philo_takes_forks(philo, data))
@@ -80,8 +78,7 @@ int	live(t_philo *philo, t_data *data)
 	}
 	if (data->count_meals && philo->nb_of_meals == data->param[NB_OF_MEALS])
 		exit_status = MEALS_REACHED;
-//	else if (data->philo_died == TRUE)
-//		exit_status = DEATH;
-//	printf("exit_status = %d\n", exit_status);
+	else if (data->philo_died == TRUE)
+		exit_status = DEATH;
 	return (exit_status);
 }

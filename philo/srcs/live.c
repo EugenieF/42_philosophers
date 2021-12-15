@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   live.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/21 22:40:10 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/12/15 14:33:14 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,13 @@ t_bool	not_enough_meals(t_philo *philo, t_data *data)
 	return (ret);
 }
 
-t_bool	life_insurance(t_philo *philo, t_data *data)
+static void	life_insurance(t_philo *philo, t_data *data)
 {
 	if (pthread_create(
 			&philo->life_insurance, NULL, supervise_life_philo, (void *)data))
-		return (FAIL);
+		exit_error("pthread_create()", data);
 	if (pthread_detach(philo->life_insurance))
-		return (FAIL);
-	return (SUCCESS);
+		exit_error("pthread_detach()", data);
 }
 
 void	*live(void *void_data)
@@ -69,8 +68,8 @@ void	*live(void *void_data)
 		philo_eats(philo, data);
 		if (someone_died(philo, data))
 		{
-			unlock_mutex(&philo->left_fork);
 			unlock_mutex(philo->right_fork);
+			unlock_mutex(&philo->left_fork);
 			break ;
 		}
 		philo_sleeps_then_thinks(philo, data);

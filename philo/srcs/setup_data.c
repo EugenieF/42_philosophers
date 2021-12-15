@@ -3,38 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   setup_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:35 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/21 13:26:30 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/12/15 17:21:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-char	**create_status(void)
+static char	*safe_strdup(const char *s1, t_data *data)
 {
-	char	**status;
+	int		i;
+	int		s1_len;
+	char	*copy;
 
-	status = (char **)malloc(sizeof(char *) * 5);
-	if (!status)
+	if (!s1)
 		return (NULL);
-	status[THINKING] = ft_strdup("\033[38;5;123mis thinking\033[0m");
-	if (!status[THINKING])
-		return (NULL);
-	status[HAS_A_FORK] = ft_strdup("\033[38;5;229mhas taken a fork\033[0m");
-	if (!status[HAS_A_FORK])
-		return (NULL);
-	status[EATING] = ft_strdup("\033[38;5;215mis eating\033[0m");
-	if (!status[EATING])
-		return (NULL);
-	status[SLEEPING] = ft_strdup("\033[38;5;32mis sleeping\033[0m");
-	if (!status[SLEEPING])
-		return (NULL);
-	status[DEAD] = ft_strdup("\033[38;5;196mdied\033[0m");
-	if (!status[DEAD])
-		return (NULL);
-	return (status);
+	i = 0;
+	s1_len = 0;
+	while (s1[s1_len])
+		s1_len++;
+	copy = (char *)ft_calloc(1, sizeof(char) * (s1_len + 1));
+	if (!copy)
+		exit_error("malloc()", data);
+	while (s1[i])
+	{
+		copy[i] = s1[i];
+		i++;
+	}
+	copy[i] = '\0';
+	return (copy);
+}
+
+static void	create_status(t_data *data)
+{
+	data->status = (char **)ft_calloc(1, sizeof(char *) * 6);
+	if (!data->status)
+		exit_error("malloc()", data);
+	data->status[THINKING] = safe_strdup(
+			"\033[38;5;123mis thinking\033[0m", data);
+	data->status[HAS_A_FORK] = safe_strdup(
+			"\033[38;5;229mhas taken a fork\033[0m", data);
+	data->status[SLEEPING] = safe_strdup("\033[38;5;32mis sleeping\033[0m", data);
+	data->status[EATING] = safe_strdup("\033[38;5;215mis eating\033[0m", data);
+	data->status[DEAD] = safe_strdup("\033[38;5;196mdied\033[0m", data);
+	data->status[5] = NULL;
 }
 
 t_bool	create_locks(t_data *data)
@@ -50,7 +64,6 @@ t_bool	create_locks(t_data *data)
 
 void	set_to_null(t_data *data)
 {
-	memset(data, 0, sizeof(t_data));
 	data->param = NULL;
 	data->status = NULL;
 	data->philo = NULL;
@@ -62,18 +75,16 @@ t_data	*setup_data(int argc)
 {
 	t_data	*data;
 
-	data = (t_data *)malloc(sizeof(t_data));
+	data = (t_data *)ft_calloc(1, sizeof(t_data));
 	if (!data)
-		return (NULL);
+		exit_error("malloc()", data);
 	set_to_null(data);
 	argc--;
-	data->param = (int *)malloc(sizeof(int) * argc);
+	data->param = (int *)ft_calloc(1, sizeof(int) * argc);
 	if (!data->param)
-		return (NULL);
-	data->status = create_status();
-	if (!data->status)
-		return (NULL);
+		exit_error("malloc()", data);
+	create_status(data);
 	if (!create_locks(data))
-		return (NULL);
+		exit_error("pthread_mutex_init()", data);
 	return (data);
 }

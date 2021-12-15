@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   supervise_life_philo.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/27 19:01:18 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/12/15 12:22:12 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

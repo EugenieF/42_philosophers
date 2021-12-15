@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_philo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/10/09 16:39:48 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/12/15 11:07:32 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	*check_exit_status(void *void_data)
 	}
 }
 
-t_bool	waiting_for_the_end(t_data *data)
+void	waiting_for_the_end(t_data *data)
 {
 	int			i;
 	pthread_t	meals_thread;
@@ -48,9 +48,9 @@ t_bool	waiting_for_the_end(t_data *data)
 	{
 		if (pthread_create(
 				&meals_thread, NULL, check_exit_status, (void *)data))
-			return (FAIL);
+			exit_error("pthread_create()", data);
 		if (pthread_detach(meals_thread))
-			return (FAIL);
+			exit_error("pthread_detach()", data);
 	}
 	sem_wait(data->sem->end_lock);
 	i = 0;
@@ -61,7 +61,6 @@ t_bool	waiting_for_the_end(t_data *data)
 		printf("\n    All %d philosophers ", data->param[NB_OF_PHILO]);
 		printf("ate their %d meals\n", data->param[NB_OF_MEALS]);
 	}
-	return (SUCCESS);
 }
 
 t_bool	run_philo(t_data *data)
@@ -77,7 +76,7 @@ t_bool	run_philo(t_data *data)
 		data->i = i;
 		data->philo[i].pid = fork();
 		if (data->philo[i].pid < 0)
-			return (FAIL);
+			exit_error("fork()", data);
 		else if (data->philo[i].pid == CHILD)
 		{
 			exit_status = live(&data->philo[i], data);
@@ -88,7 +87,6 @@ t_bool	run_philo(t_data *data)
 		usleep(100);
 		i++;
 	}
-	if (!waiting_for_the_end(data))
-		return (FAIL);
+	waiting_for_the_end(data);
 	return (SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_philo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/27 19:27:54 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/12/15 14:29:10 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_bool	waiting_for_the_end(t_data *data)
 	i = -1;
 	while (++i < data->param[NB_OF_PHILO])
 	{
+		// printf("%d\n", i);
 		if (pthread_join(data->philo[i].life_thread, NULL))
 			return (FAIL);
 	}

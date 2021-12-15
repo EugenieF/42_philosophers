@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   parse_arguments.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:29:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/28 22:58:14 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/12/15 10:57:07 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+int	ft_isdigit(char c)
+{
+	return (c >= '0' && c <= '9');
+}
+
+int	ft_isspace(char c)
+{
+	return ((c >= 9 && c <= 13) || c == 32);
+}
 
 t_bool	number_is_valid(long nb)
 {

@@ -3,54 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   init_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/10/09 16:33:41 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/12/15 16:10:08 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_bool	open_semaphore(sem_t **semaphore, char *name, int nb_of_resources)
+static void	open_semaphore(
+	sem_t **semaphore, char *name, int nb_of_resources, t_data *data)
 {
 	memset(semaphore, 0, sizeof(sem_t *));
 	*semaphore = sem_open(name, O_CREAT | O_EXCL, 0777, nb_of_resources);
 	if (*semaphore == SEM_FAILED)
-		return (FAIL);
-	return (SUCCESS);
+		exit_error("sem_open()", data);
 }
 
-t_bool	create_semaphores(t_data *data, int total_philo)
+void	create_semaphores(t_data *data, int total_philo)
 {
 	int		i;
 
-	data->sem = (t_semaphores *)malloc(sizeof(t_semaphores));
+	data->sem = (t_semaphores *)ft_calloc(1, sizeof(t_semaphores));
 	if (!data->sem)
-		return (FAIL);
+		exit_error("malloc()", data);
 	memset(data->sem, 0, sizeof(t_semaphores));
 	unlink_semaphores();
-	if (!open_semaphore(&data->sem->forks_lock, "/sem_forks", total_philo)
-		|| !open_semaphore(&data->sem->writing_lock, "/sem_writing", 1)
-		|| !open_semaphore(&data->sem->end_lock, "/sem_end", 0)
-		|| !open_semaphore(&data->sem->meal_lock, "/sem_meal", 1)
-		|| !open_semaphore(&data->sem->writing_death_lock, "/sem_writing_death", 1))
-		return (FAIL);
+	open_semaphore(&data->sem->forks_lock, "/sem_forks", total_philo, data);
+	open_semaphore(&data->sem->writing_lock, "/sem_writing", 1, data);
+	open_semaphore(&data->sem->end_lock, "/sem_end", 0, data);
+	open_semaphore(&data->sem->meal_lock, "/sem_meal", 1, data);
 	i = -1;
 	while (++i < total_philo)
 		data->philo[i].sem = data->sem;
-	return (SUCCESS);
 }
 
-t_bool	init_philo(t_data *data)
+void	init_philo(t_data *data)
 {
 	int		i;
 	int		total_philo;
 
 	total_philo = data->param[NB_OF_PHILO];
-	data->philo = (t_philo *)malloc(sizeof(t_philo) * total_philo);
+	data->philo = (t_philo *)ft_calloc(1, sizeof(t_philo) * total_philo);
 	if (!data->philo)
-		return (FAIL);
+		exit_error("malloc()", data);
 	memset(data->philo, 0, sizeof(t_philo));
 	data->start_time = get_time();
 	i = 0;
@@ -62,7 +59,5 @@ t_bool	init_philo(t_data *data)
 		data->philo[i].num = i + 1;
 		i++;
 	}
-	if (!create_semaphores(data, total_philo))
-		return (FAIL);
-	return (SUCCESS);
+	create_semaphores(data, total_philo);
 }

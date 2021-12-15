@@ -1,35 +1,77 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   libft_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/11 18:28:10 by efrancon          #+#    #+#             */
-/*   Updated: 2021/10/09 13:47:51 by EugenieFran      ###   ########.fr       */
+/*   Created: 2021/12/15 10:41:12 by efrancon          #+#    #+#             */
+/*   Updated: 2021/12/15 17:15:11 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	ft_isdigit(char c)
+void	ft_putstr_fd(char *s, int fd)
 {
-	return (c >= '0' && c <= '9');
+	while (s && *s)
+		write(fd, s++, 1);
 }
 
-int	ft_isspace(char c)
+void	clean_free(char **str)
 {
-	return ((c >= 9 && c <= 13) || c == 32);
+	if (*str)
+	{
+		free(*str);
+		*str = NULL;
+	}
 }
 
-int	ft_strlen(const char *str)
+static size_t	nbrlen(long n)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (str[i])
+	if (n == 0)
 		i++;
+	if (n < 0)
+	{
+		n = -n;
+		i++;
+	}
+	while (n > 0)
+	{
+		n /= 10;
+		i++;
+	}
 	return (i);
+}
+
+char	*ft_itoa(int n)
+{
+	char	*ret;
+	long	nb;
+	size_t	len;
+
+	nb = n;
+	len = nbrlen(n);
+	ret = malloc(sizeof(char) * (len + 1));
+	if (!ret)
+		return (NULL);
+	ret[len--] = 0;
+	if (n == 0)
+		ret[0] = '0';
+	if (nb < 0)
+	{
+		ret[0] = '-';
+		nb = -nb;
+	}
+	while (nb)
+	{
+		ret[len--] = (nb % 10) + 48;
+		nb /= 10;
+	}
+	return (ret);
 }
 
 int	ft_atoi(const char *str)
@@ -55,42 +97,4 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (sign * res);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	int		i;
-	int		s1_len;
-	char	*copy;
-
-	if (!s1)
-		return (NULL);
-	i = 0;
-	s1_len = 0;
-	while (s1[s1_len])
-		s1_len++;
-	copy = (char *)malloc(sizeof(char) * (s1_len + 1));
-	if (!copy)
-		return (NULL);
-	while (s1[i])
-	{
-		copy[i] = s1[i];
-		i++;
-	}
-	copy[i] = '\0';
-	return (copy);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	int	i;
-
-	if (!s)
-		return ;
-	i = 0;
-	while (s[i])
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:49 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/21 22:12:08 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/12/15 14:51:32 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,31 +46,54 @@ void	free_status(t_data *data)
 {
 	int	i;
 
-	if (IS_LINUX)
-		i = 5;
-	else
-		i = 6;
-	while (--i >= THINKING)
+	i = -1;
+	while (data->status[++i])
 	{
 		if (data->status[i])
-			free(data->status[i]);
+			clean_free(&data->status[i]);
 	}
 	free(data->status);
 	data->status = NULL;
 }
 
-t_bool	cleanup(t_data *data)
+static void	exit_error_cleanup(char *message, t_data *data)
+{
+	ft_putstr_fd("Error: ", 2);
+	ft_putstr_fd(message, 2);
+	ft_putstr_fd(" failed\n", 2);
+	if (data->philo)
+	{
+		free(data->philo);
+		data->philo = NULL;
+	}
+	if (data->param)
+	{
+		free(data->param);
+		data->param = NULL;
+	}
+	free(data);
+	data = NULL;
+	exit(EXIT_FAILURE);
+}
+
+void	cleanup(t_data *data)
 {
 	if (!data)
-		return (SUCCESS);
+		return ;
 	if (!clean_mutex(data))
-		return (FAIL);
+		exit_error_cleanup("pthread_mutex_destroy()", data);
 	if (data->philo)
+	{
 		free(data->philo);
+		data->philo = NULL;
+	}
 	if (data->status)
 		free_status(data);
 	if (data->param)
+	{
 		free(data->param);
+		data->param = NULL;
+	}
 	free(data);
-	return (SUCCESS);
+	data = NULL;
 }

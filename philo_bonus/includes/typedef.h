@@ -6,7 +6,7 @@
 /*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/10/09 16:32:16 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/09/28 22:19:26 by EugenieFran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 # define TYPEDEF_H
 
 # define CHILD	0
-
-# include <pthread.h>
-# include <semaphore.h>
-
-typedef int	t_bool;
 
 # ifdef __linux__
 #  define IS_LINUX 1
@@ -64,6 +59,8 @@ typedef enum s_param
 }	t_param;
 # endif
 
+typedef int	t_bool;
+
 typedef enum e_boolean
 {
 	FAIL			= 0,
@@ -81,7 +78,6 @@ typedef struct s_semaphores
 	sem_t	*forks_lock;
 	sem_t	*writing_lock;
 	sem_t	*end_lock;
-	sem_t	*writing_death_lock;
 	sem_t	*meal_lock;
 }		t_semaphores;
 
