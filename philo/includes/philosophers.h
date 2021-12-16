@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/15 16:04:35 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/16 11:11:01 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void			*supervise_life_philo(void *void_data);
 t_bool			someone_died(t_philo *philo, t_data *data);
 t_bool			other_philo_died(t_data *data);
 t_bool			not_enough_meals(t_philo *philo, t_data *data);
-t_bool			check_state_philo(int status, t_philo *philo);
+// t_bool			check_state_philo(int status, t_philo *philo);
 
 /***   CLEAN   ***/
 

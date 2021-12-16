@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   typedef.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/28 22:19:26 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/12/15 20:45:11 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 # define TYPEDEF_H
 
 # define CHILD	0
-
-# ifdef __linux__
-#  define IS_LINUX 1
 
 typedef enum s_status
 {
@@ -36,28 +33,6 @@ typedef enum s_param
 	TIME_TO_SLEEP	= 3,
 	NB_OF_MEALS		= 4,
 }	t_param;
-# else
-#  define IS_LINUX 0
-
-typedef enum s_status
-{
-	THINKING		= 1,
-	HAS_A_FORK		= 2,
-	SLEEPING		= 3,
-	EATING			= 4,
-	DEAD			= 5,
-	HAS_TWO_FORKS	= 6,
-}	t_status;
-
-typedef enum s_param
-{
-	NB_OF_PHILO		= 1,
-	TIME_TO_DIE		= 2,
-	TIME_TO_EAT		= 3,
-	TIME_TO_SLEEP	= 4,
-	NB_OF_MEALS		= 5,
-}	t_param;
-# endif
 
 typedef int	t_bool;
 

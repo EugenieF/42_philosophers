@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/15 14:33:14 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/16 12:20:57 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 t_bool	someone_died(t_philo *philo, t_data *data)
 {
-	if (check_state_philo(DEAD, philo))
-		return (TRUE);
-	if (other_philo_died(data))
+	if (philo->is_dead || other_philo_died(data))
 		return (TRUE);
 	return (FALSE);
 }

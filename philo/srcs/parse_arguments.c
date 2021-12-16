@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:29:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/15 10:39:18 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/15 20:44:30 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,7 @@ t_bool	fill_and_check_parameters(char **argv, t_data *data)
 	long	nb;
 
 	i = 0;
-	if (IS_LINUX)
-		j = 0;
-	else
-		j = 1;
+	j = 0;
 	nb = 0;
 	while (argv[++i])
 	{

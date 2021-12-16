@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:31 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/15 12:15:15 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/16 11:09:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,6 @@ t_bool	philo_takes_forks(t_philo *philo, t_data *data)
 void	philo_eats(t_philo *philo, t_data *data)
 {
 	lock_mutex(&philo->meal_lock);
-	if (!check_state_philo(HAS_TWO_FORKS, philo))
-	{
-		unlock_mutex(&philo->meal_lock);
-		return ;
-	}
 	philo->last_meal = get_time();
 	philo->nb_of_meals++;
 	unlock_mutex(&philo->meal_lock);
@@ -58,8 +53,6 @@ void	philo_eats(t_philo *philo, t_data *data)
 
 void	philo_sleeps_then_thinks(t_philo *philo, t_data *data)
 {
-	if (!check_state_philo(EATING, philo))
-		return ;
 	unlock_mutex(philo->right_fork);
 	unlock_mutex(&philo->left_fork);
 	display_status(SLEEPING, philo, data);
