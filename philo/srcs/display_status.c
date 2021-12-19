@@ -6,29 +6,11 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:04 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/15 15:59:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/17 11:18:49 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-// void	display_status(int status, t_philo *philo, t_data *data)
-// {
-// 	unsigned long	time_in_ms;
-
-// 	if (other_philo_died(data))
-// 		return ;
-// 	lock_mutex(&data->writing_lock);
-// 	time_in_ms = get_time() - data->start_time;
-// 	if (!time_is_valid(time_in_ms))
-// 		return ;
-// 	printf("  %lu\t\t", time_in_ms);
-// 	printf("Philo nᵒ %d %s\n", philo->num, data->status[status]);
-// 	unlock_mutex(&data->writing_lock);
-// 	lock_mutex(&philo->state_lock);
-// 	philo->state = status;
-// 	unlock_mutex(&philo->state_lock);
-// }
 
 char	*get_message(
 	unsigned long time_in_ms, int status, t_philo *philo, t_data *data)
@@ -56,7 +38,7 @@ void	display_status(int status, t_philo *philo, t_data *data)
 	unsigned long	time_in_ms;
 	char			*message;
 
-	if (other_philo_died(data))
+	if (someone_died(data))
 		return ;
 	time_in_ms = get_time() - data->start_time;
 	if (!time_is_valid(time_in_ms))
@@ -66,9 +48,6 @@ void	display_status(int status, t_philo *philo, t_data *data)
 	ft_putstr_fd(message, 1);
 	unlock_mutex(&data->writing_lock);
 	clean_free(&message);
-	lock_mutex(&philo->state_lock);
-	philo->state = status;
-	unlock_mutex(&philo->state_lock);
 }
 
 t_bool	death_already_displayed(t_data *data)
@@ -102,7 +81,4 @@ void	display_death(t_philo *philo, t_data *data)
 	ft_putstr_fd(message, 1);
 	unlock_mutex(&data->writing_lock);
 	clean_free(&message);
-	lock_mutex(&philo->state_lock);
-	philo->state = DEAD;
-	unlock_mutex(&philo->state_lock);
 }

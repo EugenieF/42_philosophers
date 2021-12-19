@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:31 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/16 11:09:43 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/17 11:21:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,18 @@ t_bool	philo_takes_forks(t_philo *philo, t_data *data)
 	display_status(HAS_A_FORK, philo, data);
 	if (!philo->right_fork)
 	{
-		smart_usleep_in_ms(data->param[TIME_TO_DIE], philo, data);
+		smart_usleep_in_ms(data->param[TIME_TO_DIE], data);
 		unlock_mutex(&philo->left_fork);
 		return (FAIL);
 	}
-	if (someone_died(philo, data))
+	if (someone_died(data))
 	{
 		unlock_mutex(&philo->left_fork);
 		return (FAIL);
 	}
 	lock_mutex(philo->right_fork);
 	display_status(HAS_A_FORK, philo, data);
-	lock_mutex(&philo->state_lock);
-	philo->state = HAS_TWO_FORKS;
-	unlock_mutex(&philo->state_lock);
-	if (someone_died(philo, data))
+	if (someone_died(data))
 	{
 		unlock_mutex(philo->right_fork);
 		unlock_mutex(&philo->left_fork);
@@ -48,7 +45,7 @@ void	philo_eats(t_philo *philo, t_data *data)
 	philo->nb_of_meals++;
 	unlock_mutex(&philo->meal_lock);
 	display_status(EATING, philo, data);
-	smart_usleep_in_ms(data->param[TIME_TO_EAT], philo, data);
+	smart_usleep_in_ms(data->param[TIME_TO_EAT], data);
 }
 
 void	philo_sleeps_then_thinks(t_philo *philo, t_data *data)
@@ -56,7 +53,7 @@ void	philo_sleeps_then_thinks(t_philo *philo, t_data *data)
 	unlock_mutex(philo->right_fork);
 	unlock_mutex(&philo->left_fork);
 	display_status(SLEEPING, philo, data);
-	smart_usleep_in_ms(data->param[TIME_TO_SLEEP], philo, data);
+	smart_usleep_in_ms(data->param[TIME_TO_SLEEP], data);
 	if (!not_enough_meals(philo, data))
 		return ;
 	display_status(THINKING, philo, data);

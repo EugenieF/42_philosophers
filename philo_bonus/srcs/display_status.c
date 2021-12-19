@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:04 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/15 15:21:27 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/19 11:07:54 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,9 @@ void	display_status(int status, t_philo *philo, t_data *data)
 	if (!time_is_valid(time_in_ms))
 		return ;
 	message = get_message(time_in_ms, status, philo, data);
-	if (data->philo_died == FALSE && data->meals_reached == FALSE)
-		sem_wait(philo->sem->writing_lock);
-	else
-		return ;
-	philo->state = status;
+	sem_wait(data->writing_lock);
+	ft_putstr_fd(message, 1);
 	clean_free(&message);
 	if (status != DEAD)
-		sem_post(philo->sem->writing_lock);
+		sem_post(data->writing_lock);
 }

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/16 11:11:01 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/17 11:20:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int				unlock_mutex(pthread_mutex_t *mutex);
 
 unsigned long	get_time(void);
 void			usleep_in_ms(unsigned long time_in_ms);
-void			smart_usleep_in_ms(int time, t_philo *philo, t_data *data);
+void			smart_usleep_in_ms(int time, t_data *data);
 t_bool			time_is_valid(unsigned long time);
 
 /***     INIT     ***/
@@ -56,7 +56,7 @@ void			init_philo(t_data *data);
 
 /***    PHILO    ***/
 
-t_bool			run_philo(t_data *data);
+void			run_philo(t_data *data);
 void			*live(void *void_data);
 t_bool			philo_takes_forks(t_philo *philo, t_data *data);
 void			philo_eats(t_philo *philo, t_data *data);
@@ -67,10 +67,8 @@ void			display_death(t_philo *philo, t_data *data);
 /***  MONITORING  ***/
 
 void			*supervise_life_philo(void *void_data);
-t_bool			someone_died(t_philo *philo, t_data *data);
-t_bool			other_philo_died(t_data *data);
+t_bool			someone_died(t_data *data);
 t_bool			not_enough_meals(t_philo *philo, t_data *data);
-// t_bool			check_state_philo(int status, t_philo *philo);
 
 /***   CLEAN   ***/
 

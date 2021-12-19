@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:49 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/15 14:51:32 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/16 19:42:12 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,12 @@ t_bool	clean_mutex(t_data *data)
 	int	i;
 
 	if (!destroy_mutex(&data->writing_lock)
-		|| !destroy_mutex(&data->count_meals_lock)
 		|| !destroy_mutex(&data->data_lock))
 		return (FAIL);
 	i = 0;
 	while (data->philo && i < data->param[NB_OF_PHILO])
 	{
 		if (!destroy_mutex(&data->philo[i].left_fork)
-			|| !destroy_mutex(&data->philo[i].state_lock)
 			|| !destroy_mutex(&data->philo[i].meal_lock))
 			return (FAIL);
 		i++;

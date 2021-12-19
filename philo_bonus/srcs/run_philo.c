@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/15 11:07:32 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/19 11:38:55 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	*check_exit_status(void *void_data)
 		if (data->count_meals > data->param[NB_OF_PHILO]
 			|| exit_status == DEATH)
 		{
-			sem_post(data->sem->end_lock);
+			sem_post(data->end_lock);
 			return (NULL);
 		}
 		i = i % data->param[NB_OF_PHILO];
-		usleep(50);
+		usleep(100);
 	}
 }
 
@@ -48,11 +48,11 @@ void	waiting_for_the_end(t_data *data)
 	{
 		if (pthread_create(
 				&meals_thread, NULL, check_exit_status, (void *)data))
-			exit_error("pthread_create()", data);
+			exit_error("pthread_create() failed", data);
 		if (pthread_detach(meals_thread))
-			exit_error("pthread_detach()", data);
+			exit_error("pthread_detach() failed", data);
 	}
-	sem_wait(data->sem->end_lock);
+	sem_wait(data->end_lock);
 	i = 0;
 	while (i < data->param[NB_OF_PHILO])
 		kill(data->philo[i++].pid, SIGKILL);
@@ -63,7 +63,7 @@ void	waiting_for_the_end(t_data *data)
 	}
 }
 
-t_bool	run_philo(t_data *data)
+void	run_philo(t_data *data)
 {
 	int	i;
 	int	exit_status;
@@ -76,17 +76,14 @@ t_bool	run_philo(t_data *data)
 		data->i = i;
 		data->philo[i].pid = fork();
 		if (data->philo[i].pid < 0)
-			exit_error("fork()", data);
+			exit_error("fork() failed", data);
 		else if (data->philo[i].pid == CHILD)
 		{
 			exit_status = live(&data->philo[i], data);
-			if (exit_status == FAIL)
-				return (FAIL);
 			exit(exit_status);
 		}
 		usleep(100);
 		i++;
 	}
 	waiting_for_the_end(data);
-	return (SUCCESS);
 }

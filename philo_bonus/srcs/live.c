@@ -6,55 +6,49 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/15 14:34:12 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/19 12:20:23 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_bool	someone_died(t_philo *philo, t_data *data)
+t_bool	philo_is_dead(t_philo *philo)
 {
 	int				ret;
-	unsigned long	time_to_die;
 
 	ret = FALSE;
-	time_to_die = (unsigned long)data->param[TIME_TO_DIE];
-	if (philo->state == DEAD || data->philo_died == TRUE)
+	sem_wait(philo->meal_lock);
+	if (philo->is_dead)
 		ret = TRUE;
-	sem_wait(philo->sem->meal_lock);
-	if (time_to_die < get_time() - philo->last_meal)
-	{
-		sem_post(philo->sem->meal_lock);
-		display_status(DEAD, philo, data);
-		data->philo_died = TRUE;
-		philo->state = DEAD;
-		sem_post(philo->sem->end_lock);
-		ret = TRUE;
-		return (ret);
-	}
-	sem_post(philo->sem->meal_lock);
+	sem_post(philo->meal_lock);
 	return (ret);
 }
 
-t_bool	not_enough_meals(t_philo *philo, t_data *data)
+t_bool	had_enough_meals(t_philo *philo, t_data *data)
 {
 	int	ret;
 
-	ret = TRUE;
+	ret = FALSE;
 	if (data->count_meals == NO_NEED)
 		return (ret);
+	sem_wait(philo->meal_lock);
 	if (philo->nb_of_meals >= data->param[NB_OF_MEALS])
-		ret = FALSE;
+		ret = TRUE;
+	sem_post(philo->meal_lock);
 	return (ret);
 }
 
 static void	life_insurance(t_philo *philo, t_data *data)
 {
+	printf("before | sem_name = %s | errno = %s\n", philo->sem_name, strerror(errno));
+	sem_unlink(philo->sem_name);
+	open_semaphore(&philo->meal_lock, philo->sem_name, 1, data);
+	printf("after | sem_name = %s | errno = %s\n", philo->sem_name, strerror(errno));
 	if (pthread_create(
 			&philo->life_insurance, NULL, supervise_life_philo, (void *)data))
-		exit_error("pthread_create()", data);
+		exit_error("pthread_create() failed", data);
 	if (pthread_detach(philo->life_insurance))
-		exit_error("pthread_detach()", data);
+		exit_error("pthread_detach() failed", data);
 }
 
 int	live(t_philo *philo, t_data *data)
@@ -63,22 +57,22 @@ int	live(t_philo *philo, t_data *data)
 
 	exit_status = FAIL;
 	life_insurance(philo, data);
-	while (not_enough_meals(philo, data) && !someone_died(philo, data))
+	while (!had_enough_meals(philo, data) && !philo_is_dead(philo))
 	{
 		if (!philo_takes_forks(philo, data))
 			break ;
 		philo_eats(philo, data);
-		if (someone_died(philo, data))
-		{
-			sem_post(data->sem->forks_lock);
-			sem_post(data->sem->forks_lock);
-			break ;
-		}
 		philo_sleeps_then_thinks(philo, data);
 	}
+	sem_wait(philo->meal_lock);
 	if (data->count_meals && philo->nb_of_meals == data->param[NB_OF_MEALS])
 		exit_status = MEALS_REACHED;
-	else if (data->philo_died == TRUE)
+	else if (philo->is_dead == TRUE)
 		exit_status = DEATH;
+	sem_post(philo->meal_lock);
+	if (sem_close(philo->meal_lock))
+		exit_error("sem_close() failed", data);
+	sem_unlink(philo->sem_name);
+	clean_free(&philo->sem_name);
 	return (exit_status);
 }

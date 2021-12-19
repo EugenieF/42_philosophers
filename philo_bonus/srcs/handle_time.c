@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_time.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: EugenieFrancon <EugenieFrancon@student.    +#+  +:+       +#+        */
+/*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:07 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/09/27 10:33:41 by EugenieFran      ###   ########.fr       */
+/*   Updated: 2021/12/19 11:46:09 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	usleep_in_ms(unsigned long time_in_ms)
 
 	start_time = get_time();
 	while ((get_time() - start_time < time_in_ms))
-		usleep(10);
+		usleep(100);
 }
 
-void	smart_usleep_in_ms(int time, t_philo *philo, t_data *data)
+void	smart_usleep_in_ms(int time, t_philo *philo)
 {
 	unsigned long	start_time;
 	unsigned long	time_in_ms;
@@ -49,7 +49,7 @@ void	smart_usleep_in_ms(int time, t_philo *philo, t_data *data)
 	{
 		while ((get_time() - start_time < time_in_ms))
 		{
-			if (someone_died(philo, data))
+			if (philo_is_dead(philo))
 				break ;
 			usleep(100);
 		}

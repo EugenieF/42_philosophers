@@ -6,13 +6,13 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/16 13:10:55 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/19 11:29:44 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_bool	program_completed(t_data *data)
+static t_bool	program_completed(t_data *data)
 {
 	int	ret;
 
@@ -24,27 +24,26 @@ t_bool	program_completed(t_data *data)
 	return (ret);
 }
 
-t_bool	waiting_for_the_end(t_data *data)
+static void	waiting_for_the_end(t_data *data)
 {
 	int	i;
 
 	while (!program_completed(data))
-		usleep(10);
+		usleep(100);
 	i = -1;
 	while (++i < data->param[NB_OF_PHILO])
 	{
 		if (pthread_join(data->philo[i].life_thread, NULL))
-			return (FAIL);
+			exit_error("pthread_join() failed", data);
 	}
 	if (data->count_meals > data->param[NB_OF_PHILO])
 	{
 		printf("\n    All %d philosophers ", data->param[NB_OF_PHILO]);
 		printf("ate their %d meals\n", data->param[NB_OF_MEALS]);
 	}
-	return (SUCCESS);
 }
 
-t_bool	run_philo(t_data *data)
+void	run_philo(t_data *data)
 {
 	int	i;
 
@@ -58,11 +57,9 @@ t_bool	run_philo(t_data *data)
 		unlock_mutex(&data->data_lock);
 		if (pthread_create(
 				&data->philo[i].life_thread, NULL, live, (void *)data))
-			return (FAIL);
+			exit_error("pthread_create() failed", data);
 		usleep(100);
 		i++;
 	}
-	if (!waiting_for_the_end(data))
-		return (FAIL);
-	return (SUCCESS);
+	waiting_for_the_end(data);
 }

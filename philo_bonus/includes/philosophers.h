@@ -6,13 +6,14 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/15 16:05:27 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/19 12:14:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
+# include <sys/types.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -22,10 +23,11 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <semaphore.h>
-# include <sys/types.h>
 # include <sys/wait.h>
 # include <signal.h>
 # include "typedef.h"
+
+#include <errno.h>
 
 /***   LIBFT   ***/
 
@@ -46,7 +48,7 @@ char			*ft_itoa(int n);
 
 unsigned long	get_time(void);
 void			usleep_in_ms(unsigned long time_in_ms);
-void			smart_usleep_in_ms(int time, t_philo *philo, t_data *data);
+void			smart_usleep_in_ms(int time, t_philo *philo);
 t_bool			time_is_valid(unsigned long time);
 
 /***   INIT   ***/
@@ -54,10 +56,12 @@ t_bool			time_is_valid(unsigned long time);
 t_data			*setup_data(int argc);
 t_bool			fill_and_check_parameters(char **argv, t_data *data);
 void			init_philo(t_data *data);
+void			open_semaphore(sem_t **semaphore, char *name,
+					int nb_of_resources, t_data *data);
 
 /***   PHILO   ***/
 
-t_bool			run_philo(t_data *data);
+void			run_philo(t_data *data);
 int				live(t_philo *philo, t_data *data);
 t_bool			philo_takes_forks(t_philo *philo, t_data *data);
 void			philo_eats(t_philo *philo, t_data *data);
@@ -67,8 +71,8 @@ void			philo_sleeps_then_thinks(t_philo *philo, t_data *data);
 
 void			display_status(int status, t_philo *philo, t_data *data);
 void			*supervise_life_philo(void *void_data);
-t_bool			someone_died(t_philo *philo, t_data *data);
-t_bool			not_enough_meals(t_philo *philo, t_data *data);
+t_bool			philo_is_dead(t_philo *philo);
+t_bool			had_enough_meals(t_philo *philo, t_data *data);
 
 /***   CLEAN   ***/
 
