@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/19 11:29:26 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/19 19:52:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void	*live(void *void_data)
 		philo_eats(philo, data);
 		if (someone_died(data))
 		{
-			unlock_mutex(philo->right_fork);
-			unlock_mutex(&philo->left_fork);
+			unlock_mutex(philo->minor_fork);
+			unlock_mutex(philo->main_fork);
 			break ;
 		}
 		philo_sleeps_then_thinks(philo, data);

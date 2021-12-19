@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:31 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/17 11:21:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/19 19:51:57 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 t_bool	philo_takes_forks(t_philo *philo, t_data *data)
 {
-	lock_mutex(&philo->left_fork);
+	lock_mutex(philo->main_fork);
 	display_status(HAS_A_FORK, philo, data);
-	if (!philo->right_fork)
+	if (!philo->minor_fork)
 	{
 		smart_usleep_in_ms(data->param[TIME_TO_DIE], data);
-		unlock_mutex(&philo->left_fork);
+		unlock_mutex(philo->main_fork);
 		return (FAIL);
 	}
 	if (someone_died(data))
 	{
-		unlock_mutex(&philo->left_fork);
+		unlock_mutex(philo->main_fork);
 		return (FAIL);
 	}
-	lock_mutex(philo->right_fork);
+	lock_mutex(philo->minor_fork);
 	display_status(HAS_A_FORK, philo, data);
 	if (someone_died(data))
 	{
-		unlock_mutex(philo->right_fork);
-		unlock_mutex(&philo->left_fork);
+		unlock_mutex(philo->minor_fork);
+		unlock_mutex(philo->main_fork);
 		return (FAIL);
 	}
 	return (SUCCESS);
@@ -50,8 +50,8 @@ void	philo_eats(t_philo *philo, t_data *data)
 
 void	philo_sleeps_then_thinks(t_philo *philo, t_data *data)
 {
-	unlock_mutex(philo->right_fork);
-	unlock_mutex(&philo->left_fork);
+	unlock_mutex(philo->minor_fork);
+	unlock_mutex(philo->main_fork);
 	display_status(SLEEPING, philo, data);
 	smart_usleep_in_ms(data->param[TIME_TO_SLEEP], data);
 	if (!not_enough_meals(philo, data))

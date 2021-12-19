@@ -6,11 +6,33 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/19 11:29:18 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/19 19:50:49 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	link_main_fork_mutex(t_data *data)
+{
+	int	i;
+	int	nb_philos;
+
+	nb_philos = data->param[NB_OF_PHILO];
+	i = -1;
+	while (++i < nb_philos)
+	{
+		if (i % 2 == 0)
+		{
+			data->philo[i].main_fork = data->philo[i].right_fork;
+			data->philo[i].minor_fork = &data->philo[i].left_fork;
+		}
+		else
+		{
+			data->philo[i].main_fork = &data->philo[i].left_fork;
+			data->philo[i].minor_fork = data->philo[i].right_fork;
+		}
+	}
+}
 
 void	link_right_fork_mutex(t_data *data)
 {
@@ -70,4 +92,5 @@ void	init_philo(t_data *data)
 	if (!create_left_fork_mutex(data))
 		exit_error("pthread_mutex_init() failed", data);
 	link_right_fork_mutex(data);
+	link_main_fork_mutex(data);
 }

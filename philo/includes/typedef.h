@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/19 11:41:46 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/19 19:46:26 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_philo
 	pthread_t		life_insurance;
 	pthread_mutex_t	left_fork;
 	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*main_fork;
+	pthread_mutex_t	*minor_fork;
 	pthread_mutex_t	meal_lock;
 }					t_philo;
 
