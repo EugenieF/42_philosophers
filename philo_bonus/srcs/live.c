@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/19 12:20:23 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/19 12:57:01 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ t_bool	had_enough_meals(t_philo *philo, t_data *data)
 
 static void	life_insurance(t_philo *philo, t_data *data)
 {
-	printf("before | sem_name = %s | errno = %s\n", philo->sem_name, strerror(errno));
 	sem_unlink(philo->sem_name);
 	open_semaphore(&philo->meal_lock, philo->sem_name, 1, data);
-	printf("after | sem_name = %s | errno = %s\n", philo->sem_name, strerror(errno));
 	if (pthread_create(
 			&philo->life_insurance, NULL, supervise_life_philo, (void *)data))
 		exit_error("pthread_create() failed", data);
