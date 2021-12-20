@@ -6,39 +6,26 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:49 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 15:47:48 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/19 12:08:11 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_bool	destroy_mutex(pthread_mutex_t *mutex)
+void	unlink_semaphores(void)
 {
-	int	ret;
-
-	ret = pthread_mutex_destroy(mutex);
-	if (ret != 0)
-		return (FAIL);
-	return (SUCCESS);
+	sem_unlink("/sem_forks");
+	sem_unlink("/sem_writing");
+	sem_unlink("/sem_end");
 }
 
-t_bool	clean_mutex(t_data *data)
+t_bool	close_semaphores(t_data *data)
 {
-	int	i;
-
-	// unlock_mutex(&data->end_lock);
-	if (!destroy_mutex(&data->writing_lock)
-		|| !destroy_mutex(&data->data_lock)
-		|| !destroy_mutex(&data->end_lock))
+	if (sem_close(data->forks_lock) != 0
+		|| sem_close(data->writing_lock) != 0
+		|| sem_close(data->end_lock) != 0)
 		return (FAIL);
-	i = 0;
-	while (data->philo && i < data->param[NB_OF_PHILO])
-	{
-		if (!destroy_mutex(&data->philo[i].left_fork)
-			|| !destroy_mutex(&data->philo[i].meal_lock))
-			return (FAIL);
-		i++;
-	}
+	unlink_semaphores();
 	return (SUCCESS);
 }
 
@@ -80,15 +67,15 @@ void	cleanup(t_data *data)
 {
 	if (!data)
 		return ;
-	if (!clean_mutex(data))
-		exit_error_cleanup("pthread_mutex_destroy()", data);
+	if (data->status)
+		free_status(data);
 	if (data->philo)
 	{
+		if (!close_semaphores(data))
+			exit_error_cleanup("sem_close()", data);
 		free(data->philo);
 		data->philo = NULL;
 	}
-	if (data->status)
-		free_status(data);
 	if (data->param)
 	{
 		free(data->param);

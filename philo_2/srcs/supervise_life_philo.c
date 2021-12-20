@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 15:56:58 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/20 15:40:37 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_bool	meals_count_reached(t_philo *philo, t_data *data)
 	{
 		data->count_meals++;
 		philo->done = TRUE;
+		// printf("\ncount meals = %d\n", data->count_meals);
 	}
 	unlock_mutex(&philo->meal_lock);
 	if (data->count_meals >= data->param[NB_OF_PHILO])
@@ -69,7 +70,9 @@ void	*supervise_life_philo(void *void_data)
 		if (meals_count_reached(philo, data)
 			|| philo_died(philo, data))
 		{
-			unlock_mutex(&data->end_lock);
+			lock_mutex(&data->data_lock);
+			data->finish++;
+			unlock_mutex(&data->data_lock);
 			return (NULL);
 		}
 		usleep(100);

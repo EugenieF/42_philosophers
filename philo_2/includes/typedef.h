@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 15:48:39 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/20 10:29:39 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_data
 	char			**status;
 	pthread_mutex_t	writing_lock;
 	pthread_mutex_t	data_lock;
-	pthread_mutex_t	end_lock;
+	int				finish;
 }					t_data;
 
 #endif

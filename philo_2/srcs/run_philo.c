@@ -6,17 +6,30 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 15:46:27 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/20 12:33:46 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+static t_bool	program_completed(t_data *data)
+{
+	int	ret;
+
+	ret = FALSE;
+	lock_mutex(&data->data_lock);
+	if (data->finish == data->param[NB_OF_PHILO])
+		ret = TRUE;
+	unlock_mutex(&data->data_lock);
+	return (ret);
+}
+
 static void	waiting_for_the_end(t_data *data)
 {
 	int	i;
 
-	lock_mutex(&data->end_lock);
+	while (!program_completed(data))
+		usleep(100);
 	i = -1;
 	while (++i < data->param[NB_OF_PHILO])
 	{

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 10:41:12 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/15 17:17:05 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/20 15:53:26 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*ft_itoa(int n)
 
 	nb = n;
 	len = nbrlen(n);
-	ret = malloc(sizeof(char) * (len + 1));
+	ret = ft_calloc(1, sizeof(char) * (len + 1));
 	if (!ret)
 		return (NULL);
 	ret[len--] = 0;

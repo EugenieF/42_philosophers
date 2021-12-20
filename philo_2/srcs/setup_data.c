@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:35 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 15:48:57 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/20 10:29:47 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,8 @@ static void	create_status(t_data *data)
 t_bool	create_locks(t_data *data)
 {
 	if (pthread_mutex_init(&data->writing_lock, NULL)
-		|| pthread_mutex_init(&data->end_lock, NULL)
 		|| pthread_mutex_init(&data->data_lock, NULL))
 		return (FAIL);
-	lock_mutex(&data->end_lock);
 	return (SUCCESS);
 }
 
@@ -68,6 +66,7 @@ void	set_to_null(t_data *data)
 	data->philo = NULL;
 	data->need_count_meals = FALSE;
 	data->count_meals = 0;
+	data->finish = 0;
 }
 
 t_data	*setup_data(int argc)

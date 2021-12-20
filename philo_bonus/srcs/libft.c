@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 18:28:10 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/15 17:19:12 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/20 16:03:44 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	d = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	d = ft_calloc(1, sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!d)
 		return (NULL);
 	i = 0;

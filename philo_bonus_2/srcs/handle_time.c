@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:07 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 15:57:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/19 11:46:09 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	usleep_in_ms(unsigned long time_in_ms)
 		usleep(100);
 }
 
-void	smart_usleep_in_ms(int time, t_data *data)
+void	smart_usleep_in_ms(int time, t_philo *philo)
 {
 	unsigned long	start_time;
 	unsigned long	time_in_ms;
@@ -49,7 +49,7 @@ void	smart_usleep_in_ms(int time, t_data *data)
 	{
 		while ((get_time() - start_time < time_in_ms))
 		{
-			if (someone_died(data))
+			if (philo_is_dead(philo))
 				break ;
 			usleep(100);
 		}

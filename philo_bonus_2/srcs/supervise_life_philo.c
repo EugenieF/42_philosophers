@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 15:56:58 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/19 13:17:18 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,43 +16,32 @@ t_bool	meals_count_reached(t_philo *philo, t_data *data)
 {
 	int	ret;
 
-	ret = FALSE;
-	lock_mutex(&data->data_lock);
-	if (!data->need_count_meals)
-	{
-		unlock_mutex(&data->data_lock);
+	if (data->count_meals == NO_NEED)
 		return (FALSE);
-	}
-	lock_mutex(&philo->meal_lock);
-	if (!philo->done
-		&& philo->nb_of_meals >= data->param[NB_OF_MEALS])
-	{
-		data->count_meals++;
-		philo->done = TRUE;
-	}
-	unlock_mutex(&philo->meal_lock);
-	if (data->count_meals >= data->param[NB_OF_PHILO])
+	ret = FALSE;
+	sem_wait(philo->meal_lock);
+	if (philo->nb_of_meals >= data->param[NB_OF_MEALS])
 		ret = TRUE;
-	unlock_mutex(&data->data_lock);
+	sem_post(philo->meal_lock);
 	return (ret);
 }
 
 t_bool	philo_died(t_philo *philo, t_data *data)
 {
+	int				ret;
 	unsigned long	time_to_die;
 
+	ret = FALSE;
 	time_to_die = (unsigned long)data->param[TIME_TO_DIE];
-	if (someone_died(data))
-		return (TRUE);
-	lock_mutex(&philo->meal_lock);
+	sem_wait(philo->meal_lock);
 	if (time_to_die < get_time() - philo->last_meal)
 	{
-		unlock_mutex(&philo->meal_lock);
-		display_death(philo, data);
-		return (TRUE);
+		display_status(DEAD, philo, data);
+		sem_post(data->end_lock);
+		ret = TRUE;
 	}
-	unlock_mutex(&philo->meal_lock);
-	return (FALSE);
+	sem_post(philo->meal_lock);
+	return (ret);
 }
 
 void	*supervise_life_philo(void *void_data)
@@ -61,17 +50,12 @@ void	*supervise_life_philo(void *void_data)
 	t_philo		*philo;
 
 	data = (t_data *)void_data;
-	lock_mutex(&data->data_lock);
 	philo = &data->philo[data->i];
-	unlock_mutex(&data->data_lock);
 	while (1)
 	{
 		if (meals_count_reached(philo, data)
 			|| philo_died(philo, data))
-		{
-			unlock_mutex(&data->end_lock);
 			return (NULL);
-		}
 		usleep(100);
 	}
 }

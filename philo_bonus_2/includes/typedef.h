@@ -6,14 +6,12 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 15:48:39 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/19 11:56:55 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPEDEF_H
 # define TYPEDEF_H
-
-typedef int	t_bool;
 
 typedef enum s_status
 {
@@ -34,42 +32,45 @@ typedef enum s_param
 	NB_OF_MEALS		= 4,
 }	t_param;
 
+typedef int	t_bool;
+
 typedef enum e_boolean
 {
-	FAIL		= 0,
-	SUCCESS		= 1,
-	FALSE		= 0,
-	TRUE		= 1,
+	CHILD			= 0,
+	FAIL			= 0,
+	SUCCESS			= 1,
+	FALSE			= 0,
+	TRUE			= 1,
+	NO_NEED			= 0,
+	NEEDED			= 1,
+	DEATH			= 2,
+	MEALS_REACHED	= 3,
 }		t_boolean;
 
 typedef struct s_philo
 {
 	int				num;
 	unsigned long	last_meal;
-	int				nb_of_meals;
-	t_bool			done;
-	pthread_t		life_thread;
+	int				nb_of_meals;		
+	t_bool			is_dead;
+	pid_t			pid;
 	pthread_t		life_insurance;
-	pthread_mutex_t	left_fork;
-	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	*main_fork;
-	pthread_mutex_t	*minor_fork;
-	pthread_mutex_t	meal_lock;
+	sem_t			*meal_lock;
+	char			*sem_name;
 }					t_philo;
 
 typedef struct s_data
 {
 	int				i;
 	unsigned long	start_time;
-	t_bool			someone_died;
-	t_bool			need_count_meals;
+	t_bool			meals_reached;
 	int				count_meals;
 	int				*param;
-	t_philo			*philo;
 	char			**status;
-	pthread_mutex_t	writing_lock;
-	pthread_mutex_t	data_lock;
-	pthread_mutex_t	end_lock;
+	t_philo			*philo;
+	sem_t			*writing_lock;
+	sem_t			*end_lock;
+	sem_t			*forks_lock;
 }					t_data;
 
 #endif
