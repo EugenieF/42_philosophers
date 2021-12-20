@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/19 19:52:16 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/20 12:35:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,15 @@ t_bool	someone_died(t_data *data)
 	return (ret);
 }
 
-t_bool	not_enough_meals(t_philo *philo, t_data *data)
+t_bool	had_enough_meals(t_data *data)
 {
 	int	ret;
 
 	ret = FALSE;
 	lock_mutex(&data->data_lock);
-	if (data->count_meals == NO_NEED)
-	{
-		unlock_mutex(&data->data_lock);
-		return (TRUE);
-	}
-	unlock_mutex(&data->data_lock);
-	lock_mutex(&philo->meal_lock);
-	if (philo->nb_of_meals < data->param[NB_OF_MEALS])
+	if (data->need_count_meals && data->count_meals >= data->param[NB_OF_PHILO])
 		ret = TRUE;
-	unlock_mutex(&philo->meal_lock);
+	unlock_mutex(&data->data_lock);
 	return (ret);
 }
 
@@ -64,15 +57,15 @@ void	*live(void *void_data)
 	life_insurance(philo, data);
 	if (philo->num % 2 == 0)
 		smart_usleep_in_ms(data->param[TIME_TO_EAT], data);
-	while (not_enough_meals(philo, data) && !someone_died(data))
+	while (!had_enough_meals(data) && !someone_died(data))
 	{
 		if (!philo_takes_forks(philo, data))
 			break ;
 		philo_eats(philo, data);
 		if (someone_died(data))
 		{
-			unlock_mutex(philo->minor_fork);
 			unlock_mutex(philo->main_fork);
+			unlock_mutex(philo->minor_fork);
 			break ;
 		}
 		philo_sleeps_then_thinks(philo, data);

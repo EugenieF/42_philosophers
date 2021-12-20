@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:29:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/15 20:44:30 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/20 11:00:40 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,6 @@ t_bool	fill_and_check_parameters(char **argv, t_data *data)
 		data->param[j++] = (int)nb;
 	}
 	if (i == 6)
-		data->count_meals = NEEDED;
+		data->need_count_meals = TRUE;
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/19 19:46:26 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/20 10:29:39 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ typedef enum e_boolean
 	SUCCESS		= 1,
 	FALSE		= 0,
 	TRUE		= 1,
-	NO_NEED		= 0,
-	NEEDED		= 1,
 }		t_boolean;
 
 typedef struct s_philo
@@ -64,6 +62,7 @@ typedef struct s_data
 	int				i;
 	unsigned long	start_time;
 	t_bool			someone_died;
+	t_bool			need_count_meals;
 	int				count_meals;
 	int				*param;
 	t_philo			*philo;

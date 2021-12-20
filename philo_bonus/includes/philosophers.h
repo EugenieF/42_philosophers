@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/19 12:14:50 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/20 14:32:53 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include "typedef.h"
-
-#include <errno.h>
 
 /***   LIBFT   ***/
 

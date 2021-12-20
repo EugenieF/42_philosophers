@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/19 19:50:49 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/20 12:34:47 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void	link_main_fork_mutex(t_data *data)
 	{
 		if (i % 2 == 0)
 		{
-			data->philo[i].main_fork = data->philo[i].right_fork;
-			data->philo[i].minor_fork = &data->philo[i].left_fork;
+			data->philo[i].main_fork = &data->philo[i].left_fork;
+			data->philo[i].minor_fork = data->philo[i].right_fork;
 		}
 		else
 		{
-			data->philo[i].main_fork = &data->philo[i].left_fork;
-			data->philo[i].minor_fork = data->philo[i].right_fork;
+			data->philo[i].main_fork = data->philo[i].right_fork;
+			data->philo[i].minor_fork = &data->philo[i].left_fork;
 		}
 	}
 }
@@ -84,7 +84,7 @@ void	init_philo(t_data *data)
 	{
 		data->philo[i].last_meal = data->start_time;
 		data->philo[i].nb_of_meals = 0;
-		data->philo[i].done = 0;
+		data->philo[i].done = FALSE;
 		data->philo[i].num = i + 1;
 		i++;
 	}

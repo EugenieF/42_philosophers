@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/19 11:29:44 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/20 12:33:46 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	waiting_for_the_end(t_data *data)
 		if (pthread_join(data->philo[i].life_thread, NULL))
 			exit_error("pthread_join() failed", data);
 	}
-	if (data->count_meals > data->param[NB_OF_PHILO])
+	if (data->need_count_meals && data->count_meals >= data->param[NB_OF_PHILO])
 	{
 		printf("\n    All %d philosophers ", data->param[NB_OF_PHILO]);
 		printf("ate their %d meals\n", data->param[NB_OF_MEALS]);
@@ -58,7 +58,7 @@ void	run_philo(t_data *data)
 		if (pthread_create(
 				&data->philo[i].life_thread, NULL, live, (void *)data))
 			exit_error("pthread_create() failed", data);
-		usleep(100);
+		usleep(1000);
 		i++;
 	}
 	waiting_for_the_end(data);

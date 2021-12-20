@@ -1,3 +1,5 @@
 .vscode/
 .DS_STORE
 *.o
+philo/objs
+philo_bonus/objs
