@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/21 12:36:28 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/21 13:42:15 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_bool	philo_died(t_philo *philo, t_data *data)
 	if (time_to_die < get_time() - philo->last_meal)
 	{
 		display_status(DEAD, philo, data);
+		philo->is_dead = TRUE;
 		ret = TRUE;
 	}
 	sem_post(philo->meal_lock);
