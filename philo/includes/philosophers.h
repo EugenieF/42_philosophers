@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 10:35:55 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/21 15:28:58 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int				ft_isspace(char c);
 void			ft_putstr_fd(char *s, int fd);
 void			*ft_calloc(int count, int size);
 void			clean_free(char **str);
-int				ft_atoi(const char *str);
+long			ft_atoi(const char *str);
 char			*ft_strdup(const char *s1);
 int				ft_strlen(const char *s);
 void			*ft_memset(void *b, int c, int len);
@@ -40,6 +40,9 @@ char			*ft_itoa(int n);
 
 int				lock_mutex(pthread_mutex_t *mutex);
 int				unlock_mutex(pthread_mutex_t *mutex);
+int				handle_zero_meals(t_data *data);
+void			exit_error(char *message, t_data *data);
+void			exit_error_cleanup(char *message, t_data *data);
 
 /***     TIME     ***/
 
@@ -73,6 +76,5 @@ t_bool			had_enough_meals(t_data *data);
 /***   CLEAN   ***/
 
 void			cleanup(t_data *data);
-void			exit_error(char *message, t_data *data);
 
 #endif

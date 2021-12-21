@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:29:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 11:00:40 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/21 15:23:10 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ int	ft_isspace(char c)
 	return ((c >= 9 && c <= 13) || c == 32);
 }
 
-t_bool	number_is_valid(long nb)
+t_bool	number_is_valid(long nb, int i)
 {
+	if (i == 5)
+		return (nb >= 0 && nb < 2147483648);
 	return (nb > 0 && nb < 2147483648);
 }
 
@@ -59,7 +61,7 @@ t_bool	fill_and_check_parameters(char **argv, t_data *data)
 		if (!argv_is_valid(argv[i]))
 			return (FAIL);
 		nb = ft_atoi(argv[i]);
-		if (!number_is_valid(nb))
+		if (!number_is_valid(nb, i))
 			return (FAIL);
 		data->param[j++] = (int)nb;
 	}

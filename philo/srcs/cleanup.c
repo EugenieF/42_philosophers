@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:49 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 22:52:04 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/21 15:27:19 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,6 @@ void	free_status(t_data *data)
 	}
 	free(data->status);
 	data->status = NULL;
-}
-
-static void	exit_error_cleanup(char *message, t_data *data)
-{
-	ft_putstr_fd("Error: ", 2);
-	ft_putstr_fd(message, 2);
-	ft_putstr_fd(" failed\n", 2);
-	if (data->philo)
-	{
-		free(data->philo);
-		data->philo = NULL;
-	}
-	if (data->param)
-	{
-		free(data->param);
-		data->param = NULL;
-	}
-	free(data);
-	data = NULL;
-	exit(EXIT_FAILURE);
 }
 
 void	cleanup(t_data *data)

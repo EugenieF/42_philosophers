@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 10:41:12 by efrancon          #+#    #+#             */
-/*   Updated: 2021/12/20 16:03:33 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/21 15:23:30 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_itoa(int n)
 	return (ret);
 }
 
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
 	unsigned long	i;
 	unsigned long	res;

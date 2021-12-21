@@ -6,7 +6,7 @@
 #    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/18 22:02:30 by EugenieFr         #+#    #+#              #
-#    Updated: 2021/12/20 14:19:02 by efrancon         ###   ########.fr        #
+#    Updated: 2021/12/21 15:28:24 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,9 @@ SRCS			= main.c \
 				supervise_life_philo.c \
 				handle_time.c \
 				cleanup.c \
+				utils.c \
 				libft.c \
-				libft_2.c \
+				libft_2.c
 
 OBJS_DIR		= ./objs
 
