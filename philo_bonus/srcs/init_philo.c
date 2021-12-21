@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 15:52:22 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/20 22:52:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ void	create_semaphores(t_data *data, int total_philo)
 	unlink_semaphores();
 	open_semaphore(&data->forks_lock, "/sem_forks", total_philo, data);
 	open_semaphore(&data->writing_lock, "/sem_writing", 1, data);
-	open_semaphore(&data->end_lock, "/sem_end", 1, data);
-	sem_wait(data->end_lock);
+	open_semaphore(&data->end_lock, "/sem_end", 0, data);
 }
 
 void	init_philo(t_data *data)
