@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/21 12:31:20 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/21 13:54:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ void	*check_exit_status(void *void_data)
 			exit_status = WEXITSTATUS(exit_status);
 		if (exit_status == MEALS_REACHED)
 			data->count_meals++;
-		if (data->count_meals > data->param[NB_OF_PHILO])
+		if (exit_status == DEATH
+			|| data->count_meals > data->param[NB_OF_PHILO])
 		{
 			sem_post(data->end_lock);
 			return (NULL);
 		}
-		if (exit_status == DEATH)
-			return (NULL);
+		// if (exit_status == DEATH)
+		// 	return (NULL);
 		i = i % data->param[NB_OF_PHILO];
 		usleep(100);
 	}
@@ -45,14 +46,14 @@ void	waiting_for_the_end(t_data *data)
 	int			i;
 	pthread_t	meals_thread;
 
-	if (data->count_meals)
-	{
+	// if (data->count_meals)
+	// {
 		if (pthread_create(
 				&meals_thread, NULL, check_exit_status, (void *)data))
 			exit_error("pthread_create() failed", data);
 		if (pthread_detach(meals_thread))
 			exit_error("pthread_detach() failed", data);
-	}
+	// }
 	sem_wait(data->end_lock);
 	i = 0;
 	while (i < data->param[NB_OF_PHILO])
