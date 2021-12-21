@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:49 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/19 12:08:11 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/21 12:07:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,39 +43,32 @@ void	free_status(t_data *data)
 	data->status = NULL;
 }
 
-static void	exit_error_cleanup(char *message, t_data *data)
+void	free_philo(t_data *data)
 {
-	ft_putstr_fd("Error: ", 2);
-	ft_putstr_fd(message, 2);
-	ft_putstr_fd(" failed\n", 2);
-	if (data->philo)
+	int	i;
+
+	i = -1;
+	while (++i < data->param[NB_OF_PHILO])
 	{
-		free(data->philo);
-		data->philo = NULL;
+		sem_unlink(data->philo[i].sem_name);
+		clean_free(&data->philo[i].sem_name);
 	}
-	if (data->param)
-	{
-		free(data->param);
-		data->param = NULL;
-	}
-	free(data);
-	data = NULL;
-	exit(EXIT_FAILURE);
+	free(data->philo);
+	data->philo = NULL;
 }
 
 void	cleanup(t_data *data)
 {
 	if (!data)
 		return ;
-	if (data->status)
-		free_status(data);
 	if (data->philo)
 	{
 		if (!close_semaphores(data))
 			exit_error_cleanup("sem_close()", data);
-		free(data->philo);
-		data->philo = NULL;
+		free_philo(data);
 	}
+	if (data->status)
+		free_status(data);
 	if (data->param)
 	{
 		free(data->param);

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/19 12:57:01 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/21 12:07:29 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,5 @@ int	live(t_philo *philo, t_data *data)
 	sem_post(philo->meal_lock);
 	if (sem_close(philo->meal_lock))
 		exit_error("sem_close() failed", data);
-	sem_unlink(philo->sem_name);
-	clean_free(&philo->sem_name);
 	return (exit_status);
 }

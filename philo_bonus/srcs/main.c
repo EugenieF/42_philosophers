@@ -6,15 +6,30 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:25 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 10:24:32 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/21 12:04:12 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	check_leaks(void)
+void	exit_error_cleanup(char *message, t_data *data)
 {
-	system("leaks philo_bonus");
+	ft_putstr_fd("Error: ", 2);
+	ft_putstr_fd(message, 2);
+	ft_putstr_fd(" failed\n", 2);
+	if (data->philo)
+	{
+		free(data->philo);
+		data->philo = NULL;
+	}
+	if (data->param)
+	{
+		free(data->param);
+		data->param = NULL;
+	}
+	free(data);
+	data = NULL;
+	exit(EXIT_FAILURE);
 }
 
 void	exit_error(char *message, t_data *data)
@@ -38,6 +53,5 @@ int	main(int argc, char **argv)
 	run_philo(data);
 	printf("----------------------------------------------\n\n");
 	cleanup(data);
-//	atexit(check_leaks);
 	return (0);
 }

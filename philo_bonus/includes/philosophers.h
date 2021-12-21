@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 14:32:53 by efrancon         ###   ########.fr       */
+/*   Updated: 2021/12/21 12:04:24 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ t_bool			had_enough_meals(t_philo *philo, t_data *data);
 void			cleanup(t_data *data);
 void			unlink_semaphores(void);
 void			exit_error(char *message, t_data *data);
+void			exit_error_cleanup(char *message, t_data *data);
 
 #endif
