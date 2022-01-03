@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:49 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/21 15:27:19 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/03 11:17:22 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,11 @@ t_bool	clean_mutex(t_data *data)
 {
 	int	i;
 
-	if (!destroy_mutex(&data->writing_lock)
-		|| !destroy_mutex(&data->data_lock))
+	lock_mutex(&data->data_lock);
+	if (!destroy_mutex(&data->writing_lock))
+		return (FAIL);
+	unlock_mutex(&data->data_lock);
+	if (!destroy_mutex(&data->data_lock))
 		return (FAIL);
 	i = 0;
 	while (data->philo && i < data->param[NB_OF_PHILO])

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/21 14:20:03 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/03 19:16:06 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@ void	*check_exit_status(void *void_data)
 			exit_status = WEXITSTATUS(exit_status);
 		if (exit_status == MEALS_REACHED)
 			data->count_meals++;
-		if (data->count_meals > data->param[NB_OF_PHILO])
+		if (data->count_meals > data->param[NB_OF_PHILO]
+			|| exit_status == DEATH)
 		{
 			sem_post(data->end_lock);
 			return (NULL);
 		}
-		if (exit_status == DEATH)
-			return (NULL);
 		i = i % data->param[NB_OF_PHILO];
 		usleep(100);
 	}
