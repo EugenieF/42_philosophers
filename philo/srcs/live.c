@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/21 11:28:46 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/03 23:30:56 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_bool	had_enough_meals(t_data *data)
 static void	life_insurance(t_philo *philo, t_data *data)
 {
 	if (pthread_create(
-			&philo->life_insurance, NULL, supervise_life_philo, (void *)data))
+			&philo->life_insurance, NULL, supervise_life_philo, (void *)philo))
 		exit_error("pthread_create() failed", data);
 	if (pthread_detach(philo->life_insurance))
 		exit_error("pthread_detach() failed", data);

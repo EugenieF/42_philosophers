@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 12:34:47 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/03 23:24:40 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	init_philo(t_data *data)
 		data->philo[i].nb_of_meals = 0;
 		data->philo[i].done = FALSE;
 		data->philo[i].num = i + 1;
+		data->philo[i].data = data;
 		i++;
 	}
 	data->someone_died = FALSE;

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 10:29:39 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/03 23:29:19 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef enum e_boolean
 	TRUE		= 1,
 }		t_boolean;
 
+struct		s_data;
+
 typedef struct s_philo
 {
 	int				num;
@@ -55,6 +57,7 @@ typedef struct s_philo
 	pthread_mutex_t	*main_fork;
 	pthread_mutex_t	*minor_fork;
 	pthread_mutex_t	meal_lock;
+	struct s_data	*data;
 }					t_philo;
 
 typedef struct s_data

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/21 14:49:46 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/03 23:30:49 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,13 @@ t_bool	philo_died(t_philo *philo, t_data *data)
 	return (FALSE);
 }
 
-void	*supervise_life_philo(void *void_data)
+void	*supervise_life_philo(void *void_philo)
 {
 	t_data		*data;
 	t_philo		*philo;
 
-	data = (t_data *)void_data;
-	lock_mutex(&data->data_lock);
-	philo = &data->philo[data->i];
-	unlock_mutex(&data->data_lock);
+	philo = (t_philo *)void_philo;
+	data = philo->data;
 	while (1)
 	{
 		if (meals_count_reached(philo, data)

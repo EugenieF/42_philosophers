@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/21 11:29:25 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/03 23:13:17 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	run_philo(t_data *data)
 		if (pthread_create(
 				&data->philo[i].life_thread, NULL, live, (void *)data))
 			exit_error("pthread_create() failed", data);
-		usleep(1000);
+		usleep(100);
 		i++;
 	}
 	waiting_for_the_end(data);

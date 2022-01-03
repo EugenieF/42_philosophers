@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/03 19:16:06 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/03 22:38:10 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,12 @@ void	waiting_for_the_end(t_data *data)
 		if (pthread_create(
 				&meals_thread, NULL, check_exit_status, (void *)data))
 			exit_error("pthread_create() failed", data);
+		sem_wait(data->end_lock);
 		if (pthread_detach(meals_thread))
 			exit_error("pthread_detach() failed", data);
 	}
-	sem_wait(data->end_lock);
+	else
+		sem_wait(data->end_lock);
 	i = 0;
 	while (i < data->param[NB_OF_PHILO])
 		kill(data->philo[i++].pid, SIGKILL);
