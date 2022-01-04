@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/04 14:21:20 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/04 22:17:49 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	run_philo(t_data *data)
 	printf("----------------------------------------------\n");
 	while (i < data->param[NB_OF_PHILO])
 	{
-		data->i = i;
 		data->philo[i].pid = fork();
 		if (data->philo[i].pid < 0)
 			exit_error("fork() failed", data);

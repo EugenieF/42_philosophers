@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/04 11:31:06 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/04 22:23:50 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ typedef enum e_boolean
 	MEALS_REACHED	= 3,
 }		t_boolean;
 
+struct		s_data;
+
 typedef struct s_philo
 {
 	int				num;
@@ -57,15 +59,13 @@ typedef struct s_philo
 	pthread_t		life_insurance;
 	sem_t			*meal_lock;
 	char			*sem_name;
+	struct s_data	*data;
 }					t_philo;
 
 typedef struct s_data
 {
-	int				i;
 	unsigned long	start_time;
-	t_bool			meals_reached;
 	int				count_meals;
-	t_bool			someone_is_dead;
 	int				*param;
 	char			**status;
 	t_philo			*philo;

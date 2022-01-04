@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/04 11:32:18 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/04 22:14:37 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	init_philo(t_data *data)
 		data->philo[i].is_dead = FALSE;
 		num_str = ft_itoa(i + 1);
 		data->philo[i].sem_name = ft_strjoin("/sem_meal", num_str);
+		data->philo[i].data = data;
 		clean_free(&num_str);
 		i++;
 	}

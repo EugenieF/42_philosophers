@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/04 15:55:55 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/04 22:03:19 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,10 @@ void	run_philo(t_data *data)
 	printf("----------------------------------------------\n");
 	while (i < data->param[NB_OF_PHILO])
 	{
-		lock_mutex(&data->data_lock);
-		data->i = i;
-		unlock_mutex(&data->data_lock);
-		if (pthread_create(
-				&data->philo[i].life_thread, NULL, live, (void *)data))
+		if (pthread_create(&data->philo[i].life_thread,
+				NULL, live, (void *)&data->philo[i]))
 			exit_error("pthread_create() failed", data);
-		usleep(100);
+		usleep(500);
 		i++;
 	}
 	waiting_for_the_end(data);

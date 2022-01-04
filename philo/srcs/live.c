@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/04 16:19:13 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/04 22:21:35 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,17 @@ static void	life_insurance(t_philo *philo, t_data *data)
 	if (pthread_create(
 			&philo->life_insurance, NULL, supervise_life_philo, (void *)philo))
 		exit_error("pthread_create() failed", data);
-	int ret = pthread_detach(philo->life_insurance);
-	if (ret)
-	{
-		printf("ret = %d\n", ret);
+	if (pthread_detach(philo->life_insurance))
 		exit_error("pthread_detach() failed", data);
-	}
 }
 
-void	*live(void *void_data)
+void	*live(void *void_philo)
 {
 	t_data		*data;
 	t_philo		*philo;
 
-	data = (t_data *)void_data;
-	lock_mutex(&data->data_lock);
-	philo = &data->philo[data->i];
-	unlock_mutex(&data->data_lock);
+	philo = (t_philo *)void_philo;
+	data = philo->data;
 	life_insurance(philo, data);
 	if (philo->num % 2 == 0)
 		smart_usleep_in_ms(data->param[TIME_TO_EAT], data);
@@ -75,7 +69,5 @@ void	*live(void *void_data)
 		}
 		philo_sleeps_then_thinks(philo, data);
 	}
-	// if (pthread_join(philo->life_insurance, NULL))
-	// 	exit_error("pthread_join() failed", data);
 	return (NULL);
 }

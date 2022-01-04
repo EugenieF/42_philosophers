@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/04 14:22:55 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/04 22:13:12 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,24 @@ t_bool	philo_is_dead(t_philo *philo)
 	return (ret);
 }
 
+t_bool	had_enough_meals(t_philo *philo, t_data *data)
+{
+	int	ret;
+
+	ret = FALSE;
+	if (data->count_meals == NO_NEED)
+		return (ret);
+	sem_wait(philo->meal_lock);
+	if (philo->nb_of_meals >= data->param[NB_OF_MEALS])
+		ret = TRUE;
+	sem_post(philo->meal_lock);
+	return (ret);
+}
+
 static void	life_insurance(t_philo *philo, t_data *data)
 {
 	if (pthread_create(
-			&philo->life_insurance, NULL, supervise_life_philo, (void *)data))
+			&philo->life_insurance, NULL, supervise_life_philo, (void *)philo))
 		exit_error("pthread_create() failed", data);
 	if (pthread_detach(philo->life_insurance))
 		exit_error("pthread_detach() failed", data);

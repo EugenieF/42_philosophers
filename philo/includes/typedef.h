@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/04 16:13:02 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/04 22:03:33 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	int				i;
 	unsigned long	start_time;
 	t_bool			someone_died;
 	t_bool			need_count_meals;
