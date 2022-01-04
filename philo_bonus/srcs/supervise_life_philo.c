@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/03 22:35:12 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/04 14:24:37 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,20 @@ t_bool	philo_died(t_philo *philo, t_data *data)
 	return (ret);
 }
 
+t_bool	had_enough_meals(t_philo *philo, t_data *data)
+{
+	int	ret;
+
+	ret = FALSE;
+	if (data->count_meals == NO_NEED)
+		return (ret);
+	sem_wait(philo->meal_lock);
+	if (philo->nb_of_meals >= data->param[NB_OF_MEALS])
+		ret = TRUE;
+	sem_post(philo->meal_lock);
+	return (ret);
+}
+
 void	*supervise_life_philo(void *void_data)
 {
 	t_data		*data;
@@ -41,10 +55,18 @@ void	*supervise_life_philo(void *void_data)
 	{
 		if (philo_died(philo, data))
 		{
-			sem_post(data->end_lock);
-			if (sem_close(philo->meal_lock))
-				exit_error("sem_close() failed", data);
-			return (NULL);
+			if (!data->count_meals)
+			{
+				sem_post(data->end_lock);
+				if (sem_close(philo->meal_lock))
+					exit_error("sem_close() failed", data);
+				return (NULL);
+			}
+			else
+			{
+				exit(DEATH);
+				return (NULL);
+			}
 		}
 		usleep(100);
 	}

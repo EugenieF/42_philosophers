@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/03 22:38:10 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/04 14:21:20 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void	*check_exit_status(void *void_data)
 	while (1)
 	{
 		exit_status = 0;
-		waitpid(data->philo[++i].pid, &exit_status, 0);
+		waitpid(data->philo[++i].pid, &exit_status, WNOHANG);
 		if (WIFEXITED(exit_status))
 			exit_status = WEXITSTATUS(exit_status);
 		if (exit_status == MEALS_REACHED)
 			data->count_meals++;
-		if (data->count_meals > data->param[NB_OF_PHILO]
-			|| exit_status == DEATH)
+		if (exit_status == DEATH
+			|| data->count_meals > data->param[NB_OF_PHILO])
 		{
 			sem_post(data->end_lock);
 			return (NULL);
@@ -49,9 +49,9 @@ void	waiting_for_the_end(t_data *data)
 		if (pthread_create(
 				&meals_thread, NULL, check_exit_status, (void *)data))
 			exit_error("pthread_create() failed", data);
-		sem_wait(data->end_lock);
 		if (pthread_detach(meals_thread))
 			exit_error("pthread_detach() failed", data);
+		sem_wait(data->end_lock);
 	}
 	else
 		sem_wait(data->end_lock);
@@ -68,7 +68,6 @@ void	waiting_for_the_end(t_data *data)
 void	run_philo(t_data *data)
 {
 	int	i;
-	int	exit_status;
 
 	i = 0;
 	printf("  TIME IN MS\t  PHILO Nᵒ\tSTATE\n");
@@ -80,11 +79,8 @@ void	run_philo(t_data *data)
 		if (data->philo[i].pid < 0)
 			exit_error("fork() failed", data);
 		else if (data->philo[i].pid == CHILD)
-		{
-			exit_status = live(&data->philo[i], data);
-			exit(exit_status);
-		}
-		usleep(100);
+			live(&data->philo[i], data);
+		usleep(1000);
 		i++;
 	}
 	waiting_for_the_end(data);

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/21 15:29:43 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/04 14:04:51 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void			open_semaphore(sem_t **semaphore, char *name,
 /***   PHILO   ***/
 
 void			run_philo(t_data *data);
-int				live(t_philo *philo, t_data *data);
+void			live(t_philo *philo, t_data *data);
 t_bool			philo_takes_forks(t_philo *philo, t_data *data);
 void			philo_eats(t_philo *philo, t_data *data);
 void			philo_sleeps_then_thinks(t_philo *philo, t_data *data);

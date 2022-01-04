@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/21 15:28:58 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/04 15:47:03 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include "typedef.h"
+
+#include <errno.h>
 
 /***   LIBFT   ***/
 
@@ -71,7 +73,7 @@ void			display_death(t_philo *philo, t_data *data);
 
 void			*supervise_life_philo(void *void_data);
 t_bool			someone_died(t_data *data);
-t_bool			had_enough_meals(t_data *data);
+t_bool			had_enough_meals(t_philo *philo, t_data *data);
 
 /***   CLEAN   ***/
 

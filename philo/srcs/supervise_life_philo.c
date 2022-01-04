@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/03 23:30:49 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/04 16:19:44 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	*supervise_life_philo(void *void_philo)
 	data = philo->data;
 	while (1)
 	{
-		if (meals_count_reached(philo, data)
-			|| philo_died(philo, data))
+		if (philo_died(philo, data)
+			|| meals_count_reached(philo, data))
 		{
 			lock_mutex(&data->data_lock);
 			data->finish++;
