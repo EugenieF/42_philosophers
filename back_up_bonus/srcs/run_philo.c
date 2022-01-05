@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/05 15:20:46 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:35:36 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ void	*check_exit_status(void *void_data)
 	t_data	*data;
 
 	data = (t_data *)void_data;
-	i = 0;
+	i = -1;
 	while (1)
 	{
 		exit_status = 0;
-		waitpid(data->philo[i].pid, &exit_status, WNOHANG);
-		// printf("i = %d | pid = %d\n", i, data->philo[i].pid);
-		// waitpid(data->philo[i].pid, &exit_status, 0);
+		waitpid(data->philo[++i].pid, &exit_status, WNOHANG);
+		// waitpid(data->philo[++i].pid, &exit_status, 0);
 		if (WIFEXITED(exit_status))
 			exit_status = WEXITSTATUS(exit_status);
+		// printf("exit_status = %d\n", exit_status);
 		if (exit_status == DEATH)
 		{
 			sem_post(data->end_lock);
@@ -40,7 +40,6 @@ void	*check_exit_status(void *void_data)
 			sem_post(data->end_lock);
 			return (NULL);
 		}
-		i++;
 		i = i % data->param[NB_OF_PHILO];
 		usleep(100);
 	}
@@ -58,8 +57,10 @@ void	waiting_for_the_end(t_data *data)
 			exit_error("pthread_create() failed", data);
 		if (pthread_detach(meals_thread))
 			exit_error("pthread_detach() failed", data);
+		sem_wait(data->end_lock);
 	}
-	sem_wait(data->end_lock);
+	else
+		sem_wait(data->end_lock);
 	i = 0;
 	while (i < data->param[NB_OF_PHILO])
 		kill(data->philo[i++].pid, SIGKILL);

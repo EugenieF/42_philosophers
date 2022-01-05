@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/05 15:23:22 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:21:48 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	*supervise_life_philo(void *void_philo)
 		{
 			if (!data->count_meals)
 			{
+				sem_post(data->end_lock);
 				if (sem_close(philo->meal_lock))
 					exit_error("sem_close() failed", data);
-				sem_post(data->end_lock);
 				return (NULL);
 			}
 			else

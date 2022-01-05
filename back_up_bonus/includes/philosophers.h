@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/05 15:01:36 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:23:49 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ t_bool			had_enough_meals(t_philo *philo, t_data *data);
 void			cleanup(t_data *data);
 void			free_philo(t_data *data);
 void			free_status(t_data *data);
-t_bool			close_semaphores(t_data *data);
 void			unlink_semaphores(void);
 void			cleanup_fork(t_data *data);
 

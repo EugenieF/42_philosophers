@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/05 15:23:28 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:27:34 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	live(t_philo *philo, t_data *data)
 		philo_eats(philo, data);
 		philo_sleeps_then_thinks(philo, data);
 	}
+	printf("I'm here !\n");
 	cleanup_fork(data);
 	exit(MEALS_REACHED);
 }
