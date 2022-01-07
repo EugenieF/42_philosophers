@@ -6,59 +6,34 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/05 21:55:20 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/07 21:34:09 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	*check_exit_status(void *void_data)
+void	check_exit_status(t_data *data)
 {
 	int		i;
 	int		exit_status;
-	t_data	*data;
 
-	data = (t_data *)void_data;
 	i = 0;
-	while (1)
+	exit_status = 0;
+	waitpid(-1, &exit_status, 0);
+	if (WIFEXITED(exit_status))
+		exit_status = WEXITSTATUS(exit_status);
+	if (exit_status == MEALS_REACHED)
 	{
-		exit_status = 0;
-		waitpid(data->philo[i].pid, &exit_status, WNOHANG);
-		// waitpid(data->philo[i].pid, &exit_status, 0);
-		// printf("i = %d | pid = %d\n", i, data->philo[i].pid);
-		if (WIFEXITED(exit_status))
-			exit_status = WEXITSTATUS(exit_status);
-		if (exit_status == MEALS_REACHED)
-		{
-			// printf("EXITED : %d\n", exit_status);
-			data->count_meals++;
-		}
-		if (exit_status == DEATH
-			|| data->count_meals > data->param[NB_OF_PHILO])
-		{
-			sem_post(data->end_lock);
-			return (NULL);
-		}
-		i++;
-		i = i % data->param[NB_OF_PHILO];
-		usleep(100);
+		data->count_meals++;
+		if (data->count_meals <= data->param[NB_OF_PHILO])
+			check_exit_status(data);
 	}
 }
 
-void	waiting_for_the_end(t_data *data)
+static void	end_philo(t_data *data)
 {
 	int			i;
-	pthread_t	meals_thread;
 
-	if (data->count_meals)
-	{
-		if (pthread_create(
-				&meals_thread, NULL, check_exit_status, (void *)data))
-			exit_error("pthread_create() failed", data);
-		if (pthread_detach(meals_thread))
-			exit_error("pthread_detach() failed", data);
-	}
-	sem_wait(data->end_lock);
 	i = 0;
 	while (i < data->param[NB_OF_PHILO])
 		kill(data->philo[i++].pid, SIGKILL);
@@ -86,5 +61,6 @@ void	run_philo(t_data *data)
 		usleep(1000);
 		i++;
 	}
-	waiting_for_the_end(data);
+	check_exit_status(data);
+	end_philo(data);
 }

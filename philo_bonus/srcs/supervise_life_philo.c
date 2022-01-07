@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/05 22:26:03 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/07 21:32:40 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ t_bool	philo_died(t_philo *philo, t_data *data)
 	time_to_die = (unsigned long)data->param[TIME_TO_DIE];
 	sem_wait(philo->meal_lock);
 	if (time_to_die < get_time() - philo->last_meal)
-	{
-		philo->is_dead = TRUE;
 		ret = TRUE;
-	}
 	sem_post(philo->meal_lock);
 	return (ret);
 }
@@ -33,28 +30,19 @@ void	*supervise_life_philo(void *void_philo)
 {
 	t_data		*data;
 	t_philo		*philo;
+	int			i;
 
+	i = -1;
 	philo = (t_philo *)void_philo;
 	data = philo->data;
 	while (1)
 	{
 		if (philo_died(philo, data))
 		{
-			if (!data->count_meals)
-			{
-				if (sem_close(philo->meal_lock))
-					exit_error("sem_close() failed", data);
-				display_status(DEAD, philo, data);
-				sem_post(data->end_lock);
-				return (NULL);
-			}
-			else
-			{
-				// cleanup_fork(data);
-				display_status(DEAD, philo, data);
-				exit(DEATH);
-				return (NULL);
-			}
+			display_status(DEAD, philo, data);
+			sem_close(philo->meal_lock);
+			exit(DEATH);
+			return (NULL);
 		}
 		usleep(100);
 	}

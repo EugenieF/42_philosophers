@@ -6,33 +6,20 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/05 21:54:04 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/07 21:33:03 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-t_bool	philo_is_dead(t_philo *philo)
-{
-	int				ret;
-
-	ret = FALSE;
-	sem_wait(philo->meal_lock);
-	if (philo->is_dead)
-		ret = TRUE;
-	sem_post(philo->meal_lock);
-	return (ret);
-}
 
 t_bool	had_enough_meals(t_philo *philo, t_data *data)
 {
 	int	ret;
 
 	ret = FALSE;
-	if (data->count_meals == NO_NEED)
-		return (ret);
 	sem_wait(philo->meal_lock);
-	if (philo->nb_of_meals >= data->param[NB_OF_MEALS])
+	if (data->count_meals == NEEDED
+		&& philo->nb_of_meals >= data->param[NB_OF_MEALS])
 		ret = TRUE;
 	sem_post(philo->meal_lock);
 	return (ret);
@@ -54,11 +41,10 @@ void	live(t_philo *philo, t_data *data)
 	life_insurance(philo, data);
 	while (!had_enough_meals(philo, data))
 	{
-		if (!philo_takes_forks(philo, data))
-			break ;
+		philo_takes_forks(philo, data);
 		philo_eats(philo, data);
 		philo_sleeps_then_thinks(philo, data);
 	}
-	// cleanup_fork(data);
+	sem_close(philo->meal_lock);
 	exit(MEALS_REACHED);
 }

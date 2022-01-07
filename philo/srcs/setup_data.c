@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:35 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/20 10:29:47 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/07 16:58:57 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	set_to_null(t_data *data)
 	data->philo = NULL;
 	data->need_count_meals = FALSE;
 	data->count_meals = 0;
-	data->finish = 0;
+	data->end = FALSE;
 }
 
 t_data	*setup_data(int argc)

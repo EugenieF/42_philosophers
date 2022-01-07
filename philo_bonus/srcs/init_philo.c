@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/05 13:44:26 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/07 21:32:28 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	open_semaphore(
 	memset(semaphore, 0, sizeof(sem_t *));
 	*semaphore = sem_open(name, O_CREAT | O_EXCL, 0666, nb_of_resources);
 	if (*semaphore == SEM_FAILED)
+	{
+		printf("%s\n", name);
 		exit_error("sem_open() failed", data);
+	}
 }
 
 void	create_semaphores(t_data *data, int total_philo)
