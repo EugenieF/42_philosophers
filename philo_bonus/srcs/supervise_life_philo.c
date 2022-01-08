@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/07 21:32:40 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/07 22:20:17 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ void	*supervise_life_philo(void *void_philo)
 		{
 			display_status(DEAD, philo, data);
 			sem_close(philo->meal_lock);
+			sem_close(data->forks_lock);
+			sem_close(data->data_lock);
+			// sem_post(data->writing_lock);
+			// sem_close(data->writing_lock);
 			exit(DEATH);
 			return (NULL);
 		}
