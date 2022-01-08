@@ -6,7 +6,7 @@
 #    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/18 22:02:30 by EugenieFr         #+#    #+#              #
-#    Updated: 2022/01/06 15:02:14 by efrancon         ###   ########.fr        #
+#    Updated: 2022/01/08 15:28:30 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ SRCS			= main.c \
 				live.c \
 				philo_activity.c \
 				display_status.c \
-				supervise_life_philo.c \
 				handle_time.c \
 				cleanup.c \
 				utils.c \

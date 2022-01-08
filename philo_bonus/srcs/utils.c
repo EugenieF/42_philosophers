@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:36:15 by efrancon          #+#    #+#             */
-/*   Updated: 2022/01/06 14:32:07 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/08 15:30:37 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ void	cleanup_fork(t_philo *philo, t_data *data)
 		free(data->param);
 		data->param = NULL;
 	}
+	if (sem_close(data->forks_lock) != 0
+		|| sem_close(data->writing_lock) != 0
+		|| sem_close(data->data_lock) != 0)
+		printf("Pb close_sem()\n");
 	free(data);
 	data = NULL;
 }

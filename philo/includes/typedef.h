@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/04 22:03:33 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/07 17:47:45 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct s_philo
 	int				nb_of_meals;
 	t_bool			done;
 	pthread_t		life_thread;
-	pthread_t		life_insurance;
 	pthread_mutex_t	left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*main_fork;
@@ -63,7 +62,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	unsigned long	start_time;
-	t_bool			someone_died;
+	t_bool			end;
 	t_bool			need_count_meals;
 	int				count_meals;
 	int				*param;
@@ -71,7 +70,6 @@ typedef struct s_data
 	char			**status;
 	pthread_mutex_t	writing_lock;
 	pthread_mutex_t	data_lock;
-	int				finish;
 }					t_data;
 
 #endif

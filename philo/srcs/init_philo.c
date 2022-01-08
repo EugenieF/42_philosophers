@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/04 16:13:10 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/07 16:58:36 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	init_philo(t_data *data)
 		data->philo[i].data = data;
 		i++;
 	}
-	data->someone_died = FALSE;
 	if (!create_left_fork_mutex(data))
 		exit_error("pthread_mutex_init() failed", data);
 	link_right_fork_mutex(data);

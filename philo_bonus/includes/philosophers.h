@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/06 14:29:28 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/08 15:29:01 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void			exit_error_cleanup(char *message, t_data *data);
 
 unsigned long	get_time(void);
 void			usleep_in_ms(unsigned long time_in_ms);
-void			smart_usleep_in_ms(int time, t_philo *philo);
 t_bool			time_is_valid(unsigned long time);
 
 /***   INIT   ***/
