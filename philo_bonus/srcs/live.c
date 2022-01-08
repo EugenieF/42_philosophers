@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/08 18:51:56 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/08 21:44:27 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	live(t_philo *philo, t_data *data)
 		philo_eats(philo, data);
 		philo_sleeps_then_thinks(philo, data);
 	}
-	printf("philo %d : OUT\n", philo->num);
 	if (pthread_join(philo->life_insurance, &ret_thread))
 		exit_error("pthread_detach() failed", data);
 	if (!ret_thread)

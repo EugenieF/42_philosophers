@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:04 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/08 19:17:46 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/08 21:44:06 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ void	display_death(t_philo *philo, t_data *data)
 	if (!time_is_valid(time_in_ms))
 		return ;
 	message = get_message(time_in_ms, DEAD, philo, data);
-	sem_wait(data->writing_lock);
-	ft_putstr_fd(message, 1);
-	clean_free(&message);
 	sem_wait(philo->end_lock);
 	philo->end = TRUE;
 	sem_post(philo->end_lock);
+	sem_wait(data->writing_lock);
+	ft_putstr_fd(message, 1);
+	clean_free(&message);
 }
