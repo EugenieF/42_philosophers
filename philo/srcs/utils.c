@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 18:41:11 by efrancon          #+#    #+#             */
-/*   Updated: 2022/01/04 14:46:00 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/06 15:06:32 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	exit_error_cleanup(char *message, t_data *data)
 {
-	ft_putstr_fd("\nError: ", 2);
+	ft_putstr_fd("Error: ", 2);
 	ft_putstr_fd(message, 2);
 	ft_putstr_fd(" failed\n", 2);
 	if (data->philo)
@@ -36,7 +36,7 @@ void	exit_error(char *message, t_data *data)
 {
 	char	*error_message;
 
-	error_message = ft_strjoin("\nError: ", message);
+	error_message = ft_strjoin("Error: ", message);
 	error_message = ft_strjoin_and_free(error_message, "\n");
 	lock_mutex(&data->writing_lock);
 	ft_putstr_fd(error_message, 2);

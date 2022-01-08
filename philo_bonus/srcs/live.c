@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/05 21:54:04 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/06 14:47:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,13 @@ void	live(t_philo *philo, t_data *data)
 	life_insurance(philo, data);
 	while (!had_enough_meals(philo, data))
 	{
-		if (!philo_takes_forks(philo, data))
-			break ;
+		if (philo_is_dead(philo) || !philo_takes_forks(philo, data))
+		{
+			usleep(1000);
+			exit(DEATH);
+		}
 		philo_eats(philo, data);
 		philo_sleeps_then_thinks(philo, data);
 	}
-	// cleanup_fork(data);
 	exit(MEALS_REACHED);
 }

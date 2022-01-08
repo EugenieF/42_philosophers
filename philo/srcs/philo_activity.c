@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:31 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/04 15:47:19 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/06 15:50:04 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,5 @@ void	philo_sleeps_then_thinks(t_philo *philo, t_data *data)
 	if (had_enough_meals(philo, data))
 		return ;
 	display_status(THINKING, philo, data);
+	usleep(2000);
 }

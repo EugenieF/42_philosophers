@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:36:15 by efrancon          #+#    #+#             */
-/*   Updated: 2022/01/05 15:10:45 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/06 14:32:07 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,29 @@ int	handle_zero_meals(t_data *data)
 	return (0);
 }
 
-void	cleanup_fork(t_data *data)
+void	cleanup_fork(t_philo *philo, t_data *data)
+{
+	(void)philo;
+	if (!data)
+		return ;
+	if (data->philo)
+	{
+		if (sem_close(philo->meal_lock))
+			printf("Error sem_close()\n");
+		free_philo(data);
+	}
+	if (data->status)
+		free_status(data);
+	if (data->param)
+	{
+		free(data->param);
+		data->param = NULL;
+	}
+	free(data);
+	data = NULL;
+}
+
+void	cleanup_fork_meal(t_data *data)
 {
 	if (!data)
 		return ;
@@ -36,8 +58,6 @@ void	cleanup_fork(t_data *data)
 		free(data->param);
 		data->param = NULL;
 	}
-	free(data);
-	data = NULL;
 }
 
 void	exit_error_cleanup(char *message, t_data *data)

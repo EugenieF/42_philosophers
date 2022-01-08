@@ -6,7 +6,7 @@
 #    By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/18 22:02:30 by EugenieFr         #+#    #+#              #
-#    Updated: 2022/01/05 21:48:39 by efrancon         ###   ########.fr        #
+#    Updated: 2022/01/06 15:02:21 by efrancon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ DEP				= $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.d))
 
 CC				= clang
 
-CFLAGS			= -Wall -Wextra -Werror -pthread -MMD -MP -I${INCLUDE} -g3 #-fsanitize=thread
+CFLAGS			= -Wall -Wextra -Werror -pthread -MMD -MP -I${INCLUDE}
 
 RM				= rm -rf
 

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:29:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2021/12/21 15:24:12 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/06 15:08:10 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ t_bool	argv_is_valid(char *argv)
 
 	i = 0;
 	while (ft_isspace(argv[i]))
-		i++;
-	if (argv[i] == '+')
 		i++;
 	while (argv[i])
 	{
