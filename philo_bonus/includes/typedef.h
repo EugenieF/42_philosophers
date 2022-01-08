@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/07 22:06:45 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/08 18:50:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,13 @@ typedef struct s_philo
 	int				num;
 	unsigned long	last_meal;
 	int				nb_of_meals;		
-	t_bool			is_dead;
+	t_bool			end;
 	pid_t			pid;
 	pthread_t		life_insurance;
 	sem_t			*meal_lock;
-	char			*sem_name;
+	sem_t			*end_lock;
+	char			*sem_meal_name;
+	char			*sem_end_name;
 	struct s_data	*data;
 }					t_philo;
 
@@ -70,7 +72,6 @@ typedef struct s_data
 	char			**status;
 	t_philo			*philo;
 	sem_t			*writing_lock;
-	sem_t			*data_lock;
 	sem_t			*forks_lock;
 }					t_data;
 

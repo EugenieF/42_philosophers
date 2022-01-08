@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/08 15:29:01 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/08 17:54:33 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void			exit_error_cleanup(char *message, t_data *data);
 
 unsigned long	get_time(void);
 void			usleep_in_ms(unsigned long time_in_ms);
+void			smart_usleep_in_ms(int time, t_philo *philo);
 t_bool			time_is_valid(unsigned long time);
 
 /***   INIT   ***/
@@ -74,8 +75,8 @@ void			philo_sleeps_then_thinks(t_philo *philo, t_data *data);
 
 void			display_status(int status, t_philo *philo, t_data *data);
 void			*supervise_life_philo(void *void_data);
-t_bool			philo_is_dead(t_philo *philo);
-t_bool			had_enough_meals(t_philo *philo, t_data *data);
+t_bool			must_stop(t_philo *philo);
+void			display_death(t_philo *philo, t_data *data);
 
 /***   CLEAN   ***/
 

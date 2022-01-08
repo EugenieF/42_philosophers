@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/07 22:06:54 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/08 18:56:19 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	open_semaphore(
 
 void	create_semaphores(t_data *data, int total_philo)
 {
-	unlink_semaphores();
+	sem_unlink("/sem_forks");
+	sem_unlink("/sem_writing");
 	open_semaphore(&data->forks_lock, "/sem_forks", total_philo, data);
 	open_semaphore(&data->writing_lock, "/sem_writing", 1, data);
-	open_semaphore(&data->data_lock, "/sem_data", 1, data);
 }
 
 void	init_philo(t_data *data)
@@ -50,9 +50,10 @@ void	init_philo(t_data *data)
 		data->philo[i].last_meal = data->start_time;
 		data->philo[i].nb_of_meals = 0;
 		data->philo[i].num = i + 1;
-		data->philo[i].is_dead = FALSE;
+		data->philo[i].end = FALSE;
 		num_str = ft_itoa(i + 1);
-		data->philo[i].sem_name = ft_strjoin("/sem_meal", num_str);
+		data->philo[i].sem_meal_name = ft_strjoin("/sem_meal", num_str);
+		data->philo[i].sem_end_name = ft_strjoin("/sem_end", num_str);
 		data->philo[i].data = data;
 		clean_free(&num_str);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:36:15 by efrancon          #+#    #+#             */
-/*   Updated: 2022/01/08 15:30:37 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/08 18:05:38 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,47 +21,6 @@ int	handle_zero_meals(t_data *data)
 	printf("\n----------------------------------------------\n\n");
 	cleanup(data);
 	return (0);
-}
-
-void	cleanup_fork(t_philo *philo, t_data *data)
-{
-	(void)philo;
-	if (!data)
-		return ;
-	if (data->philo)
-	{
-		if (sem_close(philo->meal_lock))
-			printf("Error sem_close()\n");
-		free_philo(data);
-	}
-	if (data->status)
-		free_status(data);
-	if (data->param)
-	{
-		free(data->param);
-		data->param = NULL;
-	}
-	if (sem_close(data->forks_lock) != 0
-		|| sem_close(data->writing_lock) != 0
-		|| sem_close(data->data_lock) != 0)
-		printf("Pb close_sem()\n");
-	free(data);
-	data = NULL;
-}
-
-void	cleanup_fork_meal(t_data *data)
-{
-	if (!data)
-		return ;
-	if (data->philo)
-		free_philo(data);
-	if (data->status)
-		free_status(data);
-	if (data->param)
-	{
-		free(data->param);
-		data->param = NULL;
-	}
 }
 
 void	exit_error_cleanup(char *message, t_data *data)
