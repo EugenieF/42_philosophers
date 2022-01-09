@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/08 18:50:43 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/09 18:21:01 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_philo
 	unsigned long	last_meal;
 	int				nb_of_meals;		
 	t_bool			end;
+	t_bool			is_dead;
 	pid_t			pid;
 	pthread_t		life_insurance;
 	sem_t			*meal_lock;
