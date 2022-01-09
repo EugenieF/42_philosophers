@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/08 22:40:40 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/09 15:18:40 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static t_bool	philo_died(t_philo *philo, t_data *data)
 	if (time_to_die < get_time() - philo->last_meal)
 	{
 		ret = TRUE;
+		sem_post(data->forks_lock);
 		display_death(philo, data);
 	}
 	sem_post(philo->meal_lock);
@@ -58,7 +59,6 @@ void	*supervise_life_philo(void *void_philo)
 	{
 		if (philo_died(philo, data))
 		{
-			sem_post(data->forks_lock);
 			return ((void *)1);
 		}
 		if (had_enough_meals(philo, data))
