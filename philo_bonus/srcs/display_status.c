@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:04 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/09 18:00:33 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/09 19:38:20 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	display_status(int status, t_philo *philo, t_data *data)
 	unsigned long	time_in_ms;
 	char			*message;
 
-	if (must_stop(philo))
+	if (is_dead(philo))
 		return ;
 	sem_wait(data->writing_lock);
 	time_in_ms = get_time() - data->start_time;

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/08 17:54:33 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/09 19:33:15 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void			philo_sleeps_then_thinks(t_philo *philo, t_data *data);
 void			display_status(int status, t_philo *philo, t_data *data);
 void			*supervise_life_philo(void *void_data);
 t_bool			must_stop(t_philo *philo);
+t_bool			is_dead(t_philo *philo);
 void			display_death(t_philo *philo, t_data *data);
 
 /***   CLEAN   ***/

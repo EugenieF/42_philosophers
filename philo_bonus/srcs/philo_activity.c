@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:31 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/09 18:22:47 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/09 19:38:12 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,11 @@ void	philo_eats(t_philo *philo, t_data *data)
 	if (must_stop(philo))
 		return ;
 	sem_wait(philo->meal_lock);
-	display_status(EATING, philo, data);
 	philo->last_meal = get_time();
 	philo->nb_of_meals++;
 	sem_post(philo->meal_lock);
+	display_status(EATING, philo, data);
 	smart_usleep_in_ms(data->param[TIME_TO_EAT], philo);
-	// usleep_in_ms(data->param[TIME_TO_EAT]);
 }
 
 void	philo_sleeps_then_thinks(t_philo *philo, t_data *data)

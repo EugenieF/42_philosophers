@@ -6,11 +6,23 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/09 19:13:47 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/09 19:31:25 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+t_bool	is_dead(t_philo *philo)
+{
+	int	ret;
+
+	ret = FALSE;
+	sem_wait(philo->end_lock);
+	if (philo->is_dead)
+		ret = TRUE;
+	sem_post(philo->end_lock);
+	return (ret);
+}
 
 t_bool	must_stop(t_philo *philo)
 {

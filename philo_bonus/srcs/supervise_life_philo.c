@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/09 19:14:30 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/09 19:30:26 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static t_bool	philo_died(t_philo *philo, t_data *data)
 	{
 		ret = TRUE;
 		sem_wait(philo->end_lock);
+		philo->is_dead = TRUE;
 		philo->end = TRUE;
 		sem_post(philo->end_lock);
 		display_death(philo, data);
