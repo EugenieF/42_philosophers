@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/08 21:44:27 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/09 18:15:01 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	live(t_philo *philo, t_data *data)
 	int		exit_status;
 	void	*ret_thread;
 
-	exit_status = DEATH;
+	exit_status = MEALS_REACHED;
 	life_insurance(philo, data);
 	while (!must_stop(philo))
 	{
@@ -52,7 +52,7 @@ void	live(t_philo *philo, t_data *data)
 	if (pthread_join(philo->life_insurance, &ret_thread))
 		exit_error("pthread_detach() failed", data);
 	if (!ret_thread)
-		exit_status = MEALS_REACHED;
+		exit_status = DEATH;
 	if (sem_close(philo->meal_lock))
 		exit_error("sem_close() failed", data);
 	if (sem_close(philo->end_lock))
