@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:04 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/09 20:31:17 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/09 20:56:21 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,20 @@ void	display_status(int status, t_philo *philo, t_data *data)
 	unsigned long	time_in_ms;
 	char			*message;
 
-	if (is_dead(philo))
-		return ;
-	sem_wait(data->writing_lock);
-	time_in_ms = get_time() - data->start_time;
-	if (!time_is_valid(time_in_ms))
-		return ;
-	message = get_message(time_in_ms, status, philo, data);
-	ft_putstr_fd(message, 1);
-	clean_free(&message);
-	sem_post(data->writing_lock);
+	sem_wait(philo->end_lock);
+	if (!philo->is_dead)
+	{
+		sem_wait(data->writing_lock);
+		time_in_ms = get_time() - data->start_time;
+		if (time_is_valid(time_in_ms))
+		{
+			message = get_message(time_in_ms, status, philo, data);
+			ft_putstr_fd(message, 1);
+			clean_free(&message);
+		}
+		sem_post(data->writing_lock);
+	}
+	sem_post(philo->end_lock);
 }
 
 void	display_death(t_philo *philo, t_data *data)
