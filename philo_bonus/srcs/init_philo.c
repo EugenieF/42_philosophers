@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/10 15:05:12 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/10 15:23:27 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,22 @@ void	fill_philo(int i, t_data *data)
 	data->philo[i].sem_end_name = ft_strjoin("/sem_end", num_str);
 	data->philo[i].data = data;
 	clean_free(&num_str);
+}
+
+void	get_time_to_think(t_data *data)
+{
+	if (data->param[NB_OF_PHILO] % 2 == 0)
+	{
+		data->param[TIME_TO_THINK] = data->param[TIME_TO_EAT]
+			- data->param[TIME_TO_SLEEP];
+	}
+	else
+	{
+		data->param[TIME_TO_THINK] = 2 * data->param[TIME_TO_EAT]
+			- data->param[TIME_TO_SLEEP];
+	}
+	if (data->param[TIME_TO_THINK] < 0)
+		data->param[TIME_TO_THINK] = 0;
 }
 
 void	init_philo(t_data *data)
