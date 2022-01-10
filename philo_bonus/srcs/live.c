@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/09 22:45:17 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/10 16:16:23 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ t_bool	must_stop(t_philo *philo, t_data *data)
 	ret = FALSE;
 	sem_wait(philo->end_lock);
 	if (philo->end)
-	{
-		// printf("%lu   Philo %d MUST STOP\n", get_time() - data->start_time, philo->num);
 		ret = TRUE;
-	}
 	sem_post(philo->end_lock);
 	return (ret);
 }
@@ -49,6 +46,16 @@ static void	life_insurance(t_philo *philo, t_data *data)
 	if (pthread_create(
 			&philo->life_insurance, NULL, supervise_life_philo, (void *)philo))
 		exit_error("pthread_create() failed", data);
+	if (data->param[NB_OF_PHILO] == 1)
+		return ;
+	if (data->param[NB_OF_PHILO] % 2 != 0
+		&& philo->num == data->param[NB_OF_PHILO])
+		smart_usleep_in_ms(data->param[TIME_TO_EAT] * 2, philo);
+	else if ((data->param[NB_OF_PHILO] % 2 == 0
+			&& philo->num > data->param[NB_OF_PHILO] / 2)
+		|| (data->param[NB_OF_PHILO] % 2 != 0
+			&& philo->num > (data->param[NB_OF_PHILO] - 1) / 2))
+		smart_usleep_in_ms(data->param[TIME_TO_EAT], philo);
 }
 
 void	live(t_philo *philo, t_data *data)

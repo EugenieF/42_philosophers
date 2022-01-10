@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:13 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/09 18:16:17 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/10 15:30:57 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	run_philo(t_data *data)
 			exit_error("fork() failed", data);
 		else if (data->philo[i].pid == CHILD)
 			live(&data->philo[i], data);
-		usleep(1000);
+		usleep(100);
 		i++;
 	}
 	check_exit_status(data);
