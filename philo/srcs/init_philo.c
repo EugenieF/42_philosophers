@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/07 16:58:36 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/10 15:05:42 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,22 @@ t_bool	create_left_fork_mutex(t_data *data)
 	return (SUCCESS);
 }
 
+void	get_time_to_think(t_data *data)
+{
+	if (data->param[NB_OF_PHILO] % 2 == 0)
+	{
+		data->param[TIME_TO_THINK] = data->param[TIME_TO_EAT]
+			- data->param[TIME_TO_SLEEP];
+	}
+	else
+	{
+		data->param[TIME_TO_THINK] = 2 * data->param[TIME_TO_EAT]
+			- data->param[TIME_TO_SLEEP];
+	}
+	if (data->param[TIME_TO_THINK] < 0)
+		data->param[TIME_TO_THINK] = 0;
+}
+
 void	init_philo(t_data *data)
 {
 	int	i;
@@ -93,4 +109,5 @@ void	init_philo(t_data *data)
 		exit_error("pthread_mutex_init() failed", data);
 	link_right_fork_mutex(data);
 	link_main_fork_mutex(data);
+	get_time_to_think(data);
 }

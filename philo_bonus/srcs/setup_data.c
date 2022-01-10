@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:35 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/04 22:23:57 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/09 22:35:03 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_data	*setup_data(int argc)
 		exit_error("malloc() failed", data);
 	set_to_null(data);
 	argc--;
-	data->param = (int *)ft_calloc(1, sizeof(int) * argc);
+	data->param = (int *)ft_calloc(1, sizeof(int) * (argc + 1));
 	if (!data->param)
 		exit_error("malloc() failed", data);
 	create_status(data);

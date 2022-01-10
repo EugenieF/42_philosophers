@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/09 21:37:58 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/09 22:44:44 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static t_bool	philo_died(t_philo *philo, t_data *data)
 	if (time_to_die < get_time() - philo->last_meal)
 	{
 		sem_post(philo->meal_lock);
+		// printf("%lu   Philo %d DEAD\n", get_time() - data->start_time, philo->num);
 		sem_wait(philo->end_lock);
 		philo->is_dead = TRUE;
 		philo->end = TRUE;
-		display_death(philo, data);
 		sem_post(philo->end_lock);
 		return (TRUE);
 	}

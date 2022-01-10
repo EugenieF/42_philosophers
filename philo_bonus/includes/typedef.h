@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/09 18:21:01 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/09 22:30:04 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef enum s_param
 	TIME_TO_EAT		= 2,
 	TIME_TO_SLEEP	= 3,
 	NB_OF_MEALS		= 4,
+	TIME_TO_THINK	= 5,
 }	t_param;
 
 typedef int	t_bool;

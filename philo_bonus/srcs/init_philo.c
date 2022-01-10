@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/09 18:28:24 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/10 15:05:12 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,26 @@ void	create_semaphores(t_data *data, int total_philo)
 	open_semaphore(&data->writing_lock, "/sem_writing", 1, data);
 }
 
+void	fill_philo(int i, t_data *data)
+{
+	char	*num_str;
+
+	data->philo[i].last_meal = data->start_time;
+	data->philo[i].nb_of_meals = 0;
+	data->philo[i].num = i + 1;
+	data->philo[i].end = FALSE;
+	data->philo[i].is_dead = FALSE;
+	num_str = ft_itoa(i + 1);
+	data->philo[i].sem_meal_name = ft_strjoin("/sem_meal", num_str);
+	data->philo[i].sem_end_name = ft_strjoin("/sem_end", num_str);
+	data->philo[i].data = data;
+	clean_free(&num_str);
+}
+
 void	init_philo(t_data *data)
 {
 	int		i;
 	int		total_philo;
-	char	*num_str;
 
 	total_philo = data->param[NB_OF_PHILO];
 	data->philo = (t_philo *)ft_calloc(1, sizeof(t_philo) * total_philo);
@@ -47,17 +62,9 @@ void	init_philo(t_data *data)
 	i = 0;
 	while (i < total_philo)
 	{
-		data->philo[i].last_meal = data->start_time;
-		data->philo[i].nb_of_meals = 0;
-		data->philo[i].num = i + 1;
-		data->philo[i].end = FALSE;
-		data->philo[i].is_dead = FALSE;
-		num_str = ft_itoa(i + 1);
-		data->philo[i].sem_meal_name = ft_strjoin("/sem_meal", num_str);
-		data->philo[i].sem_end_name = ft_strjoin("/sem_end", num_str);
-		data->philo[i].data = data;
-		clean_free(&num_str);
+		fill_philo(i, data);
 		i++;
 	}
 	create_semaphores(data, total_philo);
+	get_time_to_think(data);
 }
