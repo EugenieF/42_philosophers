@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:29:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/10 12:12:44 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/10 18:04:55 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,7 @@ t_bool	fill_and_check_parameters(char **argv, t_data *data)
 	}
 	if (i == 6)
 		data->count_meals = NEEDED;
+	if (data->param[NB_OF_PHILO] % 2 == 0)
+		data->is_even = TRUE;
 	return (SUCCESS);
 }

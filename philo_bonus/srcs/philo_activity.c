@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:31 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/10 15:53:17 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/11 11:58:24 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@ void	philo_eats(t_philo *philo, t_data *data)
 		return ;
 	sem_wait(philo->meal_lock);
 	philo->last_meal = get_time();
+	display_status(EATING, philo, data);
+	sem_post(philo->meal_lock);
+	smart_usleep_in_ms(data->param[TIME_TO_EAT], philo);
+	sem_wait(philo->meal_lock);
 	philo->nb_of_meals++;
 	sem_post(philo->meal_lock);
-	display_status(EATING, philo, data);
-	smart_usleep_in_ms(data->param[TIME_TO_EAT], philo);
 	sem_post(data->forks_lock);
 	sem_post(data->forks_lock);
 }
@@ -55,7 +57,16 @@ void	philo_sleeps_then_thinks(t_philo *philo, t_data *data)
 {
 	display_status(SLEEPING, philo, data);
 	smart_usleep_in_ms(data->param[TIME_TO_SLEEP], philo);
-	if (!must_stop(philo, data))
-		display_status(THINKING, philo, data);
+	if (must_stop(philo, data))
+		return ;
+	display_status(THINKING, philo, data);
+	sem_wait(philo->meal_lock);
+	if (!data->is_even && (philo->num + philo->nb_of_meals)
+		% data->simultaneous_meals != 1)
+	{
+		sem_post(philo->meal_lock);
+		return ;
+	}
+	sem_post(philo->meal_lock);
 	smart_usleep_in_ms(data->param[TIME_TO_THINK], philo);
 }

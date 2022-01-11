@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/10 15:05:42 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/11 11:48:25 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,29 @@ t_bool	create_left_fork_mutex(t_data *data)
 	return (SUCCESS);
 }
 
-void	get_time_to_think(t_data *data)
+void	get_time_to_think(int time_to_eat, int time_to_sleep, t_data *data)
 {
+	int		i;
+	float	nb;
+
 	if (data->param[NB_OF_PHILO] % 2 == 0)
-	{
-		data->param[TIME_TO_THINK] = data->param[TIME_TO_EAT]
-			- data->param[TIME_TO_SLEEP];
-	}
+		data->param[TIME_TO_THINK] = time_to_eat - time_to_sleep;
 	else
-	{
-		data->param[TIME_TO_THINK] = 2 * data->param[TIME_TO_EAT]
-			- data->param[TIME_TO_SLEEP];
-	}
-	if (data->param[TIME_TO_THINK] < 0)
+		data->param[TIME_TO_THINK] = 2 * time_to_eat - time_to_sleep;
+	if (data->param[TIME_TO_THINK] < 0 || time_to_sleep > time_to_eat)
 		data->param[TIME_TO_THINK] = 0;
+	data->simultaneous_meals = data->param[NB_OF_PHILO] / 2;
+	i = -1;
+	while (++i < data->param[NB_OF_PHILO])
+	{
+		nb = (float)data->philo[i].num / (float)data->param[NB_OF_PHILO]
+			* (float)data->simultaneous_meals;
+		data->philo[i].magic_nb = (int)nb;
+		if (data->philo[i].magic_nb < data->simultaneous_meals)
+			data->philo[i].magic_nb++;
+		if (data->philo[i].magic_nb == data->simultaneous_meals)
+			data->philo[i].magic_nb = 0;
+	}
 }
 
 void	init_philo(t_data *data)
@@ -109,5 +118,6 @@ void	init_philo(t_data *data)
 		exit_error("pthread_mutex_init() failed", data);
 	link_right_fork_mutex(data);
 	link_main_fork_mutex(data);
-	get_time_to_think(data);
+	get_time_to_think(
+		data->param[TIME_TO_EAT], data->param[TIME_TO_SLEEP], data);
 }

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/07 21:49:43 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/11 11:44:03 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	*live(void *void_philo)
 
 	philo = (t_philo *)void_philo;
 	data = philo->data;
-	if (philo->num % 2 == 0)
+	if (data->param[NB_OF_PHILO] > 1
+		&& !data->is_even && philo->num == data->param[NB_OF_PHILO])
+		smart_usleep_in_ms(data->param[TIME_TO_EAT] * 2, data);
+	else if (philo->num % 2 == 0)
 		smart_usleep_in_ms(data->param[TIME_TO_EAT], data);
 	while (!must_stop(data))
 	{

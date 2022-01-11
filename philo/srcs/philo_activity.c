@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:31 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/10 15:09:32 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/11 11:57:33 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,30 @@ void	philo_eats(t_philo *philo, t_data *data)
 {
 	lock_mutex(&philo->meal_lock);
 	philo->last_meal = get_time();
-	philo->nb_of_meals++;
-	display_status(EATING, philo, data);
 	unlock_mutex(&philo->meal_lock);
+	display_status(EATING, philo, data);
 	smart_usleep_in_ms(data->param[TIME_TO_EAT], data);
+	lock_mutex(&philo->meal_lock);
+	philo->nb_of_meals++;
+	unlock_mutex(&philo->meal_lock);
 	unlock_mutex(philo->main_fork);
 	unlock_mutex(philo->minor_fork);
 }
 
 void	philo_sleeps_then_thinks(t_philo *philo, t_data *data)
 {
-	if (must_stop(data))
-		return ;
 	display_status(SLEEPING, philo, data);
 	smart_usleep_in_ms(data->param[TIME_TO_SLEEP], data);
 	if (must_stop(data))
 		return ;
 	display_status(THINKING, philo, data);
+	lock_mutex(&philo->meal_lock);
+	if (!data->is_even
+		&& philo->nb_of_meals % data->simultaneous_meals != philo->magic_nb)
+	{
+		unlock_mutex(&philo->meal_lock);
+		return ;
+	}
+	unlock_mutex(&philo->meal_lock);
 	smart_usleep_in_ms(data->param[TIME_TO_THINK], data);
 }

@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/09 22:30:04 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/10 18:15:44 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ typedef struct s_philo
 typedef struct s_data
 {
 	unsigned long	start_time;
+	t_bool			is_even;
+	int				simultaneous_meals;
 	int				count_meals;
 	int				*param;
 	char			**status;

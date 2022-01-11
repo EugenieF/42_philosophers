@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:07 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/07 18:31:27 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/11 11:38:01 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	smart_usleep_in_ms(int time, t_data *data)
 		{
 			if (must_stop(data))
 				break ;
-			usleep(100);
+			usleep(500);
 		}
 	}
 }

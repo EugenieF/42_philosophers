@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:07 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/09 19:31:45 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/11 11:43:45 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	usleep_in_ms(unsigned long time_in_ms)
 
 	start_time = get_time();
 	while (get_time() - start_time < time_in_ms)
-		usleep(100);
+		usleep(500);
 }
 
 void	smart_usleep_in_ms(int time, t_philo *philo)
@@ -47,6 +47,6 @@ void	smart_usleep_in_ms(int time, t_philo *philo)
 	{
 		if (is_dead(philo))
 			break ;
-		usleep(100);
+		usleep(500);
 	}
 }

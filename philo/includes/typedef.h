@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/10 15:06:26 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/10 21:34:17 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ struct		s_data;
 typedef struct s_philo
 {
 	int				num;
+	int				magic_nb;
 	unsigned long	last_meal;
 	int				nb_of_meals;
 	t_bool			done;
@@ -65,6 +66,8 @@ typedef struct s_data
 	unsigned long	start_time;
 	t_bool			end;
 	t_bool			need_count_meals;
+	t_bool			is_even;
+	int				simultaneous_meals;
 	int				count_meals;
 	int				*param;
 	t_philo			*philo;

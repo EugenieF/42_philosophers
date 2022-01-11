@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 22:23:54 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/10 15:23:27 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/11 11:54:05 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ void	open_semaphore(
 	memset(semaphore, 0, sizeof(sem_t *));
 	*semaphore = sem_open(name, O_CREAT | O_EXCL, 0666, nb_of_resources);
 	if (*semaphore == SEM_FAILED)
-	{
-		printf("%s\n", name);
 		exit_error("sem_open() failed", data);
-	}
 }
 
 void	create_semaphores(t_data *data, int total_philo)
@@ -48,20 +45,15 @@ void	fill_philo(int i, t_data *data)
 	clean_free(&num_str);
 }
 
-void	get_time_to_think(t_data *data)
+void	get_time_to_think(int time_to_eat, int time_to_sleep, t_data *data)
 {
 	if (data->param[NB_OF_PHILO] % 2 == 0)
-	{
-		data->param[TIME_TO_THINK] = data->param[TIME_TO_EAT]
-			- data->param[TIME_TO_SLEEP];
-	}
+		data->param[TIME_TO_THINK] = time_to_eat - time_to_sleep;
 	else
-	{
-		data->param[TIME_TO_THINK] = 2 * data->param[TIME_TO_EAT]
-			- data->param[TIME_TO_SLEEP];
-	}
-	if (data->param[TIME_TO_THINK] < 0)
+		data->param[TIME_TO_THINK] = 2 * time_to_eat - time_to_sleep;
+	if (data->param[TIME_TO_THINK] < 0 || time_to_sleep > time_to_eat)
 		data->param[TIME_TO_THINK] = 0;
+	data->simultaneous_meals = data->param[NB_OF_PHILO] / 2;
 }
 
 void	init_philo(t_data *data)
@@ -82,5 +74,6 @@ void	init_philo(t_data *data)
 		i++;
 	}
 	create_semaphores(data, total_philo);
-	get_time_to_think(data);
+	get_time_to_think(
+		data->param[TIME_TO_EAT], data->param[TIME_TO_SLEEP], data);
 }
