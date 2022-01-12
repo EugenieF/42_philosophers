@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:01:04 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/11 11:56:17 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/12 20:51:19 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	display_status(int status, t_philo *philo, t_data *data)
 		return ;
 	}
 	message = get_message(time_in_ms, status, philo, data);
-	if (!must_stop(data))
+	if (!is_dead(data))
 		ft_putstr_fd(message, 1);
 	clean_free(&message);
 	unlock_mutex(&data->writing_lock);
@@ -69,6 +69,7 @@ void	display_death(t_philo *philo, t_data *data)
 		ft_putstr_fd(message, 1);
 	clean_free(&message);
 	lock_mutex(&data->data_lock);
+	data->is_dead = TRUE;
 	data->end = TRUE;
 	unlock_mutex(&data->data_lock);
 	unlock_mutex(&data->writing_lock);

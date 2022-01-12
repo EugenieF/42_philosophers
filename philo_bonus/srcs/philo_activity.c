@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:31 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/11 11:58:24 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/12 20:34:58 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_bool	philo_takes_forks(t_philo *philo, t_data *data)
 		return (FAIL);
 	}
 	sem_wait(data->forks_lock);
+	// printf("%lu DEAD\n", get_time() - data->start_time);
 	display_status(HAS_A_FORK, philo, data);
 	if (must_stop(philo, data))
 	{

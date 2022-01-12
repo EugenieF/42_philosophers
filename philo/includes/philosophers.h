@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:30:19 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/07 17:01:47 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/12 20:53:32 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void			display_death(t_philo *philo, t_data *data);
 
 void			*supervise_life_philo(void *void_data);
 t_bool			must_stop(t_data *data);
+t_bool			is_dead(t_data *data);
 
 /***   CLEAN   ***/
 

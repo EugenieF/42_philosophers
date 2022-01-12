@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 22:02:06 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/10 21:34:17 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/12 20:50:16 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_data
 {
 	unsigned long	start_time;
 	t_bool			end;
+	t_bool			is_dead;
 	t_bool			need_count_meals;
 	t_bool			is_even;
 	int				simultaneous_meals;

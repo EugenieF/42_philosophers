@@ -6,11 +6,23 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:00 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/11 11:44:03 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/12 20:48:51 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+t_bool	is_dead(t_data *data)
+{
+	int	ret;
+
+	ret = FALSE;
+	lock_mutex(&data->data_lock);
+	if (data->is_dead)
+		ret = TRUE;
+	unlock_mutex(&data->data_lock);
+	return (ret);
+}
 
 t_bool	must_stop(t_data *data)
 {

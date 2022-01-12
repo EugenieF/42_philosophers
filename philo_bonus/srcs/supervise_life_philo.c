@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:30:52 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/10 16:24:00 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/12 21:03:43 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static t_bool	philo_died(t_philo *philo, t_data *data)
 		philo->is_dead = TRUE;
 		philo->end = TRUE;
 		sem_post(philo->end_lock);
+		// sem_post(data->forks_lock);
 		return (TRUE);
 	}
 	sem_post(philo->meal_lock);
