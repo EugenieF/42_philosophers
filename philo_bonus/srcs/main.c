@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 19:28:25 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/12 21:14:02 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/12 22:33:00 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	main(int argc, char **argv)
 	printf("\n");
 	run_philo(data);
 	printf("----------------------------------------------\n\n");
-	printf("time_to_think = %d\n", data->param[TIME_TO_THINK]);
 	cleanup(data);
 	return (0);
 }

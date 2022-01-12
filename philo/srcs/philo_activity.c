@@ -6,7 +6,7 @@
 /*   By: efrancon <efrancon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 13:31:31 by EugenieFr         #+#    #+#             */
-/*   Updated: 2022/01/11 11:57:33 by efrancon         ###   ########.fr       */
+/*   Updated: 2022/01/12 22:41:14 by efrancon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	philo_sleeps_then_thinks(t_philo *philo, t_data *data)
 		unlock_mutex(&philo->meal_lock);
 		return ;
 	}
+	// printf("philo %d | nb_of_meals = %d\n", philo->num, philo->nb_of_meals);
 	unlock_mutex(&philo->meal_lock);
 	smart_usleep_in_ms(data->param[TIME_TO_THINK], data);
 }
