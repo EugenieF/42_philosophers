@@ -4,6 +4,8 @@
 
 *🎯 Aim : learn the basics of threading a process*
 
+[Dining philosophers problem](https://en.wikipedia.org/wiki/Dining_philosophers_problem)
+
 ### 📄 Subject
 • Each philosopher should be a thread.
 • There is one fork between each pair of philosophers. Therefore, if there are several
